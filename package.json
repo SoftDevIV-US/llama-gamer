@@ -14,7 +14,6 @@
     "dev": "turbo dev -F e-commerce-db && turbo prisma -F e-commerce-api && turbo dev -F e-commerce-api -F e-commerce-client",
     "check:code": "turbo lint -F e-commerce-client -F e-commerce-api && turbo format -F e-commerce-client -F e-commerce-api",
     "test": "turbo test -F e-commerce-client -F e-commerce-api",
-    "up": "turbo dev -F e-commerce-db",
     "build": "turbo build -F e-commerce-client -F e-commerce-api",
     "start": "node apps/e-commerce-api/dist/src/main"
   },
