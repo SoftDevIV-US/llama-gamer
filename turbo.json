@@ -19,13 +19,13 @@
     "prisma:production": {
       "cache": false
     },
-    "start": {
-      "cache": false,
+    "build": {
       "dependsOn": [
         "^build"
-      ]
-    },
-    "build": {
+      ],
+      "outputs": [
+        "dist/**"
+      ],
       "cache": false
     }
   }

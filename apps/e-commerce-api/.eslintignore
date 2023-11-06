@@ -12,3 +12,4 @@ public
 coverage
 prisma/migrations
 prisma/generated
+.turbo

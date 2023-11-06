@@ -11,3 +11,4 @@ output
 coverage
 prisma/migrations
 prisma/generated
+.turbo

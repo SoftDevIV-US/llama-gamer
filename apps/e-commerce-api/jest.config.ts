@@ -8,7 +8,14 @@ const config: Config = {
   },
   coverageDirectory: 'coverage',
   coverageProvider: 'v8',
-  testPathIgnorePatterns: ['/node_modules/', '/dist/', '/coverage/', '/prisma/generated/', '/prisma/migrations/'],
+  testPathIgnorePatterns: [
+    '/node_modules/',
+    '/dist/',
+    '/coverage/',
+    '/prisma/generated/',
+    '/prisma/migrations/',
+    '/.turbo/',
+  ],
   testEnvironment: 'node',
   collectCoverageFrom: ['src/**/*.ts', '!src/**/*.module.ts'],
   coveragePathIgnorePatterns: [

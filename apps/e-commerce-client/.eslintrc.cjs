@@ -33,7 +33,7 @@ module.exports = {
     node: true,
     jest: true,
   },
-  ignorePatterns: ['dist', 'node_modules', '.eslintrc.cjs', 'coverage'],
+  ignorePatterns: ['dist', 'node_modules', '.eslintrc.cjs', 'coverage', '.turbo'],
   rules: {
     'prettier/prettier': ['warn', {}, { usePrettierrc: true }],
     'max-len': [
