@@ -5,9 +5,7 @@ on:
     branches:
       - "**"
 
-permissions:
-  pull-requests: read
-  actions: read
+permissions: read-all
 
 jobs:
   semantic_pull_request:
