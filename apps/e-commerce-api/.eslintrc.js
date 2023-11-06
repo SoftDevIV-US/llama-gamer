@@ -18,7 +18,15 @@ module.exports = {
     node: true,
     jest: true,
   },
-  ignorePatterns: ['.eslintrc.js', 'dist', 'node_modules', 'prisma/generated', 'prisma/migrations', 'coverage', '.turbo'],
+  ignorePatterns: [
+    '.eslintrc.js',
+    'dist',
+    'node_modules',
+    'prisma/generated',
+    'prisma/migrations',
+    'coverage',
+    '.turbo',
+  ],
   rules: {
     '@typescript-eslint/no-floating-promises': 'off',
     '@typescript-eslint/no-misused-promises': 'off',
@@ -44,7 +52,7 @@ module.exports = {
         avoidEscape: true,
       },
     ],
-    'prettier/prettier': ['warn', {}, { usePrettierrc: true }],
+    'prettier/prettier': ['error', {}, { usePrettierrc: true }],
     'simple-import-sort/imports': 'error',
     'simple-import-sort/exports': 'error',
     '@typescript-eslint/no-unused-vars': [

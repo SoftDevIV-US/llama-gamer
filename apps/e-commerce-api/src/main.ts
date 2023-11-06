@@ -8,8 +8,6 @@ import { DESCRIPTION, NODE_ENV, PORT, PREFIX, TITLE, VERSION } from './utils/con
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  console.log(`NODE_ENV: ${NODE_ENV}`, `PORT: ${PORT}`, `PREFIX: ${PREFIX}`);
-
   if (NODE_ENV === 'development' || NODE_ENV === 'testing' || NODE_ENV === 'staging') {
     const config = new DocumentBuilder().setTitle(TITLE).setDescription(DESCRIPTION).setVersion(VERSION).build();
     const document = SwaggerModule.createDocument(app, config);

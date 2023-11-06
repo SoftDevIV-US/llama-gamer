@@ -35,7 +35,7 @@ module.exports = {
   },
   ignorePatterns: ['dist', 'node_modules', '.eslintrc.cjs', 'coverage', '.turbo'],
   rules: {
-    'prettier/prettier': ['warn', {}, { usePrettierrc: true }],
+    'prettier/prettier': ['error', {}, { usePrettierrc: true }],
     'max-len': [
       'error',
       {
