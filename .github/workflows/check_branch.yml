@@ -9,6 +9,9 @@ on:
       - "!stage"
       - "!develop"
 
+permissions:
+  pull-requests: read
+
 jobs:
   check_branch_convention:
     name: Conventional Branch Name
