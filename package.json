@@ -15,7 +15,7 @@
     "check:code": "turbo lint -F e-commerce-client -F e-commerce-api && turbo format -F e-commerce-client -F e-commerce-api",
     "test": "turbo test -F e-commerce-client -F e-commerce-api",
     "build": "turbo build -F e-commerce-client -F e-commerce-api",
-    "start": "node apps/e-commerce-api/dist/src/main.js"
+    "start": "bun --bun run apps/e-commerce-api/dist/src/main.js"
   },
   "workspaces": [
     "apps/*"
