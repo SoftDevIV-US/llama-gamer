@@ -18,7 +18,7 @@ async function bootstrap() {
   app.setGlobalPrefix(PREFIX);
   app.enableCors();
 
-  await app.listen(PORT);
+  await app.listen(PORT, '0.0.0.0');
 }
 
 bootstrap().catch((err: Error) => {
