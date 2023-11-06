@@ -1,0 +1,11 @@
+node_modules
+.DB_Store
+dist
+dist-ssr
+*.local
+node_modules
+out
+.env*.local
+*.tsbuildinfo
+output
+public

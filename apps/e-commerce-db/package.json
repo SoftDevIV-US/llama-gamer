@@ -1,0 +1,14 @@
+{
+  "name": "e-commerce-db",
+  "version": "0.1.0",
+  "private": false,
+  "description": "The DB for the e-commerce project",
+  "author": {
+    "email": "morales.patty.jose@gmail.com",
+    "name": "Tutuma's Team"
+  },
+  "license": "MIT",
+  "scripts": {
+    "dev": "docker compose down && docker volume rm --force e-commerce-db_postgres-data && docker compose up -d"
+  }
+}

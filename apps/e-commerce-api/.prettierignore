@@ -1,0 +1,13 @@
+node_modules
+.DB_Store
+dist
+dist-ssr
+*.local
+node_modules
+out
+.env*.local
+*.tsbuildinfo
+output
+coverage
+prisma/migrations
+prisma/generated

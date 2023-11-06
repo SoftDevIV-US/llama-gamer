@@ -1,0 +1,45 @@
+{
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.patterns": {
+    "tsconfig.json": "tsconfig.json, tsconfig.app.json, tsconfig.spec.json, tsconfig.build.json, tsconfig.node.json",
+    ".eslintrc.js": ".eslintrc.js, .eslintignore, .prettierrc, .prettierignore",
+    ".eslintrc.cjs": ".eslintrc.cjs, .eslintignore, .prettierrc, .prettierignore",
+    "package.json": "package.json, bun.lockb, .gitattributes, .gitignore",
+    "jest.config.ts": "jest.config.ts, setup-jest.ts, jest.setup.ts",
+    "tailwind.config.js": "tailwind.config.js, postcss.config.js",
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.organizeImports": true
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "[postgres]": {
+    "editor.defaultFormatter": "inferrinizzard.prettier-sql-vscode"
+  },
+  "plpgsqlLanguageServer.user": "user",
+  "plpgsqlLanguageServer.password": "password",
+  "plpgsqlLanguageServer.host": "localhost",
+  "plpgsqlLanguageServer.port": 3030,
+  "plpgsqlLanguageServer.database": "llama_gamer_db",
+  "plpgsqlLanguageServer.workspaceValidationTargetFiles": [
+    "**/*.sql",
+    "**/*.pgsql"
+  ],
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma"
+  },
+  "editorconfig.generateAuto": false,
+  "editorconfig.template": "default",
+  "jest.autoRun": {
+    "onSave": false,
+    "onType": false
+  },
+  "jest.jestCommandLine": "npm run test -w e-commerce-api -w e-commerce-client --",
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[toml]": {
+    "editor.defaultFormatter": "tamasfe.even-better-toml"
+  },
+}

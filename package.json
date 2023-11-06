@@ -1,0 +1,32 @@
+{
+  "name": "e-commerce",
+  "version": "0.1.0",
+  "private": false,
+  "description": "E-commerce app built with Turbo",
+  "author": {
+    "email": "morales.patty.jose@gmail.com",
+    "name": "Tutuma's Team"
+  },
+  "license": "MIT",
+  "scripts": {
+    "prepare": "husky install",
+    "postinstall": "prisma generate",
+    "dev": "turbo dev -F e-commerce-db && turbo prisma:development -F e-commerce-api && turbo dev -F e-commerce-api -F e-commerce-client",
+    "check:code": "turbo lint -F e-commerce-client -F e-commerce-api && turbo format -F e-commerce-client -F e-commerce-api",
+    "test": "turbo test -F e-commerce-client -F e-commerce-api",
+    "up": "turbo dev -F e-commerce-db",
+    "build:development": "turbo prisma:development -F e-commerce-api && turbo build -F e-commerce-client -F e-commerce-api",
+    "build:production": "turbo prisma:production -F e-commerce-api && turbo build -F e-commerce-client -F e-commerce-api",
+    "start": "node apps/e-commerce-api/dist/src/main"
+  },
+  "workspaces": [
+    "apps/*"
+  ],
+  "devDependencies": {
+    "husky": "^8.0.3",
+    "turbo": "^1.10.16"
+  },
+  "prisma": {
+    "schema": "./apps/e-commerce-api/prisma/schema.prisma"
+  }
+}

@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+bun run up
+bun install
+bun run build:development
+bun run check:code
+bun run test
+
