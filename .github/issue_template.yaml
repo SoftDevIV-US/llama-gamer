@@ -1,0 +1,93 @@
+name: Bug Report
+about: Create a report to help us improve
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please provide a clear and concise description of the bug.
+
+  - type: input
+    id: bug_id
+    attributes:
+      label: Bug ID
+      description: A unique identifier for the bug.
+      placeholder: Enter bug ID
+    validations:
+      required: true
+
+  - type: input
+    id: us_id
+    attributes:
+      label: User Story ID
+      description: The associated User Story ID (if applicable).
+      placeholder: Enter User Story ID
+
+  - type: input
+    id: bug_title
+    attributes:
+      label: Bug Title
+      description: A brief, descriptive title for the bug.
+      placeholder: Enter bug title
+    validations:
+      required: true
+
+  - type: select
+    id: bug_severity
+    attributes:
+      label: Severity
+      description: Select the severity of the bug.
+      options:
+        - Critical
+        - High
+        - Medium
+        - Low
+    validations:
+      required: true
+
+  - type: textarea
+    id: bug_description
+    attributes:
+      label: Bug Description
+      description: Describe the bug in detail.
+      placeholder: Enter bug description
+    validations:
+      required: true
+
+  - type: textarea
+    id: bug_requirements
+    attributes:
+      label: Requirements/Preconditions
+      description: Specify any requirements or preconditions to reproduce the bug.
+      placeholder: Enter requirements/preconditions
+
+  - type: textarea
+    id: bug_steps
+    attributes:
+      label: Steps to Reproduce
+      description: Provide step-by-step instructions to reproduce the bug.
+      placeholder: Enter steps to reproduce
+    validations:
+      required: true
+
+  - type: textarea
+    id: bug_actual_result
+    attributes:
+      label: Actual Result
+      description: Describe what actually happened when the bug occurred.
+      placeholder: Enter actual result
+    validations:
+      required: true
+
+  - type: textarea
+    id: bug_expected_result
+    attributes:
+      label: Expected Result
+      description: Describe what you expected to happen.
+      placeholder: Enter expected result
+    validations:
+      required: true
+
+  - type: input
+    id: bug_attachments
+    attributes:
