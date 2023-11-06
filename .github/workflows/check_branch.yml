@@ -9,7 +9,8 @@ on:
       - "!stage"
 
 permissions:
-  pull-requests: read
+  contents: read
+  pull-requests: write
 
 jobs:
   check_branch_convention:
