@@ -32,7 +32,7 @@ To run the production environment you need to run the following commands:
 
 ```bash
 bun install
-bun run build:development
+bun run build
 bun run start
 ```
 
