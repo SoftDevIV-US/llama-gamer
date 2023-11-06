@@ -1,6 +1,6 @@
 const DESCRIPTION =
   'The E Commerce API is a RESTful API that allows you to create, read, update and delete products, users and orders.';
-const NODE_ENV = process.env.NODE_ENV ?? 'development';
+const NODE_ENV = process.env.ENV ?? 'development';
 const PORT = process.env.PORT ?? 3000;
 const PREFIX = '/api';
 const TITLE = 'The E Commerce API';
