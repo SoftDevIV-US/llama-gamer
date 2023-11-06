@@ -11,12 +11,11 @@
   "scripts": {
     "prepare": "husky install",
     "postinstall": "prisma generate",
-    "dev": "turbo dev -F e-commerce-db && turbo prisma:development -F e-commerce-api && turbo dev -F e-commerce-api -F e-commerce-client",
+    "dev": "turbo dev -F e-commerce-db && turbo prisma -F e-commerce-api && turbo dev -F e-commerce-api -F e-commerce-client",
     "check:code": "turbo lint -F e-commerce-client -F e-commerce-api && turbo format -F e-commerce-client -F e-commerce-api",
     "test": "turbo test -F e-commerce-client -F e-commerce-api",
     "up": "turbo dev -F e-commerce-db",
-    "build:development": "turbo prisma:development -F e-commerce-api && turbo build -F e-commerce-client -F e-commerce-api",
-    "build:production": "turbo prisma:production -F e-commerce-api && turbo build -F e-commerce-client -F e-commerce-api",
+    "build": "turbo build -F e-commerce-client -F e-commerce-api",
     "start": "node apps/e-commerce-api/dist/src/main"
   },
   "workspaces": [

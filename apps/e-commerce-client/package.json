@@ -11,7 +11,7 @@
   "license": "MIT",
   "scripts": {
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\" \"test/**/*.{ts,tsx}\"",
     "dev": "vite --host",
     "build": "tsc && vite build",
     "test": "jest --coverage --detectOpenHandles --passWithNoTests"
