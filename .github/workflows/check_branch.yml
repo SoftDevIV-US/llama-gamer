@@ -8,10 +8,6 @@ on:
       - "!test"
       - "!stage"
 
-permissions:
-  contents: read
-  pull-requests: write
-
 jobs:
   check_branch_convention:
     name: Conventional Branch Name
