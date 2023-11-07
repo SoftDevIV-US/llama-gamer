@@ -69,5 +69,10 @@
   "bugs": {
     "url": "https://github.com/SoftDevIV-US/llama-gamer/issues"
   },
-  "homepage": "https://github.com/SoftDevIV-US/llama-gamer#readme"
+  "homepage": "https://github.com/SoftDevIV-US/llama-gamer#readme",
+  "release": {
+    "branches": [
+      "main"
+    ]
+  }
 }
