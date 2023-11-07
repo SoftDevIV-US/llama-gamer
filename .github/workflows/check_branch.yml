@@ -1,4 +1,4 @@
-name: CI/CD_PUSH
+name: CI/CD_BRANCH
 
 on:
   pull_request:

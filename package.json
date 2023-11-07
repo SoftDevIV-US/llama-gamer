@@ -21,7 +21,10 @@
     "apps/*"
   ],
   "devDependencies": {
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^9.2.1",
     "husky": "^8.0.3",
+    "semantic-release": "^22.0.7",
     "turbo": "^1.10.16"
   },
   "prisma": {
