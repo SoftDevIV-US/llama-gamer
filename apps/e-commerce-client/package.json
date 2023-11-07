@@ -61,5 +61,13 @@
     "extends": [
       "./.eslintrc.cjs"
     ]
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SoftDevIV-US/llama-gamer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SoftDevIV-US/llama-gamer/issues"
+  },
+  "homepage": "https://github.com/SoftDevIV-US/llama-gamer#readme"
 }
