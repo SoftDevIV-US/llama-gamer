@@ -18,7 +18,7 @@ const config = {
       "@semantic-release/changelog",
       {
         changelogFile: "CHANGELOG.md",
-        changelogTitle: "# Changelog",
+        changelogTitle: "# Changelog\n## E-commerce\n",
       },
     ],
     "@semantic-release/npm",
