@@ -7,8 +7,12 @@ on:
 
 jobs:
   validate-code:
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
     runs-on: ubuntu-22.04
-    name: Install, Build, Check Code and Test
+    name: Install, Build, Check Code, Test and Release
 
     steps:
       - name: Get the last commit
@@ -30,23 +34,6 @@ jobs:
 
       - name: Test
         run: bun run test
-
-  release:
-    permissions:
-      contents: write
-      issues: write
-      pull-requests: write
-    runs-on: ubuntu-22.04
-    name: Release
-
-    steps:
-      - name: Get the last commit
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 1
-
-      - name: Get bun
-        uses: oven-sh/setup-bun@v1
 
       - name: Semantic release
         run: bunx semantic-release
