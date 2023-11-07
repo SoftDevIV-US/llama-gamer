@@ -13,13 +13,14 @@ const config = {
         ],
       },
     ],
+    "@semantic-release/release-notes-generator",
     [
       "@semantic-release/changelog",
       {
         changelogFile: "CHANGELOG.md",
+        changelogTitle: "# Changelog",
       },
     ],
-    "@semantic-release/release-notes-generator",
     "@semantic-release/npm",
     [
       "@semantic-release/git",

@@ -1,6 +1,6 @@
 {
   "name": "e-commerce-docker-vite-nestjs",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "private": false,
   "description": "E-commerce app built with Turbo",
   "author": {
@@ -27,6 +27,7 @@
     "apps/*"
   ],
   "devDependencies": {
+    "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/commit-analyzer": "^11.1.0",
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/github": "^9.2.1",
@@ -53,12 +54,9 @@
     ]
   },
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/",
+    "registry": "https://npm.pkg.github.com",
     "tag": "latest",
     "access": "public"
   },
-  "main": "apps/e-commerce-api/dist/src/main.js",
-  "dependencies": {
-    "@semantic-release/changelog": "^6.0.3"
-  }
+  "main": "apps/e-commerce-api/dist/src/main.js"
 }
