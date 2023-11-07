@@ -11,6 +11,9 @@ permissions:
   pull-requests: write
   id-token: write
 
+env:
+  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
 jobs:
   validate-code:
     runs-on: ubuntu-22.04
