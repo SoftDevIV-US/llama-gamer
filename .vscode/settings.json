@@ -38,8 +38,5 @@
   "jest.jestCommandLine": "npm run test -w e-commerce-api -w e-commerce-client --",
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[toml]": {
-    "editor.defaultFormatter": "tamasfe.even-better-toml"
-  },
+  }
 }

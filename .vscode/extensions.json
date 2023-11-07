@@ -13,6 +13,8 @@
     "christian-kohler.path-intellisense",
     "inferrinizzard.prettier-sql-vscode",
     "streetsidesoftware.code-spell-checker",
-    "mikehanson.auto-barrel"
+    "mikehanson.auto-barrel",
+    "rapidapi.vscode-services",
+    "rapidapi.vscode-rapidapi-client"
   ],
 }
