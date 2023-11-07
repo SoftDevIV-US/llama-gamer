@@ -21,7 +21,8 @@
     "check:code": "turbo lint && turbo format",
     "test": "turbo test",
     "build": "turbo build",
-    "start": "bun --bun run apps/e-commerce-api/dist/src/main.js"
+    "start": "bun --bun run apps/e-commerce-api/dist/src/main.js",
+    "postversion": "cp -r package.json .."
   },
   "workspaces": [
     "apps/*"
