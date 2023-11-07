@@ -15,6 +15,7 @@
     "streetsidesoftware.code-spell-checker",
     "mikehanson.auto-barrel",
     "rapidapi.vscode-services",
-    "rapidapi.vscode-rapidapi-client"
+    "rapidapi.vscode-rapidapi-client",
+    "jasonnutter.vscode-codeowners"
   ],
 }
