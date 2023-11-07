@@ -5,12 +5,14 @@ on:
     branches:
       - "main"
 
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+  id-token: write
+
 jobs:
   validate-code:
-    permissions:
-      contents: write
-      issues: write
-      pull-requests: write
     runs-on: ubuntu-22.04
     name: Install, Build, Check Code, Test and Release
 

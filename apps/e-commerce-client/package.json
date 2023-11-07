@@ -1,14 +1,6 @@
 {
   "name": "e-commerce-client",
-  "version": "0.1.0",
-  "private": false,
   "type": "module",
-  "description": "The client for the e-commerce project",
-  "author": {
-    "email": "morales.patty.jose@gmail.com",
-    "name": "Tutuma's Team"
-  },
-  "license": "MIT",
   "scripts": {
     "lint": "eslint \"{src,test}/**/*.{ts,tsx}\" --report-unused-disable-directives --max-warnings 0",
     "format": "prettier --write \"src/**/*.{ts,tsx}\" \"test/**/*.{ts,tsx}\"",
@@ -60,19 +52,6 @@
   "eslintConfig": {
     "extends": [
       "./.eslintrc.cjs"
-    ]
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/SoftDevIV-US/llama-gamer.git"
-  },
-  "bugs": {
-    "url": "https://github.com/SoftDevIV-US/llama-gamer/issues"
-  },
-  "homepage": "https://github.com/SoftDevIV-US/llama-gamer#readme",
-  "release": {
-    "branches": [
-      "main"
     ]
   }
 }

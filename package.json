@@ -1,5 +1,5 @@
 {
-  "name": "e-commerce",
+  "name": "e-commerce-docker-vite-nestjs",
   "version": "0.1.0",
   "private": false,
   "description": "E-commerce app built with Turbo",
@@ -7,6 +7,12 @@
     "email": "morales.patty.jose@gmail.com",
     "name": "Tutuma's Team"
   },
+  "contributors": [
+    {
+      "name": "Manuel Morales",
+      "email": "morales.patty.jose@gmail.com"
+    }
+  ],
   "license": "MIT",
   "scripts": {
     "prepare": "husky install",
@@ -21,8 +27,11 @@
     "apps/*"
   ],
   "devDependencies": {
+    "@semantic-release/commit-analyzer": "^11.1.0",
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/github": "^9.2.1",
+    "@semantic-release/npm": "^11.0.1",
+    "@semantic-release/release-notes-generator": "^12.1.0",
     "husky": "^8.0.3",
     "semantic-release": "^22.0.7",
     "turbo": "^1.10.16"
@@ -42,5 +51,11 @@
     "branches": [
       "main"
     ]
-  }
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "tag": "latest",
+    "access": "public"
+  },
+  "main": "apps/e-commerce-api/dist/src/main.js"
 }
