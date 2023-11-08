@@ -15,6 +15,7 @@ import CountriesModule from './countries/countries.module';
     BrandModule,
     CategoryModule,
     BrandModule,
+    CategoryModule,
   ],
 })
 class AppModule {}

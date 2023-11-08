@@ -24,6 +24,9 @@ class CreateCategoryDto {
     message: 'The category title must have at least one character',
   })
   @Transform(({ value }) => value.trim())
+  @IsNotEmpty({
+    message: 'The category title must have at least one character',
+  })
   readonly name: string;
 
   @ApiProperty({
