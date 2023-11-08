@@ -1,7 +1,7 @@
 {
   "name": "api",
   "scripts": {
-    "dev": "nest start --watch",
+    "dev": "DATABASE_URL=\"postgresql://user:password@localhost:3030/llama_gamer_db\" nest start --watch",
     "lint": "eslint \"{src,test}/**/*.ts\" --report-unused-disable-directives --max-warnings 0",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "test": "jest --coverage --detectOpenHandles --passWithNoTests",

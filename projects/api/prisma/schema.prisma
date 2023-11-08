@@ -7,122 +7,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id        String     @id @default(uuid()) @db.Uuid()
-  name      String
-  lastName  String     @map(name: "last_name")
-  email     String     @unique
-  password  String
-  createdAt DateTime   @default(now()) @map(name: "created_at") @db.Timestamptz()
-  updatedAt DateTime   @default(now()) @updatedAt @map(name: "updated_at") @db.Timestamptz()
-  penalty   Penalty?
-  wishList  WishList?
-  purchases Purchase[]
-
-  @@map(name: "users")
-}
-
-model Penalty {
-  id        String    @id @default(uuid()) @db.Uuid()
-  amount    Int       @default(0)
-  startDate DateTime? @map(name: "start_date") @db.Timestamptz()
-  endDate   DateTime? @map(name: "end_date") @db.Timestamptz()
-  createdAt DateTime  @default(now()) @map(name: "created_at") @db.Timestamptz()
-  updatedAt DateTime  @default(now()) @updatedAt @map(name: "updated_at") @db.Timestamptz()
-  userId    String    @unique @map(name: "user_id") @db.Uuid()
-  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-
-  @@map(name: "penalties")
-}
-
-model WishList {
-  id               String             @id @default(uuid()) @db.Uuid()
-  title            String
-  description      String?
-  createdAt        DateTime           @default(now()) @map(name: "created_at") @db.Timestamptz()
-  updatedAt        DateTime           @default(now()) @updatedAt @map(name: "updated_at") @db.Timestamptz()
-  userId           String             @unique @map(name: "user_id") @db.Uuid()
-  user             User               @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  WishListProducts WishListProducts[]
-
-  @@map(name: "wish_lists")
-}
-
-model Branch {
-  id        String     @id @default(uuid()) @db.Uuid()
-  country   String
-  city      String
-  address   String
-  image     String
-  schedule  String
-  createdAt DateTime   @default(now()) @map(name: "created_at") @db.Timestamptz()
-  updatedAt DateTime   @default(now()) @updatedAt @map(name: "updated_at") @db.Timestamptz()
-  purchases Purchase[]
-
-  @@map(name: "branches")
-}
-
-model Purchase {
-  id           String   @id @default(uuid()) @db.Uuid()
-  totalCost    Decimal  @map(name: "total_cost") @db.Decimal(10, 2)
-  deliveryDate DateTime @map(name: "delivery_date") @db.Timestamptz()
-  deadline     DateTime @db.Timestamptz()
-  state        String
-  createdAt    DateTime @default(now()) @map(name: "created_at") @db.Timestamptz()
-  updatedAt    DateTime @default(now()) @updatedAt @map(name: "updated_at") @db.Timestamptz()
-  userId       String   @map(name: "user_id") @db.Uuid()
-  branchId     String   @map(name: "branch_id") @db.Uuid()
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  branch       Branch   @relation(fields: [branchId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-
-  @@map(name: "purchases")
-}
-
-model Brand {
-  id         String    @id @default(uuid()) @db.Uuid()
-  name       String
-  logo       String
-  creaatedAt DateTime  @default(now()) @map(name: "created_at") @db.Timestamptz()
-  updatedAt  DateTime  @default(now()) @updatedAt @map(name: "updated_at") @db.Timestamptz()
-  products   Product[]
-
-  @@map(name: "brands")
-}
-
-model Product {
-  id               String             @id @default(uuid()) @db.Uuid()
-  name             String
-  description      String
-  stock            Int
-  price            Decimal            @db.Decimal(10, 2)
-  color            String
-  createdAt        DateTime           @default(now()) @map(name: "created_at") @db.Timestamptz()
-  updatedAt        DateTime           @default(now()) @updatedAt @map(name: "updated_at") @db.Timestamptz()
-  brandId          String             @map(name: "brand_id") @db.Uuid()
-  brand            Brand              @relation(fields: [brandId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  productImages    ProductImage[]
-  wishListProducts WishListProducts[]
-
-  @@map(name: "products")
-}
-
-model ProductImage {
+model Country {
   id        String   @id @default(uuid()) @db.Uuid()
-  image     String
+  name      String   @unique
+  tax       Float
   createdAt DateTime @default(now()) @map(name: "created_at") @db.Timestamptz()
   updatedAt DateTime @default(now()) @updatedAt @map(name: "updated_at") @db.Timestamptz()
-  productId String   @map(name: "product_id") @db.Uuid()
-  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
-  @@map(name: "product_images")
-}
-
-model WishListProducts {
-  wishListId String   @map(name: "wish_list_id") @db.Uuid()
-  productId  String   @map(name: "product_id") @db.Uuid()
-  createdAt  DateTime @default(now()) @map(name: "created_at") @db.Timestamptz()
-  wishList   WishList @relation(fields: [wishListId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-
-  @@id([wishListId, productId])
+  @@map(name: "countries")
 }
