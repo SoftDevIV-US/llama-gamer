@@ -10,5 +10,4 @@ import BrandService from './brand.service';
   providers: [BrandService, PrismaService],
 })
 class BrandModule {}
-
 export default BrandModule;
