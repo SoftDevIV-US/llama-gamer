@@ -4,9 +4,6 @@ on:
   pull_request:
     branches:
       - "**"
-      - "!main"
-      - "!test"
-      - "!stage"
 
 jobs:
   check_branch_convention:
@@ -17,6 +14,6 @@ jobs:
         with:
           regex: '([a-z])+\/([a-z])+\/([a-z])+'
           allowed_prefixes: "feature,stable,fix,chore,docs,feat,build,ci,test,refactor,perf"
-          ignore: main,develop
+          ignore: main,stage,test,develop
           min_length: 4
           max_length: 120

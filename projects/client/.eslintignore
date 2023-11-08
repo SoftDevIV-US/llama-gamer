@@ -1,0 +1,12 @@
+node_modules
+.DB_Store
+dist
+dist-ssr
+*.local
+out
+.env*.local
+*.tsbuildinfo
+output
+public
+.turbo
+coverage
