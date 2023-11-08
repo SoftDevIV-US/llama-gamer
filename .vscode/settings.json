@@ -35,7 +35,7 @@
     "onSave": false,
     "onType": false
   },
-  "jest.jestCommandLine": "npm run test -w e-commerce-api -w e-commerce-client --",
+  "jest.jestCommandLine": "npm run test -w api -w client --",
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
