@@ -30,32 +30,11 @@
     }
   ],
   "license": "MIT",
-  "scripts": {
-    "prepare": "husky install",
-    "postinstall": "prisma generate",
-    "dev": "docker compose down && docker volume rm --force llama-gamer_postgres-data && docker compose up -d && turbo prisma -F e-commerce-api && turbo dev",
-    "check:code": "turbo lint && turbo format",
-    "test": "turbo test",
-    "build": "turbo build",
-    "start": "bun --bun run apps/e-commerce-api/dist/src/main.js"
-  },
   "workspaces": [
-    "apps/*"
+    "projects/api",
+    "projects/client"
   ],
-  "devDependencies": {
-    "@semantic-release/changelog": "^6.0.3",
-    "@semantic-release/commit-analyzer": "^11.1.0",
-    "@semantic-release/git": "^10.0.1",
-    "@semantic-release/github": "^9.2.1",
-    "@semantic-release/npm": "^11.0.1",
-    "@semantic-release/release-notes-generator": "^12.1.0",
-    "husky": "^8.0.3",
-    "semantic-release": "^22.0.7",
-    "turbo": "^1.10.16"
-  },
-  "prisma": {
-    "schema": "./apps/e-commerce-api/prisma/schema.prisma"
-  },
+  "main": "apps/e-commerce-api/dist/src/main.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SoftDevIV-US/llama-gamer.git"
@@ -82,5 +61,27 @@
     "tag": "latest",
     "access": "public"
   },
-  "main": "apps/e-commerce-api/dist/src/main.js"
+  "prisma": {
+    "schema": "./projects/api/prisma/schema.prisma"
+  },
+  "scripts": {
+    "prepare": "husky install",
+    "postinstall": "prisma generate",
+    "dev": "docker compose down && docker volume rm --force llama-gamer_postgres-data && docker compose up -d && turbo prisma -F api && turbo dev",
+    "check:code": "turbo lint && turbo format",
+    "test": "turbo test",
+    "build": "turbo build",
+    "start": "bun --bun run projects/api/dist/src/main.js"
+  },
+  "devDependencies": {
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^11.1.0",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^9.2.1",
+    "@semantic-release/npm": "^11.0.1",
+    "@semantic-release/release-notes-generator": "^12.1.0",
+    "husky": "^8.0.3",
+    "semantic-release": "^22.0.7",
+    "turbo": "^1.10.16"
+  }
 }
