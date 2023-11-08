@@ -71,7 +71,7 @@
     "check:code": "turbo lint && turbo format",
     "test": "turbo test",
     "build": "turbo build",
-    "start": "node projects/api/dist/src/main.js"
+    "start": "node projects/api/dist/src/main"
   },
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",
