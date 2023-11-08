@@ -16,3 +16,13 @@ model Country {
 
   @@map(name: "countries")
 }
+
+model Brand {
+  id        String   @id @default(uuid()) @db.Uuid()
+  name      String
+  logo      String
+  createdAt DateTime @default(now()) @map(name: "created_at") @db.Timestamptz()
+  updatedAt DateTime @default(now()) @updatedAt @map(name: "updated_at") @db.Timestamptz()
+
+  @@map(name: "brands")
+}
