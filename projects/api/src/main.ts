@@ -5,14 +5,10 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import AppModule from './app.module';
 import { DESCRIPTION, NODE_ENV, PORT, PREFIX, TITLE, VERSION } from './utils/constants';
 
-async function bootstrap() {
+async function main() {
   const app = await NestFactory.create(AppModule);
 
-  app.useGlobalPipes(
-    new ValidationPipe({
-      transform: true,
-    })
-  );
+  app.useGlobalPipes(new ValidationPipe());
   app.setGlobalPrefix(PREFIX);
   app.enableCors();
 
@@ -25,6 +21,6 @@ async function bootstrap() {
   await app.listen(PORT);
 }
 
-bootstrap().catch((err: Error) => {
+main().catch((err: Error) => {
   throw new Error(err.message);
 });
