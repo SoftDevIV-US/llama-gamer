@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
-import { IsNotEmpty, IsString, IsUrl, Length, Matches } from 'class-validator';
+import { IsNotEmpty, IsString, IsUrl, Matches, MaxLength, MinLength } from 'class-validator';
 
 class CreateBrandDto {
   @ApiProperty({
@@ -15,11 +15,14 @@ class CreateBrandDto {
   @IsNotEmpty({
     message: 'The brand name must not be empty',
   })
-  @Length(2, 15, {
-    message: 'The brand name must be between 2 and 15 characters',
+  @MinLength(3, {
+    message: 'The brand name must be at least 3 characters',
+  })
+  @MaxLength(15, {
+    message: 'The brand name must be at most 15 characters',
   })
   @Matches(/^[A-Za-z\s]+$/, {
-    message: 'The brand name must contain only alphabetic characters',
+    message: 'The brand name must only contain letters and spaces',
   })
   readonly name: string;
 
@@ -29,16 +32,19 @@ class CreateBrandDto {
     example: 'https://test-logo.com/test.png',
   })
   @IsString({
-    message: 'The URL of the brand must be a string',
+    message: 'The brand logo URL of the brand must be a string',
   })
   @Transform(({ value }) => value.trim())
   @IsNotEmpty({
-    message: 'The brand URL must not be empty',
+    message: 'The brand logo URL must not be empty',
   })
   @IsUrl(
-    {},
     {
-      message: 'The logo URL is not a valid URL',
+      require_protocol: true,
+      require_valid_protocol: true,
+    },
+    {
+      message: 'The brand logo URL must be a valid URL',
     }
   )
   readonly logo: string;

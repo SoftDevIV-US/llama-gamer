@@ -32,7 +32,8 @@ describe('BrandService', () => {
       };
       const brand: Brand = {
         id: 'd0f02b9c-1d9a-4f1a-9e2a-3d9a3b0c4c7e',
-        ...createBrandDto,
+        name: createBrandDto.name,
+        logo: createBrandDto.logo,
         createdAt: new Date(),
         updatedAt: new Date(),
       };
@@ -133,7 +134,8 @@ describe('BrandService', () => {
       };
       const brand: Brand = {
         id,
-        ...updateBrandDto,
+        name: updateBrandDto.name,
+        logo: updateBrandDto.logo,
         createdAt: new Date(),
         updatedAt: new Date(),
       };
