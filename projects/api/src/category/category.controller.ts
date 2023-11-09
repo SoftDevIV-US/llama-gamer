@@ -6,8 +6,8 @@ import CreateCategoryDto from './dto/create-category.dto';
 import UpdateCategoryDto from './dto/update-category.dto';
 import Category from './entities/category.entity';
 
-@Controller('category')
-@ApiTags('Category')
+@Controller('categories')
+@ApiTags('Categories')
 class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
@@ -27,7 +27,7 @@ class CategoryController {
     return categories;
   }
 
-  @Get()
+  @Get(':id')
   @ApiOperation({ summary: 'Get a category by id' })
   @ApiCreatedResponse({ type: Category })
   async findOne(@Param('id') id: string): Promise<Category> {
@@ -44,7 +44,7 @@ class CategoryController {
   }
 
   @Delete(':id')
-  @ApiOperation({ summary: 'Delete a task by id' })
+  @ApiOperation({ summary: 'Delete a category by id' })
   @ApiCreatedResponse({ type: Category })
   async remove(@Param('id') id: string): Promise<Category> {
     const removedCategory: Category = await this.categoryService.remove(id);

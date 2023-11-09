@@ -2,40 +2,40 @@ import { ApiProperty } from '@nestjs/swagger';
 
 class Category {
   @ApiProperty({
-    type: 'string',
+    type: 'String',
     format: 'uuid',
     description: 'The unique ID of the category',
-    example: '1',
+    example: 'f6a5d5c0-7e3a-4f1f-9d1e-3e5d8e5f8a3e',
   })
-  id: string;
+  readonly id: string;
 
   @ApiProperty({
-    type: 'string',
+    type: 'String',
     description: 'The name of the category',
     example: 'Mouse',
   })
-  name: string;
+  readonly name: string;
 
   @ApiProperty({
-    type: 'string',
-    description: 'The image of the category',
+    type: 'String',
+    description: 'The image URL of the category',
     example: 'http://www.example.com/imagen1.png',
   })
-  image: string;
+  readonly image: string;
 
   @ApiProperty({
-    type: 'date',
-    description: 'The creation date of the category',
-    example: '2023-11-08',
+    type: 'Date',
+    description: 'The date and time the category was created',
+    example: '2021-01-01T00:00:00.000Z',
   })
-  createdAt: Date;
+  readonly createdAt: Date;
 
   @ApiProperty({
-    type: 'date',
-    description: 'The last updated date of the category',
-    example: '2023-11-09',
+    type: 'Date',
+    description: 'The date and time the category was updated',
+    example: '2021-01-01T00:00:00.000Z',
   })
-  updatedAt: Date;
+  readonly updatedAt: Date;
 }
 
 export default Category;

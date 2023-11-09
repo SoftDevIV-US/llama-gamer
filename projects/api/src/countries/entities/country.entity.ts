@@ -4,7 +4,7 @@ class Country {
   @ApiProperty({
     type: 'String',
     format: 'uuid',
-    description: 'The ID of the country',
+    description: 'The unique ID of the country',
     example: '123e4567-e89b-12d3-a456-426614174000',
   })
   readonly id: string;
@@ -25,14 +25,14 @@ class Country {
 
   @ApiProperty({
     type: 'Date',
-    description: 'The date the country was created',
+    description: 'The date and time the country was created',
     example: '2021-01-01T00:00:00.000Z',
   })
   readonly createdAt: Date;
 
   @ApiProperty({
     type: 'Date',
-    description: 'The date the country was updated',
+    description: 'The date and time the country was updated',
     example: '2021-01-01T00:00:00.000Z',
   })
   readonly updatedAt: Date;

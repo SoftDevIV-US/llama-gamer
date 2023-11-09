@@ -58,7 +58,7 @@ class CategoryService {
       });
       return updatedCategory;
     } catch (error) {
-      if (error.meta?.target?.includes('name')) {
+      if (error?.meta?.target?.includes('name')) {
         throw new BadRequestException('Category name already exists');
       } else {
         throw new NotFoundException(`Category with ID ${categoryId} not found`);
