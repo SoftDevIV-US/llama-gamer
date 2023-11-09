@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber, IsPositive, IsString, Max, MaxLength, MinLength } from 'class-validator';
+import { Transform } from 'class-transformer';
+import { IsNumber, IsPositive, IsString, Matches, Max, MaxLength, MinLength } from 'class-validator';
 
 class CreateCountryDto {
   @ApiProperty({
@@ -10,13 +11,17 @@ class CreateCountryDto {
   @IsString({
     message: 'Name must be a string',
   })
+  @Transform(({ value }) => value.trim())
   @MinLength(3, {
     message: 'Name must be at least 3 characters',
   })
   @MaxLength(20, {
     message: 'Name must be at most 20 characters',
   })
-  name: string;
+  @Matches(/^[a-zA-Z\s]*$/, {
+    message: 'Name must contain only letters and spaces',
+  })
+  readonly name: string;
 
   @ApiProperty({
     type: 'Float',
@@ -37,7 +42,7 @@ class CreateCountryDto {
   @Max(50, {
     message: 'Tax must be at most 50',
   })
-  tax: number;
+  readonly tax: number;
 }
 
 export default CreateCountryDto;

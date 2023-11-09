@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber, IsOptional, IsPositive, IsString, Max, MaxLength, MinLength } from 'class-validator';
+import { Transform } from 'class-transformer';
+import { IsNumber, IsOptional, IsPositive, IsString, Matches, Max, MaxLength, MinLength } from 'class-validator';
 
 class UpdateCountryDto {
   @ApiProperty({
@@ -10,14 +11,18 @@ class UpdateCountryDto {
   @IsString({
     message: 'Name must be a string',
   })
+  @Transform(({ value }) => value.trim())
   @MinLength(3, {
     message: 'Name must be at least 3 characters',
   })
   @MaxLength(20, {
     message: 'Name must be at most 20 characters',
   })
+  @Matches(/^[a-zA-Z\s]*$/, {
+    message: 'Name must contain only letters and spaces',
+  })
   @IsOptional()
-  name?: string;
+  readonly name?: string;
 
   @ApiProperty({
     type: 'Float',
@@ -39,7 +44,7 @@ class UpdateCountryDto {
     message: 'Tax must be at most 50',
   })
   @IsOptional()
-  tax?: number;
+  readonly tax?: number;
 }
 
 export default UpdateCountryDto;
