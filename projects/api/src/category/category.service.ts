@@ -68,9 +68,11 @@ class CategoryService {
 
   async remove(id: string): Promise<Category> {
     try {
-      return await this.prisma.category.delete({
+      const deletedCategory = await this.prisma.category.delete({
         where: { id },
       });
+
+      return deletedCategory;
     } catch (error) {
       throw new NotFoundException(`Category with ID ${id} not found`);
     }

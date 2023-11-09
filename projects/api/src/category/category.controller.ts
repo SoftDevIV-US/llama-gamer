@@ -14,13 +14,14 @@ class CategoryController {
   @Post()
   @ApiOperation({ summary: 'Create a new category' })
   @ApiCreatedResponse({ type: Category })
-  async create(createCategoryDto: CreateCategoryDto): Promise<Category> {
-    return this.categoryService.create(createCategoryDto);
+  async create(@Body() createCategoryDto: CreateCategoryDto): Promise<Category> {
+    const category: Category = await this.categoryService.create(createCategoryDto);
+    return category;
   }
 
   @Get()
   @ApiOperation({ summary: 'Get all categories' })
-  @ApiCreatedResponse({ type: [Category], isArray: true })
+  @ApiCreatedResponse({ isArray: true })
   async findAll(): Promise<Category[]> {
     return this.categoryService.findAll();
   }
