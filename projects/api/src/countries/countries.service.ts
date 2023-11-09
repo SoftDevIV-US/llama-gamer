@@ -19,9 +19,8 @@ class CountriesService {
     } catch (error) {
       if (error?.meta?.target?.includes('name')) {
         throw new BadRequestException('Country name already exists');
-      } else {
-        throw new BadRequestException('Something went wrong');
       }
+      throw new BadRequestException('Something went wrong');
     }
   }
 

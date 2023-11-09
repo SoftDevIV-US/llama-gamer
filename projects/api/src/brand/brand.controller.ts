@@ -21,7 +21,7 @@ class BrandController {
 
   @Get()
   @ApiOperation({ summary: 'Get all brands' })
-  @ApiCreatedResponse({ type: Brand })
+  @ApiCreatedResponse({ type: Brand, isArray: true })
   async findAll(): Promise<Brand[]> {
     const brands: Brand[] = await this.brandService.findAll();
     return brands;

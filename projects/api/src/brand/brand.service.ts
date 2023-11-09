@@ -25,11 +25,13 @@ class BrandService {
   }
 
   async findAll(): Promise<Brand[]> {
-    return this.prisma.brand.findMany({
+    const brands = await this.prisma.brand.findMany({
       orderBy: {
         name: 'asc',
       },
     });
+
+    return brands;
   }
 
   async findOne(id: string): Promise<Brand> {
@@ -52,13 +54,10 @@ class BrandService {
       });
       return brand;
     } catch (error) {
-      if (error.code === 'P2025') {
-        throw new NotFoundException(`Brand with ID ${id} not found`);
-      } else if (error.meta?.target?.includes('name')) {
+      if (error?.meta?.target?.includes('name')) {
         throw new BadRequestException('Brand name already exists');
-      } else {
-        throw new BadRequestException('Something went wrong during brand update');
       }
+      throw new NotFoundException(`Brand with ID ${id} not found`);
     }
   }
 
@@ -71,11 +70,7 @@ class BrandService {
       });
       return brand;
     } catch (error) {
-      if (error.code === 'P2025') {
-        throw new NotFoundException(`Brand with ID ${id} not found`);
-      } else {
-        throw new BadRequestException('Something went wrong during brand removal');
-      }
+      throw new NotFoundException(`Brand with ID ${id} not found`);
     }
   }
 }

@@ -2,37 +2,42 @@ import { ApiProperty } from '@nestjs/swagger';
 
 class Brand {
   @ApiProperty({
-    type: 'string',
+    type: 'String',
     format: 'uuid',
     description: 'The unique identifier of the brand',
+    example: 'd0f02b9c-1d9a-4f1a-9e2a-3d9a3b0c4c7e',
   })
-  id: string;
+  readonly id: string;
 
   @ApiProperty({
-    type: 'string',
+    type: 'String',
     description: 'The name of the brand',
+    example: 'Asus',
   })
-  name: string;
+  readonly name: string;
 
   @ApiProperty({
-    type: 'string',
+    type: 'String',
     description: 'The url logo of the brand',
+    example: 'https://test-logo.com/test.png',
   })
-  logo: string;
+  readonly logo: string;
 
   @ApiProperty({
-    type: 'string',
+    type: 'String',
     format: 'date-time',
     description: 'The date and time the brand was created',
+    example: '2021-01-01T00:00:00.000Z',
   })
-  createdAt: Date;
+  readonly createdAt: Date;
 
   @ApiProperty({
-    type: 'string',
+    type: 'String',
     format: 'date-time',
     description: 'The date and time the brand was updated',
+    example: '2021-01-01T00:00:00.000Z',
   })
-  updatedAt: Date;
+  readonly updatedAt: Date;
 }
 
 export default Brand;
