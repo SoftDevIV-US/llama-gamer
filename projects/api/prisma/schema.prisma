@@ -47,13 +47,3 @@ model Brand {
 
   @@map(name: "brands")
 }
-
-model Category {
-  id        String   @id @default(uuid()) @db.Uuid()
-  name      String
-  image     String
-  createdAt DateTime @default(now()) @map(name: "created_at") @db.Timestamptz()
-  updatedAt DateTime @default(now()) @updatedAt @map(name: "update_at") @db.Timestamptz()
-
-  @@map(name: "categories")
-}
