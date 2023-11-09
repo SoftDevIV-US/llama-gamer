@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
 import { IsNotEmpty, IsOptional, IsString, Matches, MaxLength, MinLength } from 'class-validator';
 
 class UpdateCategoryDto {
@@ -23,11 +24,13 @@ class UpdateCategoryDto {
     message: 'The category title must have at least one character',
   })
   @IsOptional()
+  @Transform(({ value }) => value.trim())
   name?: string;
 
   @ApiProperty({
     type: 'string',
     description: 'The image of the category',
+    example: 'http://www.example.com/imagen1.png',
   })
   @IsNotEmpty({
     message: 'The category image can not be empty',

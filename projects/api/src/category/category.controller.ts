@@ -21,30 +21,34 @@ class CategoryController {
 
   @Get()
   @ApiOperation({ summary: 'Get all categories' })
-  @ApiCreatedResponse({ isArray: true })
+  @ApiCreatedResponse({ type: Category, isArray: true })
   async findAll(): Promise<Category[]> {
-    return this.categoryService.findAll();
+    const categories: Category[] = await this.categoryService.findAll();
+    return categories;
   }
 
   @Get()
   @ApiOperation({ summary: 'Get a category by id' })
   @ApiCreatedResponse({ type: Category })
   async findOne(@Param('id') id: string): Promise<Category> {
-    return this.categoryService.findOne(id);
+    const category: Category = await this.categoryService.findOne(id);
+    return category;
   }
 
   @Patch(':id')
   @ApiOperation({ summary: 'Update a category by id' })
   @ApiCreatedResponse({ type: Category })
   async update(@Param('id') id: string, @Body() updateCategoryDto: UpdateCategoryDto): Promise<Category> {
-    return this.categoryService.update(id, updateCategoryDto);
+    const updatedCategory: Category = await this.categoryService.update(id, updateCategoryDto);
+    return updatedCategory;
   }
 
   @Delete(':id')
   @ApiOperation({ summary: 'Delete a task by id' })
   @ApiCreatedResponse({ type: Category })
   async remove(@Param('id') id: string): Promise<Category> {
-    return this.categoryService.remove(id);
+    const removedCategory: Category = await this.categoryService.remove(id);
+    return removedCategory;
   }
 }
 
