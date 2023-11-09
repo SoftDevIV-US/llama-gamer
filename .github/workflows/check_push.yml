@@ -8,8 +8,13 @@ on:
 
 jobs:
   validate-code:
-    runs-on: ubuntu-22.04
+    runs-on: ${{ matrix.os }}
     name: Install, Build, Check Code and Test
+    strategy:
+      matrix:
+        os: [ubuntu-22.04]
+        node_version: [18.14.0]
+      fail-fast: false
 
     steps:
       - name: Get the last commit
@@ -17,17 +22,25 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Get bun
-        uses: oven-sh/setup-bun@v1
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Use Node.js ${{ matrix.node_version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node_version }}
+          cache: "pnpm"
 
       - name: Install deps
-        run: bun install
+        run: pnpm install
 
       - name: Build app
-        run: bun run build
+        run: pnpm run build
 
       - name: Check code
-        run: bun run check:code
+        run: pnpm run check:code
 
       - name: Test
-        run: bun run test
+        run: pnpm run test

@@ -4,7 +4,7 @@
     "tsconfig.json": "tsconfig.json, tsconfig.app.json, tsconfig.spec.json, tsconfig.build.json, tsconfig.node.json",
     ".eslintrc.js": ".eslintrc.js, .eslintignore, .prettierrc, .prettierignore",
     ".eslintrc.cjs": ".eslintrc.cjs, .eslintignore, .prettierrc, .prettierignore",
-    "package.json": "package.json, bun.lockb, .gitattributes, .gitignore",
+    "package.json": "package.json, pnpm-lock.yaml, pnpm-workspace.yaml, .gitattributes, .gitignore",
     "jest.config.ts": "jest.config.ts, setup-jest.ts, jest.setup.ts",
     "tailwind.config.js": "tailwind.config.js, postcss.config.js",
   },

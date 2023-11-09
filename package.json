@@ -34,7 +34,7 @@
     "projects/api",
     "projects/client"
   ],
-  "main": "apps/e-commerce-api/dist/src/main.js",
+  "main": "projects/api/dist/src/main.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SoftDevIV-US/llama-gamer.git"
@@ -66,12 +66,12 @@
   },
   "scripts": {
     "prepare": "husky install",
-    "postinstall": "prisma generate",
-    "dev": "docker compose down && docker volume rm --force llama-gamer_postgres-data && docker compose up -d && turbo prisma -F api && turbo dev",
-    "check:code": "turbo lint && turbo format",
-    "test": "turbo test",
-    "build": "turbo build",
-    "start": "node projects/api/dist/src/main"
+    "postinstall": "pnpm -F=api prisma:generate",
+    "dev": "docker compose down && docker volume rm --force llama-gamer_postgres-data && docker compose up -d && pnpm -F=api prisma && pnpm --parallel dev",
+    "check:code": "pnpm --parallel lint && pnpm --parallel format",
+    "test": "pnpm --parallel test",
+    "build": "pnpm --parallel build",
+    "start": "node projects/api/dist/src/main.js"
   },
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",
@@ -81,7 +81,6 @@
     "@semantic-release/npm": "^11.0.1",
     "@semantic-release/release-notes-generator": "^12.1.0",
     "husky": "^8.0.3",
-    "semantic-release": "^22.0.7",
-    "turbo": "^1.10.16"
+    "semantic-release": "^22.0.7"
   }
 }

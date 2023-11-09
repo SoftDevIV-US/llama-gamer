@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-bun install
-bun run build
-bun run check:code
-bun run test
+pnpm install
+pnpm run build
+pnpm run check:code
+pnpm run test

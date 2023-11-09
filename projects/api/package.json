@@ -6,6 +6,7 @@
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "test": "jest --coverage --detectOpenHandles --passWithNoTests",
     "prisma": "DATABASE_URL=\"postgresql://user:password@localhost:3030/llama_gamer_db\" prisma generate && DATABASE_URL=\"postgresql://user:password@localhost:3030/llama_gamer_db\" prisma db push --accept-data-loss",
+    "prisma:generate": "prisma generate",
     "build": "nest build"
   },
   "dependencies": {
