@@ -50,7 +50,11 @@ describe('SuppliersController', () => {
       };
       const createdSupplier: Supplier = {
         id: '1',
+<<<<<<< HEAD
         email: 'lenovo@gmail.com',
+=======
+        email: ' lenovo@gmail.com',
+>>>>>>> feat: add suppliers backend
         deliveryTime: 5,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -64,6 +68,7 @@ describe('SuppliersController', () => {
       expect(result).toEqual(createdSupplier);
       expect(suppliersService.create).toHaveBeenCalledWith(createSupplierDto);
     });
+<<<<<<< HEAD
 
     it('should not create a supplier with an invalid email', async () => {
       const createSupplierDto: CreateSupplierDto = {
@@ -77,6 +82,8 @@ describe('SuppliersController', () => {
       await expect(suppliersController.create(createSupplierDto)).rejects.toThrow(BadRequestException);
       expect(suppliersService.create).toHaveBeenCalledWith(createSupplierDto);
     });
+=======
+>>>>>>> feat: add suppliers backend
   });
 
   describe('findAll', () => {
@@ -150,6 +157,7 @@ describe('SuppliersController', () => {
       expect(result).toEqual(updatedSupplier);
       expect(suppliersService.update).toHaveBeenCalledWith(supplierId, updateSupplierDto);
     });
+<<<<<<< HEAD
 
     it('should not update a supplier with an invalid email', async () => {
       const supplierId = '1';
@@ -163,6 +171,8 @@ describe('SuppliersController', () => {
       await expect(suppliersController.update(supplierId, updateSupplierDto)).rejects.toThrow(BadRequestException);
       expect(suppliersService.update).toHaveBeenCalledWith(supplierId, updateSupplierDto);
     });
+=======
+>>>>>>> feat: add suppliers backend
   });
 
   describe('remove', () => {
