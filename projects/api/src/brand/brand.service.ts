@@ -12,9 +12,10 @@ class BrandService {
 
   async create(createBrandDto: CreateBrandDto): Promise<Brand> {
     try {
-      return await this.prisma.brand.create({
+      const brand: Brand = await this.prisma.brand.create({
         data: createBrandDto,
       });
+      return brand;
     } catch (error) {
       if (error?.meta?.target?.includes('name')) {
         throw new BadRequestException('Brand name already exists');
@@ -43,10 +44,13 @@ class BrandService {
 
   async update(id: string, updateBrandDto: UpdateBrandDto): Promise<Brand> {
     try {
-      return await this.prisma.brand.update({
-        where: { id },
+      const brand: Brand = await this.prisma.brand.update({
+        where: {
+          id,
+        },
         data: updateBrandDto,
       });
+      return brand;
     } catch (error) {
       if (error.code === 'P2025') {
         throw new NotFoundException(`Brand with ID ${id} not found`);
@@ -60,9 +64,12 @@ class BrandService {
 
   async remove(id: string): Promise<Brand> {
     try {
-      return await this.prisma.brand.delete({
-        where: { id },
+      const brand: Brand = await this.prisma.brand.delete({
+        where: {
+          id,
+        },
       });
+      return brand;
     } catch (error) {
       if (error.code === 'P2025') {
         throw new NotFoundException(`Brand with ID ${id} not found`);
