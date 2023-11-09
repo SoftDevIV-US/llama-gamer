@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 
+import BrandModule from './brand/brand.module';
+import CategoryModule from './category/category.module';
 import CountriesModule from './countries/countries.module';
 
 @Module({
@@ -10,6 +12,8 @@ import CountriesModule from './countries/countries.module';
       rootPath: join(__dirname, '../../../client/dist'),
     }),
     CountriesModule,
+    BrandModule,
+    CategoryModule,
   ],
 })
 class AppModule {}
