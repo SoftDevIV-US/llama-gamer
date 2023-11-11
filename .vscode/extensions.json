@@ -9,13 +9,13 @@
     "usernamehw.errorlens",
     "ms-azuretools.vscode-docker",
     "prisma.prisma",
-    "uniquevision.vscode-plpgsql-lsp",
     "christian-kohler.path-intellisense",
     "inferrinizzard.prettier-sql-vscode",
     "streetsidesoftware.code-spell-checker",
     "mikehanson.auto-barrel",
     "rapidapi.vscode-services",
     "rapidapi.vscode-rapidapi-client",
-    "jasonnutter.vscode-codeowners"
+    "jasonnutter.vscode-codeowners",
+    "ckolkman.vscode-postgres"
   ],
 }
