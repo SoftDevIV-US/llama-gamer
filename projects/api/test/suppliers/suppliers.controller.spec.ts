@@ -1,3 +1,4 @@
+import { BadRequestException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import CreateSupplierDto from '@/suppliers/dto/create-supplier.dto';
@@ -49,7 +50,7 @@ describe('SuppliersController', () => {
       };
       const createdSupplier: Supplier = {
         id: '1',
-        email: ' lenovo@gmail.com',
+        email: 'lenovo@gmail.com',
         deliveryTime: 5,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -61,6 +62,19 @@ describe('SuppliersController', () => {
       const result = await suppliersController.create(createSupplierDto);
 
       expect(result).toEqual(createdSupplier);
+      expect(suppliersService.create).toHaveBeenCalledWith(createSupplierDto);
+    });
+
+    it('should not create a supplier with an invalid email', async () => {
+      const createSupplierDto: CreateSupplierDto = {
+        email: 'lenovo@hola.com',
+        deliveryTime: 5,
+        countryId: '123e4567-e89b-12d3-a456-426814172801',
+      };
+
+      suppliersService.create.mockRejectedValue(new BadRequestException('Invalid email'));
+
+      await expect(suppliersController.create(createSupplierDto)).rejects.toThrow(BadRequestException);
       expect(suppliersService.create).toHaveBeenCalledWith(createSupplierDto);
     });
   });
@@ -134,6 +148,19 @@ describe('SuppliersController', () => {
       const result = await suppliersController.update(supplierId, updateSupplierDto);
 
       expect(result).toEqual(updatedSupplier);
+      expect(suppliersService.update).toHaveBeenCalledWith(supplierId, updateSupplierDto);
+    });
+
+    it('should not update a supplier with an invalid email', async () => {
+      const supplierId = '1';
+      const updateSupplierDto: UpdateSupplierDto = {
+        email: 'dell@hithere.com',
+        deliveryTime: 4,
+      };
+
+      suppliersService.update.mockRejectedValue(new BadRequestException('Invalid email'));
+
+      await expect(suppliersController.update(supplierId, updateSupplierDto)).rejects.toThrow(BadRequestException);
       expect(suppliersService.update).toHaveBeenCalledWith(supplierId, updateSupplierDto);
     });
   });

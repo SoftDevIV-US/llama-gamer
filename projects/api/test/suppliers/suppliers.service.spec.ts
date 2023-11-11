@@ -51,7 +51,7 @@ describe('SuppliersService', () => {
       };
       const createdSupplier: Supplier = {
         id: '1',
-        email: ' lenovo@gmail.com',
+        email: 'lenovo@gmail.com',
         deliveryTime: 5,
         createdAt: new Date(),
         updatedAt: new Date(),
