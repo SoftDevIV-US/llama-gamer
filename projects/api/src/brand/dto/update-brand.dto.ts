@@ -8,21 +8,22 @@ class UpdateBrandDto {
     description: 'The name of the brand',
     example: 'Asus',
   })
-  @IsString({
-    message: 'The brand name must be a string',
-  })
-  @Transform(({ value }) => value.trim())
-  @IsNotEmpty({
-    message: 'The brand name must not be empty',
-  })
-  @MinLength(3, {
-    message: 'The brand name must be at least 3 characters',
+  @Matches(/^[A-Za-z\s]+$/, {
+    message: 'The brand name must only contain letters and spaces',
   })
   @MaxLength(15, {
     message: 'The brand name must be at most 15 characters',
   })
-  @Matches(/^[A-Za-z\s]+$/, {
-    message: 'The brand name must only contain letters and spaces',
+  @MinLength(2, {
+    message: 'The brand name must be at least 2 characters',
+  })
+  @IsNotEmpty({
+    message: 'The brand name must not be empty',
+  })
+  @Transform(({ value }) => value.replace(/\s+/g, ' '))
+  @Transform(({ value }) => value.trim())
+  @IsString({
+    message: 'The brand name must be a string',
   })
   @IsOptional()
   readonly name?: string;
@@ -31,13 +32,6 @@ class UpdateBrandDto {
     type: 'String',
     description: 'The logo URL of the brand',
     example: 'https://test-logo.com/test.png',
-  })
-  @IsString({
-    message: 'The brand logo URL of the brand must be a string',
-  })
-  @Transform(({ value }) => value.trim())
-  @IsNotEmpty({
-    message: 'The brand logo URL must not be empty',
   })
   @IsUrl(
     {
@@ -48,6 +42,14 @@ class UpdateBrandDto {
       message: 'The brand logo URL must be a valid URL',
     }
   )
+  @IsNotEmpty({
+    message: 'The brand logo URL must not be empty',
+  })
+  @Transform(({ value }) => value.replace(/\s+/g, ' '))
+  @Transform(({ value }) => value.trim())
+  @IsString({
+    message: 'The brand logo URL of the brand must be a string',
+  })
   @IsOptional()
   readonly logo?: string;
 }

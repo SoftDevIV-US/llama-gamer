@@ -17,7 +17,6 @@ services:
       - postgres-data:/var/lib/postgresql/data
       - ./scripts/init.pgsql:/docker-entrypoint-initdb.d/1.sql
       - ./scripts/triggers.pgsql:/docker-entrypoint-initdb.d/2.sql
-      - ./scripts/inserts.pgsql:/docker-entrypoint-initdb.d/3.sql
 
   pgadmin:
     image: dpage/pgadmin4:7.8

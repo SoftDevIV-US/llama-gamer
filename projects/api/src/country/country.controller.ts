@@ -1,15 +1,15 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 
-import CountriesService from './countries.service';
+import CountryService from './country.service';
 import CreateCountryDto from './dto/create-country.dto';
 import UpdateCountryDto from './dto/update-country.dto';
 import Country from './entities/country.entity';
 
 @Controller('countries')
 @ApiTags('Countries')
-class CountriesController {
-  constructor(private readonly countriesService: CountriesService) {}
+class CountryController {
+  constructor(private readonly countriesService: CountryService) {}
 
   @Post()
   @ApiOperation({ summary: 'Create a new country' })
@@ -52,4 +52,4 @@ class CountriesController {
   }
 }
 
-export default CountriesController;
+export default CountryController;

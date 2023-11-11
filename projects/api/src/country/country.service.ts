@@ -7,13 +7,15 @@ import UpdateCountryDto from './dto/update-country.dto';
 import Country from './entities/country.entity';
 
 @Injectable()
-class CountriesService {
+class CountryService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createCountryDto: CreateCountryDto): Promise<Country> {
     try {
       const country: Country = await this.prisma.country.create({
-        data: createCountryDto,
+        data: {
+          ...createCountryDto,
+        },
       });
       return country;
     } catch (error) {
@@ -76,4 +78,4 @@ class CountriesService {
   }
 }
 
-export default CountriesService;
+export default CountryService;

@@ -4,14 +4,14 @@ import { join } from 'path';
 
 import BrandModule from './brand/brand.module';
 import CategoryModule from './category/category.module';
-import CountriesModule from './countries/countries.module';
+import CountryModule from './country/country.module';
 
 @Module({
   imports: [
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '../../../client/dist'),
     }),
-    CountriesModule,
+    CountryModule,
     BrandModule,
     CategoryModule,
   ],

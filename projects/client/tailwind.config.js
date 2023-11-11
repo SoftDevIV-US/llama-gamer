@@ -7,5 +7,9 @@ export default {
       roboto: ['roboto', 'sans-serif'],
     },
   },
-  plugins: [],
+  safelist: [
+    {
+      pattern: /grid-cols-./,
+    },
+  ],
 };

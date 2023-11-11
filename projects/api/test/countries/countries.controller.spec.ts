@@ -1,13 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
-import CountriesController from '@/countries/countries.controller';
-import CountriesService from '@/countries/countries.service';
-import CreateCountryDto from '@/countries/dto/create-country.dto';
-import UpdateCountryDto from '@/countries/dto/update-country.dto';
-import Country from '@/countries/entities/country.entity';
+import CountryController from '@/country/country.controller';
+import CountryService from '@/country/country.service';
+import CreateCountryDto from '@/country/dto/create-country.dto';
+import UpdateCountryDto from '@/country/dto/update-country.dto';
+import Country from '@/country/entities/country.entity';
 
 describe('CountriesController', () => {
-  let countriesController: CountriesController;
+  let countriesController: CountryController;
 
   const countriesService = {
     create: jest.fn(),
@@ -19,16 +19,16 @@ describe('CountriesController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [CountriesController],
+      controllers: [CountryController],
       providers: [
         {
-          provide: CountriesService,
+          provide: CountryService,
           useValue: countriesService,
         },
       ],
     }).compile();
 
-    countriesController = module.get<CountriesController>(CountriesController);
+    countriesController = module.get<CountryController>(CountryController);
   });
 
   afterEach(() => {

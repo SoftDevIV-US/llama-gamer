@@ -17,15 +17,6 @@
   "[postgres]": {
     "editor.defaultFormatter": "inferrinizzard.prettier-sql-vscode"
   },
-  "plpgsqlLanguageServer.user": "user",
-  "plpgsqlLanguageServer.password": "password",
-  "plpgsqlLanguageServer.host": "localhost",
-  "plpgsqlLanguageServer.port": 3030,
-  "plpgsqlLanguageServer.database": "llama_gamer_db",
-  "plpgsqlLanguageServer.workspaceValidationTargetFiles": [
-    "**/*.sql",
-    "**/*.pgsql"
-  ],
   "[prisma]": {
     "editor.defaultFormatter": "Prisma.prisma"
   },

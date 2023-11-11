@@ -49,5 +49,8 @@
     {
       "path": "./tsconfig.node.json"
     }
+  ],
+  "types": [
+    "./src/global",
   ]
 }
