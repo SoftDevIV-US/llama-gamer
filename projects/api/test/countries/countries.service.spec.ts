@@ -1,14 +1,14 @@
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 
-import CountriesService from '@/countries/countries.service';
-import CreateCountryDto from '@/countries/dto/create-country.dto';
-import UpdateCountryDto from '@/countries/dto/update-country.dto';
-import Country from '@/countries/entities/country.entity';
+import CountryService from '@/country/country.service';
+import CreateCountryDto from '@/country/dto/create-country.dto';
+import UpdateCountryDto from '@/country/dto/update-country.dto';
+import Country from '@/country/entities/country.entity';
 import PrismaService from '@/prisma/prisma.service';
 
 describe('CountriesService', () => {
-  let countriesService: CountriesService;
+  let countriesService: CountryService;
 
   const prismaService = {
     country: {
@@ -23,7 +23,7 @@ describe('CountriesService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        CountriesService,
+        CountryService,
         {
           provide: PrismaService,
           useValue: prismaService,
@@ -31,7 +31,7 @@ describe('CountriesService', () => {
       ],
     }).compile();
 
-    countriesService = module.get<CountriesService>(CountriesService);
+    countriesService = module.get<CountryService>(CountryService);
   });
 
   afterEach(() => {

@@ -1,11 +1,14 @@
 {
   "name": "api",
+  "prisma": {
+    "seed": "ts-node ./prisma/seed.ts"
+  },
   "scripts": {
     "dev": "DATABASE_URL=\"postgresql://user:password@localhost:3030/llama_gamer_db\" nest start --watch",
     "lint": "eslint \"{src,test}/**/*.ts\" --report-unused-disable-directives --max-warnings 0",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "test": "jest --coverage --detectOpenHandles --passWithNoTests",
-    "prisma": "DATABASE_URL=\"postgresql://user:password@localhost:3030/llama_gamer_db\" prisma generate && DATABASE_URL=\"postgresql://user:password@localhost:3030/llama_gamer_db\" prisma db push --accept-data-loss",
+    "prisma": "DATABASE_URL=\"postgresql://user:password@localhost:3030/llama_gamer_db\" prisma generate && DATABASE_URL=\"postgresql://user:password@localhost:3030/llama_gamer_db\" prisma db push --accept-data-loss && DATABASE_URL=\"postgresql://user:password@localhost:3030/llama_gamer_db\" prisma db seed",
     "prisma:generate": "prisma generate",
     "build": "nest build"
   },

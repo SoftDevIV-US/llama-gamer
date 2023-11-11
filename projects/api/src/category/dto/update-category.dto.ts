@@ -8,21 +8,22 @@ class UpdateCategoryDto {
     description: 'The name of the category',
     example: 'Mouse',
   })
-  @IsString({
-    message: 'The category name must be a string',
-  })
-  @Transform(({ value }) => value.trim())
-  @IsNotEmpty({
-    message: 'The category name must not be empty',
-  })
-  @MinLength(4, {
-    message: 'The category name must be at least 4 characters long',
+  @Matches(/^[A-Za-z\s]+$/, {
+    message: 'The category name must only contain letters and spaces',
   })
   @MaxLength(30, {
     message: 'The category name must be at most 30 characters long',
   })
-  @Matches(/^[A-Za-z\s]+$/, {
-    message: 'The category name must only contain letters and spaces',
+  @MinLength(4, {
+    message: 'The category name must be at least 4 characters long',
+  })
+  @IsNotEmpty({
+    message: 'The category name must not be empty',
+  })
+  @Transform(({ value }) => value.replace(/\s+/g, ' '))
+  @Transform(({ value }) => value.trim())
+  @IsString({
+    message: 'The category name must be a string',
   })
   @IsOptional()
   readonly name?: string;
@@ -31,13 +32,6 @@ class UpdateCategoryDto {
     type: 'String',
     description: 'The image URL of the category',
     example: 'http://www.example.com/imagen1.png',
-  })
-  @IsString({
-    message: 'The category image URL must be a string',
-  })
-  @Transform(({ value }) => value.trim())
-  @IsNotEmpty({
-    message: 'The category image URL must not be empty',
   })
   @IsUrl(
     {
@@ -48,6 +42,14 @@ class UpdateCategoryDto {
       message: 'The category image URL must be a valid URL',
     }
   )
+  @IsNotEmpty({
+    message: 'The category image URL must not be empty',
+  })
+  @Transform(({ value }) => value.replace(/\s+/g, ' '))
+  @Transform(({ value }) => value.trim())
+  @IsString({
+    message: 'The category image URL must be a string',
+  })
   @IsOptional()
   readonly image?: string;
 }
