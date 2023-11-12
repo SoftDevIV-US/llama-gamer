@@ -33,17 +33,19 @@ function Countries({ recordList, isLoading, isFound }: Props) {
         </Button>
       </div>
       <Line />
-      <ul
-        className={`grid-cols-${
-          recordList.fields.length + 2
-        } mx-auto grid w-full py-4 pr-[10px] text-center lg:max-w-xl landscape:py-0 landscape:md:py-4`}
-      >
-        {recordList.fields.map((record) => (
-          <ListField key={record.key}>{record.key}</ListField>
-        ))}
-        <ListField>Edit</ListField>
-        <ListField>Remove</ListField>
-      </ul>
+      <div className='w-full pr-[10px]'>
+        <ul
+          className={`grid-cols-${
+            recordList.fields.length + 2
+          }  mx-auto grid w-full py-4 text-center lg:max-w-xl landscape:py-0 landscape:md:py-4`}
+        >
+          {recordList.fields.map((record) => (
+            <ListField key={record.key}>{record.key}</ListField>
+          ))}
+          <ListField>Edit</ListField>
+          <ListField>Remove</ListField>
+        </ul>
+      </div>
       <Line />
       <div className='flex h-full flex-col gap-14 overflow-y-scroll'>
         {isLoading ? (
