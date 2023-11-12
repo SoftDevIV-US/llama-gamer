@@ -21,7 +21,7 @@ function Countries({ recordList, isLoading, isFound }: Props) {
 
   return (
     <section
-      className={`flex max-h-full w-full flex-col gap-4 border-2 border-black p-4 font-bold ${
+      className={`flex h-full max-h-full w-full flex-col gap-4 border-2 border-black p-4 font-bold ${
         isLoading || recordList.values.length === 0 ? 'h-full' : ''
       }`}
     >

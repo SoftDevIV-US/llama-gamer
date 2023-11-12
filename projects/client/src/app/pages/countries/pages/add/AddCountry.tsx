@@ -28,7 +28,7 @@ function AddCountry() {
           addCountry(values);
         }}
       >
-        <FormFormik className='flex h-full flex-col overflow-y-scroll px-0 py-12 lg:gap-20 lg:px-16 lg:py-20 landscape:py-4 landscape:md:py-20'>
+        <FormFormik className='flex h-full flex-col overflow-y-scroll px-0 py-12 lg:px-16 landscape:gap-4 landscape:py-4 landscape:md:gap-20 landscape:md:py-20'>
           <div className='flex grow flex-col gap-10  font-normal lg:gap-20'>
             <InputField id='name' value='name' placeholder='Name of the country...' isCorrect={isNameCorrect}>
               Name
