@@ -27,7 +27,7 @@ class BrandService {
   async findAll(): Promise<Brand[]> {
     const brands = await this.prisma.brand.findMany({
       orderBy: {
-        name: 'asc',
+        name: 'desc',
       },
     });
 

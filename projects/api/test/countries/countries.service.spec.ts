@@ -123,7 +123,7 @@ describe('CountriesService', () => {
         expect(result).toEqual(expectedCountries);
         expect(prismaService.country.findMany).toHaveBeenCalledWith({
           orderBy: {
-            createdAt: 'asc',
+            createdAt: 'desc',
           },
         });
       });

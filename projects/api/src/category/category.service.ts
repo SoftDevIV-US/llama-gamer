@@ -29,7 +29,7 @@ class CategoryService {
   async findAll(): Promise<Category[]> {
     const categories: Category[] = await this.prisma.category.findMany({
       orderBy: {
-        createdAt: 'asc',
+        createdAt: 'desc',
       },
     });
 

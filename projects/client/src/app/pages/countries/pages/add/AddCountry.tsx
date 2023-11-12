@@ -38,8 +38,8 @@ function AddCountry() {
               id='tax'
               value='tax'
               placeholder='Tax for the country...'
-              type='number'
               isCorrect={isTaxCorrect}
+              type='number'
             >
               Tax
             </InputField>

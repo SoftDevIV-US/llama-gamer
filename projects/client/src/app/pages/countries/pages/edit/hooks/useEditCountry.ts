@@ -37,6 +37,8 @@ const useEditCountry = ({ id, setIsNameCorrect, setIsTaxCorrect, setIsLoading, s
     const response = toast.promise(updateCountryById(id, countryToUpdate), {
       loading: 'Updating country...',
       success: (res) => {
+        setIsNameCorrect(true);
+        setIsTaxCorrect(true);
         navigate('/admin/countries');
         return `Country ${res.name} updated successfully`;
       },

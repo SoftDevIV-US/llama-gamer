@@ -29,7 +29,7 @@ class CountryService {
   async findAll(): Promise<Country[]> {
     const countries: Country[] = await this.prisma.country.findMany({
       orderBy: {
-        createdAt: 'asc',
+        createdAt: 'desc',
       },
     });
     return countries;

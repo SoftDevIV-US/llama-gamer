@@ -123,7 +123,7 @@ describe('CategoryService', () => {
         expect(result).toEqual(expectedCategories);
         expect(prismaService.category.findMany).toHaveBeenCalledWith({
           orderBy: {
-            createdAt: 'asc',
+            createdAt: 'desc',
           },
         });
       });

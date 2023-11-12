@@ -90,7 +90,7 @@ describe('BrandService', () => {
 
       expect(prismaService.brand.findMany).toHaveBeenCalledWith({
         orderBy: {
-          name: 'asc',
+          name: 'desc',
         },
       });
       expect(result).toEqual(brands);

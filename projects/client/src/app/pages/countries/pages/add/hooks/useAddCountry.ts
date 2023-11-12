@@ -16,6 +16,8 @@ const useAddCountry = ({ setIsNameCorrect, setIsTaxCorrect }: Props) => {
     const response = toast.promise(createCountry(country), {
       loading: 'Creating country...',
       success: (res) => {
+        setIsNameCorrect(true);
+        setIsTaxCorrect(true);
         navigate('/admin/countries');
         return `Country ${res.name} created successfully`;
       },

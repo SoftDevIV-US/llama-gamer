@@ -28,6 +28,9 @@ function InputField({ id, children, value, type, placeholder, isCorrect, isDisab
         className={`w-full rounded-lg px-5 py-3 outline-none ${isCorrect ? '' : 'border-2 border-[#f55b5b]'}`}
         placeholder={placeholder}
         disabled={isDisabled}
+        step={type === 'number' ? '0.01' : undefined}
+        pattern={type === 'number' ? '\\d+(\\.\\d{1,2})?' : undefined}
+        required
       />
     </label>
   );
