@@ -2,12 +2,13 @@ import { useState } from 'react';
 
 import List from '@/app/components/list/List';
 
-import useCountries from './hooks/useLoadCountries';
+import useLoadCountries from './hooks/useLoadCountries';
 
 function Countries() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isFound, setIsFound] = useState<boolean>(false);
 
-  const { countries } = useCountries({ setIsLoading });
+  const { countries } = useLoadCountries({ setIsLoading, setIsFound });
 
   const recordList: RecordList = {
     title: 'Countries',
@@ -19,7 +20,7 @@ function Countries() {
     values: countries,
   };
 
-  return <List recordList={recordList} isLoading={isLoading} />;
+  return <List recordList={recordList} isLoading={isLoading} isFound={isFound} />;
 }
 
 export default Countries;

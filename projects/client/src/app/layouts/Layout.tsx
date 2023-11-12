@@ -11,7 +11,7 @@ function Layout({ children }: Props) {
     <div className='flex h-screen w-full flex-col bg-[#e4e3e8]'>
       <Header />
       <main className='mx-auto h-full w-full grow overflow-hidden p-4 lg:max-w-4xl lg:px-6 lg:py-8'>{children}</main>
-      <Toaster position='top-right' visibleToasts={3} theme='dark' closeButton />
+      <Toaster position='top-right' visibleToasts={2} theme='dark' closeButton expand />
     </div>
   );
 }

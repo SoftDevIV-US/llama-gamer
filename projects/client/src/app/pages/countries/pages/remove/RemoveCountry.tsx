@@ -1,12 +1,21 @@
 import { useParams } from 'react-router-dom';
 
+import Remove from '@/app/components/remove/Remove';
+
+import useRemoveCountry from './hooks/useRemoveCountry';
+
 function RemoveCountry() {
   const { id } = useParams<{ id: string }>();
+  const { removeCountry } = useRemoveCountry({ id: String(id) });
 
   return (
-    <div className='grid h-full place-content-center text-5xl font-bold'>
-      <h1>Remove Country {id}</h1>
-    </div>
+    <Remove
+      acceptAction={() => {
+        removeCountry();
+      }}
+    >
+      Country
+    </Remove>
   );
 }
 

@@ -6,19 +6,25 @@ import EditIcon from '@mui/icons-material/Edit';
 import useNavigate from '@/app/hooks/useNavigate';
 
 import Button from '../button/Button';
+import Line from '../line/Line';
 import Loading from '../loading/Loading';
 import ListField from './components/ListField';
 
 type Props = {
   recordList: RecordList;
   isLoading: boolean;
+  isFound: boolean;
 };
 
-function Countries({ recordList, isLoading }: Props) {
+function Countries({ recordList, isLoading, isFound }: Props) {
   const { navigate } = useNavigate();
 
   return (
-    <section className='flex max-h-full w-full flex-col gap-4 border-2 border-black p-4 font-bold'>
+    <section
+      className={`flex max-h-full w-full flex-col gap-4 border-2 border-black p-4 font-bold ${
+        isLoading || recordList.values.length === 0 ? 'h-full' : ''
+      }`}
+    >
       <div className='flex place-items-center gap-10 px-3'>
         <h1 className='text-3xl text-[#0D1B2A]/70'>{recordList.title}</h1>
         <Button className='flex place-items-center gap-1' onClick={() => navigate(`/admin/${recordList.url}/add`)}>
@@ -26,7 +32,7 @@ function Countries({ recordList, isLoading }: Props) {
           <p className='text-base text-[#3E93FF]'>Add</p>
         </Button>
       </div>
-      <hr className='border-[1px] border-black' />
+      <Line />
       <ul
         className={`grid-cols-${
           recordList.fields.length + 2
@@ -38,11 +44,16 @@ function Countries({ recordList, isLoading }: Props) {
         <ListField>Edit</ListField>
         <ListField>Remove</ListField>
       </ul>
-      <hr className='border-[1px] border-black' />
+      <Line />
       <div className='flex h-full flex-col gap-14 overflow-y-scroll'>
         {isLoading ? (
-          <div className='grid place-content-center py-5'>
+          <div className='grid h-full place-content-center py-5'>
             <Loading />
+          </div>
+        ) : !isFound || recordList.values.length === 0 ? (
+          <div className='grid h-full place-content-center py-5 text-center'>
+            <h2 className='text-2xl'>Not {recordList.title} Found</h2>
+            <p className='text-lg'>Add new {recordList.title}</p>
           </div>
         ) : (
           recordList.values.map((country) => (

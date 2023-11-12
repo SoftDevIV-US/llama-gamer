@@ -1,9 +1,16 @@
 import { toast } from 'sonner';
 
+import useNavigate from '@/app/hooks/useNavigate';
 import { deleteCountryById } from '@/services/country.service';
 
-const useRemoveCountry = () => {
-  const removeCountry = (id: string) => {
+type Props = {
+  id: string;
+};
+
+const useRemoveCountry = ({ id }: Props) => {
+  const { navigate } = useNavigate();
+
+  const removeCountry = () => {
     const response = toast.promise(deleteCountryById(id), {
       loading: 'Deleting country...',
       success: (res) => `Country ${res.name} deleted successfully`,
@@ -13,6 +20,9 @@ const useRemoveCountry = () => {
           return message[0];
         }
         return message;
+      },
+      finally: () => {
+        navigate('/admin/countries');
       },
     });
     return response;
