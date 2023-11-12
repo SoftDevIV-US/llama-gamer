@@ -27,7 +27,7 @@ const useEditCountry = ({ id, setIsNameCorrect, setIsTaxCorrect, setIsLoading, s
       },
       error: () => {
         setFound(false);
-        return 'Country not found';
+        return 'Error Country not found';
       },
       finally: () => setIsLoading(false),
     });

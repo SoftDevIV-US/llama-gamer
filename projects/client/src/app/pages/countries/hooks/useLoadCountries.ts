@@ -23,7 +23,7 @@ const useLoadCountries = ({ setIsLoading, setIsFound }: Props) => {
       },
       error: () => {
         setIsFound(false);
-        return 'Error loading countries';
+        return 'Error Countries not found';
       },
       finally: () => setIsLoading(false),
     });

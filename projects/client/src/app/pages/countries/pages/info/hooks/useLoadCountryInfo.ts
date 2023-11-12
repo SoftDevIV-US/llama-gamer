@@ -20,11 +20,11 @@ const useLoadCountryInfo = ({ setIsLoading, setIsFound, id }: Props) => {
       success: (res) => {
         setCountry(res);
         setIsFound(true);
-        return 'Country loaded successfully';
+        return `Country ${res.name} loaded successfully`;
       },
       error: () => {
         setIsFound(false);
-        return `Error loading country with ID ${id}`;
+        return 'Error Country not found';
       },
       finally: () => setIsLoading(false),
     });
