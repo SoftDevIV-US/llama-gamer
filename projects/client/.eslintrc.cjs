@@ -83,5 +83,7 @@ module.exports = {
         html: 'always',
       },
     ],
+    'jsx-a11y/label-has-associated-control': 'off',
+    'no-nested-ternary': 'off',
   },
 };

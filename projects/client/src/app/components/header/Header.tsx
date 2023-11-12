@@ -1,13 +1,21 @@
 import PersonIcon from '@mui/icons-material/Person';
 
+import useNavigate from '@/app/hooks/useNavigate';
+
 import Button from '../button/Button';
 import logo from './assets/llama-logo.png';
 
 function Header() {
+  const { navigate } = useNavigate();
+
   return (
     <header className='w-full bg-[#ffffff] py-2 shadow-md  lg:py-4'>
       <div className='mx-auto flex w-full place-items-center justify-between px-4 text-center lg:max-w-5xl lg:px-6'>
-        <Button>
+        <Button
+          onClick={() => {
+            navigate('/admin');
+          }}
+        >
           <img src={logo} alt='Llama Logo' className='h-[90px]' />
         </Button>
         <div className='flex place-items-center gap-5'>
