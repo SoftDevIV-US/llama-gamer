@@ -6,9 +6,10 @@ import { getAllCountries } from '@/services/country.service';
 
 type Props = {
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsFound: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const useCountries = ({ setIsLoading }: Props) => {
+const useLoadCountries = ({ setIsLoading, setIsFound }: Props) => {
   const [countries, setCountries] = useState<Country[]>([] as Country[]);
 
   useEffect(() => {
@@ -17,15 +18,18 @@ const useCountries = ({ setIsLoading }: Props) => {
       loading: 'Loading countries...',
       success: (res) => {
         setCountries(res);
-        setIsLoading(false);
+        setIsFound(true);
         return 'Countries loaded successfully';
       },
-      error: 'Error while loading countries',
+      error: () => {
+        setIsFound(false);
+        return 'Error loading countries';
+      },
+      finally: () => setIsLoading(false),
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [setIsLoading, setIsFound]);
 
   return { countries };
 };
 
-export default useCountries;
+export default useLoadCountries;
