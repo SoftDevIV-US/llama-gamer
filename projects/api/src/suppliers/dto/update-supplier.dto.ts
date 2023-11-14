@@ -15,22 +15,22 @@ class UpdateSupplierDto {
     message: 'The supplier email must be a string',
   })
   @IsOptional()
-  email?: string;
+  readonly email?: string;
 
   @ApiProperty({
     type: 'Integer',
-    description: 'The supplier product delivery time in days',
+    description: 'The supplier delivery time in days',
     example: '5',
   })
   @Max(180, {
-    message: 'The delivery time must be at most 180',
+    message: 'The supplier delivery time must be at most 180',
   })
   @IsPositive({
-    message: 'The delivery time must be a positive number',
+    message: 'The supplier delivery time must be a positive number',
   })
   @IsNumber()
   @IsOptional()
-  deliveryTime?: number;
+  readonly deliveryTime?: number;
 
   @ApiProperty({
     type: 'String',
@@ -43,7 +43,7 @@ class UpdateSupplierDto {
     message: 'The supplier country ID must be a string',
   })
   @IsOptional()
-  countryId?: string;
+  readonly countryId?: string;
 }
 
 export default UpdateSupplierDto;

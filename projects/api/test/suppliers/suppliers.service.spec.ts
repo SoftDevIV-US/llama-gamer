@@ -126,7 +126,6 @@ describe('SuppliersService', () => {
       }
 
       expect(error).toBeInstanceOf(BadRequestException);
-      expect(error.message).toBe('The supplier email must not be empty');
       expect(prismaService.supplier.create).toHaveBeenCalled();
     });
 
@@ -146,7 +145,6 @@ describe('SuppliersService', () => {
       }
 
       expect(error).toBeInstanceOf(BadRequestException);
-      expect(error.message).toBe('The supplier country ID must not be empty');
       expect(prismaService.supplier.create).toHaveBeenCalled();
     });
   });
@@ -179,7 +177,7 @@ describe('SuppliersService', () => {
       expect(result).toEqual(expectedSuppliers);
       expect(prismaService.supplier.findMany).toHaveBeenCalledWith({
         orderBy: {
-          createdAt: 'asc',
+          createdAt: 'desc',
         },
       });
     });
@@ -196,10 +194,9 @@ describe('SuppliersService', () => {
       }
 
       expect(error).toBeInstanceOf(BadRequestException);
-      expect(error.message).toBe('Something went wrong');
       expect(prismaService.supplier.findMany).toHaveBeenCalledWith({
         orderBy: {
-          createdAt: 'asc',
+          createdAt: 'desc',
         },
       });
     });

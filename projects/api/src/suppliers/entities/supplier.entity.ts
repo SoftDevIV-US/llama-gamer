@@ -4,38 +4,38 @@ class Supplier {
   @ApiProperty({
     type: 'String',
     format: 'uuid',
-    description: 'The ID of the supplier',
+    description: 'The unique ID of the supplier',
     example: '123e4567-e89b-12d3-a456-426614174000',
   })
-  id: string;
+  readonly id: string;
 
   @ApiProperty({
     type: 'String',
     description: 'The email of the supplier',
     example: 'intel@gmail.com',
   })
-  email: string;
+  readonly email: string;
 
   @ApiProperty({
     type: 'Integer',
     description: 'The delivery time in days for the product',
     example: '5',
   })
-  deliveryTime: number;
+  readonly deliveryTime: number;
 
   @ApiProperty({
     type: 'Date',
     description: 'The date the supplier was created',
     example: '2021-01-01T00:00:00.000Z',
   })
-  createdAt: Date;
+  readonly createdAt: Date;
 
   @ApiProperty({
     type: 'Date',
     description: 'The date the supplier was updated',
     example: '2021-01-01T00:00:00.000Z',
   })
-  updatedAt: Date;
+  readonly updatedAt: Date;
 
   @ApiProperty({
     type: 'String',
@@ -43,7 +43,7 @@ class Supplier {
     description: 'The ID of the country of the supplier',
     example: '123e4567-e89b-12d3-a456-426814174001',
   })
-  countryId: string;
+  readonly countryId: string;
 }
 
 export default Supplier;

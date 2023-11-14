@@ -12,7 +12,7 @@ class SuppliersController {
   constructor(private readonly suppliersService: SuppliersService) {}
 
   @Post()
-  @ApiOperation({ summary: 'Create a supplier' })
+  @ApiOperation({ summary: 'Create a new supplier' })
   @ApiCreatedResponse({ type: Supplier })
   async create(@Body() createSupplierDto: CreateSupplierDto): Promise<Supplier> {
     const supplier: Supplier = await this.suppliersService.create(createSupplierDto);
@@ -20,7 +20,7 @@ class SuppliersController {
   }
 
   @Get()
-  @ApiOperation({ summary: 'Find all suppliers' })
+  @ApiOperation({ summary: 'Get all suppliers' })
   @ApiCreatedResponse({ type: Supplier, isArray: true })
   async findAll(): Promise<Supplier[]> {
     const suppliers: Supplier[] = await this.suppliersService.findAll();
@@ -28,7 +28,7 @@ class SuppliersController {
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'Find one supplier' })
+  @ApiOperation({ summary: 'Get a supplier by id' })
   @ApiCreatedResponse({ type: Supplier })
   async findOne(@Param('id') id: string): Promise<Supplier> {
     const supplier: Supplier = await this.suppliersService.findOne(id);
@@ -36,7 +36,7 @@ class SuppliersController {
   }
 
   @Patch(':id')
-  @ApiOperation({ summary: 'Update a supplier' })
+  @ApiOperation({ summary: 'Update a supplier by id' })
   @ApiCreatedResponse({ type: Supplier })
   async update(@Param('id') id: string, @Body() updateSupplierDto: UpdateSupplierDto): Promise<Supplier> {
     const supplier: Supplier = await this.suppliersService.update(id, updateSupplierDto);
@@ -44,7 +44,7 @@ class SuppliersController {
   }
 
   @Delete(':id')
-  @ApiOperation({ summary: 'Delete a supplier' })
+  @ApiOperation({ summary: 'Delete a supplier by id' })
   @ApiCreatedResponse({ type: Supplier })
   async remove(@Param('id') id: string): Promise<Supplier> {
     const supplier: Supplier = await this.suppliersService.remove(id);
