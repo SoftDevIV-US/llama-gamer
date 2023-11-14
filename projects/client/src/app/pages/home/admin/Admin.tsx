@@ -1,56 +1,23 @@
-import useNavigate from '@/app/hooks/useNavigate';
-
-import Button from '../../../components/button/Button';
-import BackGroundImage from './assets/BackGround.png';
-import BrandButton from './assets/brand 1.png';
-import CategoryButton from './assets/Category Icon 2.png';
-import CountryButton from './assets/Countries Icon 1.png';
-import SupplierButton from './assets/Supplier Icon 1.png';
-import ProductButton from './assets/Vector.png';
+import backgroundImage from './assets/background.png';
+import brandIcon from './assets/brand.png';
+import categoryIcon from './assets/category.png';
+import countryIcon from './assets/country.png';
+import productIcon from './assets/product.png';
+import supplierIcon from './assets/supplier.png';
+import ImageButton from './components/ImageButton';
 
 function Admin() {
-  const { navigate } = useNavigate();
-
-  const containerButtons =
-    'm-7 flex flex-col sm:items-center md:flex-row landscape:sm:flex-row landscape:md:flex-row landscape:lg:flex-col';
-  const buttonsStyle =
-    'm-3 rounded-xl bg-[#223343] sm:h-[97px] sm:w-[145px] md:h-[97px] md:w-[145px] lg:h-[150px] lg:w-[230px]';
-  const containerColumns =
-    'relative left-5 top-1/2 flex w-full translate-y-[-50%] flex-row items-start justify-start landscape:sm:flex-col landscape:md:flex-col landscape:lg:flex-row ';
-  const imageStyle = 'mx-auto sm:h-[75px] sm:w-[95px] md:h-[75px] md:w-[95px] lg:h-[120px] lg:w-[120px]';
   return (
     <div
-      className='fixed left-0  h-full max-h-full w-full overflow-y-scroll bg-cover bg-center bg-no-repeat landscape:sm:flex'
-      style={{
-        backgroundImage: `url(${BackGroundImage})`,
-        height: '100vh',
-      }}
+      className='h-full max-h-full w-full overflow-y-scroll bg-cover bg-center bg-no-repeat p-10'
+      style={{ backgroundImage: `url(${backgroundImage})` }}
     >
-      <div className={containerColumns}>
-        <div className={containerButtons}>
-          <Button className={buttonsStyle} onClick={() => navigate('/admin/brand')}>
-            <img src={BrandButton} alt='BrandButton' className={imageStyle} />
-            <p style={{ color: '#fff' }}>Brand</p>
-          </Button>
-          <Button className={buttonsStyle} onClick={() => navigate('/admin/supplier')}>
-            <img src={SupplierButton} alt='SupplierButton' className={imageStyle} />
-            <p style={{ color: '#fff' }}>Supplier</p>
-          </Button>
-          <Button className={buttonsStyle} onClick={() => navigate('/admin/countries')}>
-            <img src={CountryButton} alt='CountryButton' className={imageStyle} />
-            <p style={{ color: '#fff' }}>Country</p>
-          </Button>
-        </div>
-        <div className={containerButtons}>
-          <Button className={buttonsStyle} onClick={() => navigate('/admin/category')}>
-            <img src={CategoryButton} alt='CategoryButton' className={imageStyle} />
-            <p style={{ color: '#fff' }}>Category</p>
-          </Button>
-          <Button className={buttonsStyle} onClick={() => navigate('/admin/product')}>
-            <img src={ProductButton} alt='ProductButton' className={imageStyle} />
-            <p style={{ color: '#fff' }}>Product</p>
-          </Button>
-        </div>
+      <div className='grid grid-cols-2 gap-5 md:w-4/5 lg:w-3/5 xl:w-2/5 landscape:grid-cols-3'>
+        <ImageButton src={brandIcon} title='Brand' url='/admin/brands' />
+        <ImageButton src={categoryIcon} title='Category' url='/admin/categories' />
+        <ImageButton src={supplierIcon} title='Supplier' url='/admin/suppliers' />
+        <ImageButton src={productIcon} title='Product' url='/admin/products' />
+        <ImageButton src={countryIcon} title='Country' url='/admin/countries' />
       </div>
     </div>
   );
