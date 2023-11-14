@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 
 import Layout from './layouts/Layout';
 import Brands from './pages/brands/Brands';
+<<<<<<< HEAD
 import AddBrand from './pages/brands/pages/add/AddBrand';
 import EditBrand from './pages/brands/pages/edit/EditBrand';
 import BrandInfo from './pages/brands/pages/info/BrandInfo';
@@ -9,6 +10,8 @@ import Categories from './pages/categories/Categories';
 import AddCategory from './pages/categories/pages/add/AddCategory';
 import EditCategory from './pages/categories/pages/edit/EditCategory';
 import CategoryInfo from './pages/categories/pages/info/CategoryInfo';
+=======
+>>>>>>> 0221fae (feat: brand list)
 import Countries from './pages/countries/Countries';
 import AddCountry from './pages/countries/pages/add/AddCountry';
 import EditCountry from './pages/countries/pages/edit/EditCountry';
