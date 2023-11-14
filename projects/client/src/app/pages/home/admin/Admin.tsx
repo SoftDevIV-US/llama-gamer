@@ -8,7 +8,7 @@ import CountryButton from './assets/Countries Icon 1.png';
 import SupplierButton from './assets/Supplier Icon 1.png';
 import ProductButton from './assets/Vector.png';
 
-function AdminHome() {
+function Admin() {
   const { navigate } = useNavigate();
 
   const containerButtons =
@@ -28,11 +28,11 @@ function AdminHome() {
     >
       <div className={containerColumns}>
         <div className={containerButtons}>
-          <Button className='m-3 rounded-xl bg-[#223343] sm:h-[97px] sm:w-[145px] md:h-[97px] md:w-[145px] lg:h-[150px] lg:w-[230px]'>
+          <Button className={buttonsStyle} onClick={() => navigate('/admin/brand')}>
             <img src={BrandButton} alt='BrandButton' className={imageStyle} />
             <p style={{ color: '#fff' }}>Brand</p>
           </Button>
-          <Button className={buttonsStyle}>
+          <Button className={buttonsStyle} onClick={() => navigate('/admin/supplier')}>
             <img src={SupplierButton} alt='SupplierButton' className={imageStyle} />
             <p style={{ color: '#fff' }}>Supplier</p>
           </Button>
@@ -42,11 +42,11 @@ function AdminHome() {
           </Button>
         </div>
         <div className={containerButtons}>
-          <Button className={buttonsStyle}>
+          <Button className={buttonsStyle} onClick={() => navigate('/admin/category')}>
             <img src={CategoryButton} alt='CategoryButton' className={imageStyle} />
             <p style={{ color: '#fff' }}>Category</p>
           </Button>
-          <Button className={buttonsStyle}>
+          <Button className={buttonsStyle} onClick={() => navigate('/admin/product')}>
             <img src={ProductButton} alt='ProductButton' className={imageStyle} />
             <p style={{ color: '#fff' }}>Product</p>
           </Button>
@@ -56,4 +56,4 @@ function AdminHome() {
   );
 }
 
-export default AdminHome;
+export default Admin;
