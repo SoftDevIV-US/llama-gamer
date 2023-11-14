@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Transform } from 'class-transformer/types/decorators';
+import { Transform } from 'class-transformer';
 import { IsEmail, IsNumber, IsOptional, IsPositive, IsString, Max } from 'class-validator';
 
 class UpdateSupplierDto {
@@ -19,7 +19,7 @@ class UpdateSupplierDto {
 
   @ApiProperty({
     type: 'Integer',
-    description: 'The product delivery time in days',
+    description: 'The supplier product delivery time in days',
     example: '5',
   })
   @Max(180, {

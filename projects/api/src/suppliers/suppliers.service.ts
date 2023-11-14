@@ -19,6 +19,10 @@ class SuppliersService {
     } catch (error) {
       if (error?.meta?.target?.includes('email')) {
         throw new BadRequestException('Supplier email already exists');
+      } else if (!createSupplierDto.email) {
+        throw new BadRequestException('The supplier email must not be empty');
+      } else if (!createSupplierDto.countryId) {
+        throw new BadRequestException('The supplier country ID must not be empty');
       } else {
         throw new BadRequestException('Something went wrong');
       }
@@ -26,12 +30,16 @@ class SuppliersService {
   }
 
   async findAll(): Promise<Supplier[]> {
-    const suppliers: Supplier[] = await this.prisma.supplier.findMany({
-      orderBy: {
-        createdAt: 'asc',
-      },
-    });
-    return suppliers;
+    try {
+      const suppliers: Supplier[] = await this.prisma.supplier.findMany({
+        orderBy: {
+          createdAt: 'asc',
+        },
+      });
+      return suppliers;
+    } catch (error) {
+      throw new BadRequestException('Something went wrong');
+    }
   }
 
   async findOne(id: string): Promise<Supplier> {

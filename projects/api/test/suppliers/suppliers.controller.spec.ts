@@ -1,10 +1,11 @@
+import { BadRequestException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import CreateSupplierDto from '@/suppliers/dto/create-supplier.dto';
 import UpdateSupplierDto from '@/suppliers/dto/update-supplier.dto';
 import Supplier from '@/suppliers/entities/supplier.entity';
+import SuppliersController from '@/suppliers/suppliers.controller';
 
-import SuppliersController from '../../src/suppliers/suppliers.controller';
 import SuppliersService from '../../src/suppliers/suppliers.service';
 
 describe('SuppliersController', () => {
@@ -49,7 +50,7 @@ describe('SuppliersController', () => {
       };
       const createdSupplier: Supplier = {
         id: '1',
-        email: ' lenovo@gmail.com',
+        email: 'lenovo@gmail.com',
         deliveryTime: 5,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -62,6 +63,65 @@ describe('SuppliersController', () => {
 
       expect(result).toEqual(createdSupplier);
       expect(suppliersService.create).toHaveBeenCalledWith(createSupplierDto);
+    });
+
+    it('should not create a supplier with an invalid email', async () => {
+      const createSupplierDto: CreateSupplierDto = {
+        email: 'lenovo@hola.com',
+        deliveryTime: 5,
+        countryId: '123e4567-e89b-12d3-a456-426814172801',
+      };
+
+      suppliersService.create.mockRejectedValue(new BadRequestException('Invalid email'));
+
+      await expect(suppliersController.create(createSupplierDto)).rejects.toThrow(BadRequestException);
+      expect(suppliersService.create).toHaveBeenCalledWith(createSupplierDto);
+    });
+
+    it('should handle unexpected errors during creation', async () => {
+      const createSupplierDto: CreateSupplierDto = {
+        email: 'lenovo@gmail.com',
+        deliveryTime: 5,
+        countryId: '123e4567-e89b-12d3-a456-426814172801',
+      };
+
+      suppliersService.create.mockRejectedValueOnce(new BadRequestException('Something went wrong'));
+
+      await expect(suppliersController.create(createSupplierDto)).rejects.toThrow(BadRequestException);
+      expect(suppliersService.create).toHaveBeenCalledWith(createSupplierDto);
+    });
+
+    it('should not create a supplier with an empty email', async () => {
+      const createSupplierDto: CreateSupplierDto = {
+        email: '',
+        deliveryTime: 5,
+        countryId: '123e4567-e89b-12d3-a456-426814172801',
+      };
+
+      await expect(suppliersController.create(createSupplierDto)).rejects.toThrow(BadRequestException);
+      expect(suppliersService.create).toHaveBeenCalled();
+    });
+
+    it('should not create a supplier with deliveryTime less than 0', async () => {
+      const createSupplierDto: CreateSupplierDto = {
+        email: 'lenovo@gmail.com',
+        deliveryTime: -1,
+        countryId: '123e4567-e89b-12d3-a456-426814172801',
+      };
+
+      await expect(suppliersController.create(createSupplierDto)).rejects.toThrow(BadRequestException);
+      expect(suppliersService.create).toHaveBeenCalled();
+    });
+
+    it('should not create a supplier with an empty countryId', async () => {
+      const createSupplierDto: CreateSupplierDto = {
+        email: 'lenovo@gmail.com',
+        deliveryTime: 5,
+        countryId: '',
+      };
+
+      await expect(suppliersController.create(createSupplierDto)).rejects.toThrow(BadRequestException);
+      expect(suppliersService.create).toHaveBeenCalled();
     });
   });
 
@@ -134,6 +194,19 @@ describe('SuppliersController', () => {
       const result = await suppliersController.update(supplierId, updateSupplierDto);
 
       expect(result).toEqual(updatedSupplier);
+      expect(suppliersService.update).toHaveBeenCalledWith(supplierId, updateSupplierDto);
+    });
+
+    it('should not update a supplier with an invalid email', async () => {
+      const supplierId = '1';
+      const updateSupplierDto: UpdateSupplierDto = {
+        email: 'dell@hithere.com',
+        deliveryTime: 4,
+      };
+
+      suppliersService.update.mockRejectedValue(new BadRequestException('Invalid email'));
+
+      await expect(suppliersController.update(supplierId, updateSupplierDto)).rejects.toThrow(BadRequestException);
       expect(suppliersService.update).toHaveBeenCalledWith(supplierId, updateSupplierDto);
     });
   });
