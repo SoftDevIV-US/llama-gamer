@@ -43,7 +43,7 @@ function Countries({ recordList, isLoading, isFound }: Props) {
             <ListField key={record.key}>{record.key}</ListField>
           ))}
           <ListField>Edit</ListField>
-          <ListField>Info</ListField>
+          <ListField>Infoa</ListField>
         </ul>
       </div>
       <Line />
@@ -69,13 +69,9 @@ function Countries({ recordList, isLoading, isFound }: Props) {
                 <li key={record.key}>
                   <p className={`inline break-words ${record.isUnderline ? 'underline' : ''}`}>
                     {country[record.value]}
-<<<<<<< HEAD
                     {record.decorator}
                   </p>
-=======
-                  </p>
                   <p className='inline'>{record.decorator}</p>
->>>>>>> 3cbcf62 (fix: words overpass the max width)
                 </li>
               ))}
               <li>
