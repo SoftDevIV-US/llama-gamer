@@ -61,11 +61,15 @@ function Countries({ recordList, isLoading, isFound }: Props) {
           recordList.values.map((country) => (
             <ul
               key={country.id}
-              className={`grid-cols-${recordList.fields.length + 2} mx-auto grid w-full text-center lg:max-w-xl`}
+              className={`grid-cols-${
+                recordList.fields.length + 2
+              } mx-auto grid w-full items-center text-center lg:max-w-xl`}
             >
               {recordList.fields.map((record) => (
                 <li key={record.key}>
-                  <p className={`inline ${record.isUnderline ? 'underline' : ''}`}>{country[record.value]}</p>
+                  <p className={`inline break-words ${record.isUnderline ? 'underline' : ''}`}>
+                    {country[record.value]}
+                  </p>
                   <p className='inline'>{record.decorator}</p>
                 </li>
               ))}
