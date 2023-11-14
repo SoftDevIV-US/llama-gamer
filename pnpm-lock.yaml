@@ -171,9 +171,6 @@ importers:
       formik:
         specifier: ^2.4.5
         version: 2.4.5(react@18.2.0)
-      loadable-image:
-        specifier: ^3.0.6
-        version: 3.0.6(react-dom@18.2.0)(react@18.2.0)
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -6788,18 +6785,6 @@ packages:
       strip-bom: 3.0.0
     dev: true
 
-  /loadable-image@3.0.6(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-qZY4Wyuiw8KA5IaZ81Th5RzDTjFZHkKCb+JTL4BM6jQhxRLSY9Zlk0RB/leykg2ziiiUOuNV4BwxGbE6AryK3g==}
-    peerDependencies:
-      react: '>=16.6.0'
-      react-dom: '>=16.6.0'
-    dependencies:
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-      react-intersection-observer: 9.5.3(react@18.2.0)
-      transitions-kit: 1.2.2(react-dom@18.2.0)(react@18.2.0)
-    dev: false
-
   /loader-runner@4.3.0:
     resolution: {integrity: sha512-3R/1M+yS3j5ou80Me59j7F9IMs4PXs3VqRrm0TU3AbKPxlmpoY1TNscJV/oGJXo8qCatFGTfDbY6W6ipGOYXfg==}
     engines: {node: '>=6.11.5'}
@@ -7952,14 +7937,6 @@ packages:
     resolution: {integrity: sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw==}
     dev: false
 
-  /react-intersection-observer@9.5.3(react@18.2.0):
-    resolution: {integrity: sha512-NJzagSdUPS5rPhaLsHXYeJbsvdpbJwL6yCHtMk91hc0ufQ2BnXis+0QQ9NBh6n9n+Q3OyjR6OQLShYbaNBkThQ==}
-    peerDependencies:
-      react: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
-    dependencies:
-      react: 18.2.0
-    dev: false
-
   /react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
@@ -8994,17 +8971,6 @@ packages:
     dependencies:
       punycode: 2.3.1
     dev: true
-
-  /transitions-kit@1.2.2(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-VtDbOQEAgYZ6Nqr056Foa99KBBawL+0kFyYwDss2oR5Kh9QyiB4+Hqe8zcspAXxSq1JYGBgjcjQ/DgmTeJ1qhw==}
-    peerDependencies:
-      react: '>=16.6.0'
-      react-dom: '>=16.6.0'
-    dependencies:
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-      react-transition-group: 4.4.5(react-dom@18.2.0)(react@18.2.0)
-    dev: false
 
   /traverse@0.6.7:
     resolution: {integrity: sha512-/y956gpUo9ZNCb99YjxG7OaslxZWHfCHAUUfshwqOXmxUIvqLjVO581BT+gM59+QV9tFe6/CGG53tsA1Y7RSdg==}
