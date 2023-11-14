@@ -13,10 +13,10 @@ function Remove({ children, acceptAction }: Props) {
   const { navigate } = useNavigate();
 
   return (
-    <section className='grid h-full place-content-center text-center text-lg font-bold lg:text-4xl'>
-      <div className='flex flex-col gap-20 rounded-3xl bg-[#223343] px-4 py-6 text-white shadow-xl lg:p-16'>
+    <section className='grid h-full place-content-center px-6 text-center text-lg font-bold lg:text-3xl'>
+      <div className='flex flex-col gap-10 rounded-3xl bg-[#223343] px-4 py-6 text-white shadow-xl lg:gap-20 lg:p-16'>
         <h1>Are you sure to remove this {children}?</h1>
-        <div className='flex justify-center gap-10 '>
+        <div className='flex justify-center gap-10'>
           <Button
             className='rounded-xl bg-[#f55b5b] px-4 py-2 shadow-xl'
             onClick={() => {
