@@ -39,7 +39,6 @@ const useEditCountry = ({ id, setIsNameCorrect, setIsTaxCorrect, setIsLoading, s
       success: (res) => {
         setIsNameCorrect(true);
         setIsTaxCorrect(true);
-        navigate('/admin/countries');
         return `Country ${res.name} updated successfully`;
       },
       error: (err) => {
@@ -59,6 +58,9 @@ const useEditCountry = ({ id, setIsNameCorrect, setIsTaxCorrect, setIsLoading, s
           setIsNameCorrect(true);
         }
         return error;
+      },
+      finally: () => {
+        navigate('/admin/countries');
       },
     });
 
