@@ -43,7 +43,7 @@ function Countries({ recordList, isLoading, isFound }: Props) {
             <ListField key={record.key}>{record.key}</ListField>
           ))}
           <ListField>Edit</ListField>
-          <ListField>Info</ListField>
+          <ListField>Infoa</ListField>
         </ul>
       </div>
       <Line />
