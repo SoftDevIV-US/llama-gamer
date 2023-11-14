@@ -9,7 +9,7 @@ import ImageButton from './components/ImageButton';
 function Admin() {
   return (
     <div
-      className='h-full max-h-full w-full overflow-y-scroll bg-cover bg-center bg-no-repeat p-10'
+      className='h-full max-h-full w-full overflow-y-scroll bg-cover bg-center bg-no-repeat p-10 lg:pl-24'
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
       <div className='grid grid-cols-2 gap-5 md:w-4/5 lg:w-3/5 xl:w-2/5 landscape:grid-cols-3'>

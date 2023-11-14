@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import List from '@/app/components/list/List';
+import InnerLayout from '@/app/layouts/InnerLayout';
 
 import useLoadCategories from './hooks/useLoadCategories';
 
@@ -17,7 +18,11 @@ function Categories() {
     values: categories,
   };
 
-  return <List recordList={recordList} isLoading={isLoading} isFound={isFound} />;
+  return (
+    <InnerLayout>
+      <List recordList={recordList} isLoading={isLoading} isFound={isFound} />
+    </InnerLayout>
+  );
 }
 
 export default Categories;

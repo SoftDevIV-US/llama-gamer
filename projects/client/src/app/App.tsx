@@ -6,6 +6,9 @@ import AddBrand from './pages/brands/pages/add/AddBrand';
 import EditBrand from './pages/brands/pages/edit/EditBrand';
 import BrandInfo from './pages/brands/pages/info/BrandInfo';
 import Categories from './pages/categories/Categories';
+import AddCategory from './pages/categories/pages/add/AddCategory';
+import EditCategory from './pages/categories/pages/edit/EditCategory';
+import CategoryInfo from './pages/categories/pages/info/CategoryInfo';
 import Countries from './pages/countries/Countries';
 import AddCountry from './pages/countries/pages/add/AddCountry';
 import EditCountry from './pages/countries/pages/edit/EditCountry';
@@ -32,6 +35,9 @@ function App() {
         <Route path='/admin/brands/info/:id' element={<BrandInfo />} />
         <Route path='/admin/brands/edit/:id' element={<EditBrand />} />
         <Route path='/admin/categories' element={<Categories />} />
+        <Route path='/admin/categories/add' element={<AddCategory />} />
+        <Route path='/admin/categories/info/:id' element={<CategoryInfo />} />
+        <Route path='/admin/categories/edit/:id' element={<EditCategory />} />
         <Route path='/admin/suppliers' element={<Suppliers />} />
         <Route path='/admin/products' element={<Products />} />
       </Routes>

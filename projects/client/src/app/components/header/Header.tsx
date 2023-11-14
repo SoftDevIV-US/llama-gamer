@@ -10,7 +10,7 @@ function Header() {
 
   return (
     <header className='w-full bg-[#ffffff] py-2 shadow-md  lg:py-4'>
-      <div className='mx-auto flex w-full place-items-center justify-between px-4 text-center lg:max-w-5xl lg:px-6'>
+      <div className='mx-auto flex w-full place-items-center justify-between px-4 text-center lg:max-w-4xl lg:px-6'>
         <Button
           onClick={() => {
             navigate('/admin');
