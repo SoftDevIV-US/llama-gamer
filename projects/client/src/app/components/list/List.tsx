@@ -67,7 +67,7 @@ function Countries({ recordList, isLoading, isFound }: Props) {
             >
               {recordList.fields.map((record) => (
                 <li key={record.key}>
-                  <p className={`inline break-words ${record.isUnderline ? 'underline' : ''}`}>
+                  <p className='inline break-words'>
                     {country[record.value]}
                     {record.decorator}
                   </p>

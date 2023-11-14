@@ -12,7 +12,6 @@ declare global {
     key: string;
     value: string;
     decorator?: string;
-    isUnderline?: boolean;
   };
 
   type RecordList = {
