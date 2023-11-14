@@ -23,7 +23,7 @@ const useLoadBrands = ({ setIsLoading, setIsFound }: Props) => {
       },
       error: () => {
         setIsFound(false);
-        return 'Error Brand not found';
+        return 'Error Brands not found';
       },
       finally: () => setIsLoading(false),
     });
