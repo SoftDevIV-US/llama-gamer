@@ -1,13 +1,23 @@
-import InnerLayout from '@/app/layouts/InnerLayout';
+import { useState } from 'react';
+
+import List from '@/app/components/list/List';
+
+import useLoadCategories from './hooks/useLoadCategories';
 
 function Categories() {
-  return (
-    <InnerLayout>
-      <div className='grid h-full place-content-center'>
-        <h2 className='text-4xl font-bold'>Categories</h2>
-      </div>
-    </InnerLayout>
-  );
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isFound, setIsFound] = useState<boolean>(false);
+
+  const { categories } = useLoadCategories({ setIsLoading, setIsFound });
+
+  const recordList: RecordList = {
+    title: 'Categories ',
+    url: 'categories',
+    fields: [{ key: 'Name', value: 'name' }],
+    values: categories,
+  };
+
+  return <List recordList={recordList} isLoading={isLoading} isFound={isFound} />;
 }
 
 export default Categories;
