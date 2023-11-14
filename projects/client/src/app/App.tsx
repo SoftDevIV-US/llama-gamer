@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 
 import Layout from './layouts/Layout';
+import Brands from './pages/brands/Brands';
 import Countries from './pages/countries/Countries';
 import AddCountry from './pages/countries/pages/add/AddCountry';
 import EditCountry from './pages/countries/pages/edit/EditCountry';
@@ -22,6 +23,7 @@ function App() {
         <Route path='/admin/countries/info/:id' element={<CountryInfo />} />
         <Route path='/admin/countries/edit/:id' element={<EditCountry />} />
         <Route path='/admin/countries/remove/:id' element={<RemoveCountry />} />
+        <Route path='/admin/brands' element={<Brands />} />
       </Routes>
     </Layout>
   );
