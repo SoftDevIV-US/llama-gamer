@@ -14,7 +14,7 @@ function Brands() {
   const recordList: RecordList = {
     title: 'Brands',
     url: 'brands',
-    fields: [{ key: 'Name', value: 'name', isUnderline: true }],
+    fields: [{ key: 'Name', value: 'name' }],
     values: brands,
   };
 

@@ -1,7 +1,7 @@
 const useEditBrand = () => {
-  const editCountry = () => {};
+  const editBrand = () => {};
 
-  return { editCountry };
+  return { editBrand };
 };
 
 export default useEditBrand;
