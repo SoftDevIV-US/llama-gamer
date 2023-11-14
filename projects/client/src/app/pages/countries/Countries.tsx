@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import List from '@/app/components/list/List';
+import InnerLayout from '@/app/layouts/InnerLayout';
 
 import useLoadCountries from './hooks/useLoadCountries';
 
@@ -20,7 +21,11 @@ function Countries() {
     values: countries,
   };
 
-  return <List recordList={recordList} isLoading={isLoading} isFound={isFound} />;
+  return (
+    <InnerLayout>
+      <List recordList={recordList} isLoading={isLoading} isFound={isFound} />
+    </InnerLayout>
+  );
 }
 
 export default Countries;

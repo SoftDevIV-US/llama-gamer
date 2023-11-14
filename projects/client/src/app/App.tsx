@@ -5,21 +5,24 @@ import Brands from './pages/brands/Brands';
 import AddBrand from './pages/brands/pages/add/AddBrand';
 import EditBrand from './pages/brands/pages/edit/EditBrand';
 import BrandInfo from './pages/brands/pages/info/BrandInfo';
+import Categories from './pages/categories/Categories';
 import Countries from './pages/countries/Countries';
 import AddCountry from './pages/countries/pages/add/AddCountry';
 import EditCountry from './pages/countries/pages/edit/EditCountry';
 import CountryInfo from './pages/countries/pages/info/CountryInfo';
-import AdminHome from './pages/home/admin/AdminHome';
-import UserHome from './pages/home/user/UserHome';
+import Admin from './pages/home/admin/Admin';
+import User from './pages/home/user/User';
 import NotFound from './pages/not-found/NotFound';
+import Products from './pages/products/Products';
+import Suppliers from './pages/suppliers/Suppliers';
 
 function App() {
   return (
     <Layout>
       <Routes>
         <Route path='*' element={<NotFound />} />
-        <Route path='/' element={<UserHome />} />
-        <Route path='/admin' element={<AdminHome />} />
+        <Route path='/' element={<User />} />
+        <Route path='/admin' element={<Admin />} />
         <Route path='/admin/countries' element={<Countries />} />
         <Route path='/admin/countries/add' element={<AddCountry />} />
         <Route path='/admin/countries/info/:id' element={<CountryInfo />} />
@@ -28,6 +31,9 @@ function App() {
         <Route path='/admin/brands/add' element={<AddBrand />} />
         <Route path='/admin/brands/info/:id' element={<BrandInfo />} />
         <Route path='/admin/brands/edit/:id' element={<EditBrand />} />
+        <Route path='/admin/categories' element={<Categories />} />
+        <Route path='/admin/suppliers' element={<Suppliers />} />
+        <Route path='/admin/products' element={<Products />} />
       </Routes>
     </Layout>
   );
