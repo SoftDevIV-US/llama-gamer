@@ -5,6 +5,7 @@ import { join } from 'path';
 import BrandModule from './brand/brand.module';
 import CategoryModule from './category/category.module';
 import CountryModule from './country/country.module';
+import SuppliersModule from './suppliers/suppliers.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import CountryModule from './country/country.module';
     CountryModule,
     BrandModule,
     CategoryModule,
+    SuppliersModule,
   ],
 })
 class AppModule {}
