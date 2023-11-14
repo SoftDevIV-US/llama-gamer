@@ -14,7 +14,7 @@ function Countries() {
     title: 'Countries',
     url: 'countries',
     fields: [
-      { key: 'Name', value: 'name', isInfo: true },
+      { key: 'Name', value: 'name', isUnderline: true },
       { key: 'Tax', value: 'tax', decorator: '%' },
     ],
     values: countries,

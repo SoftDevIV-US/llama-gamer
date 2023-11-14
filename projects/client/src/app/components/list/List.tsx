@@ -1,7 +1,7 @@
 /* eslint-disable tailwindcss/no-custom-classname */
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 
 import useNavigate from '@/app/hooks/useNavigate';
 
@@ -43,7 +43,7 @@ function Countries({ recordList, isLoading, isFound }: Props) {
             <ListField key={record.key}>{record.key}</ListField>
           ))}
           <ListField>Edit</ListField>
-          <ListField>Remove</ListField>
+          <ListField>Info</ListField>
         </ul>
       </div>
       <Line />
@@ -61,24 +61,16 @@ function Countries({ recordList, isLoading, isFound }: Props) {
           recordList.values.map((country) => (
             <ul
               key={country.id}
-              className={`grid-cols-${recordList.fields.length + 2} mx-auto grid w-full text-center lg:max-w-xl`}
+              className={`grid-cols-${
+                recordList.fields.length + 2
+              } mx-auto grid w-full items-center text-center lg:max-w-xl`}
             >
               {recordList.fields.map((record) => (
                 <li key={record.key}>
-                  {record.isInfo ? (
-                    <Button
-                      className='inline underline'
-                      onClick={() => {
-                        navigate(`/admin/${recordList.url}/info/${country.id}`);
-                      }}
-                    >
-                      {country[record.value]}
-                    </Button>
-                  ) : (
-                    <p className='inline'>{country[record.value]}</p>
-                  )}
-
-                  <p className='inline'>{record.decorator}</p>
+                  <p className={`inline break-words ${record.isUnderline ? 'underline' : ''}`}>
+                    {country[record.value]}
+                    {record.decorator}
+                  </p>
                 </li>
               ))}
               <li>
@@ -87,8 +79,8 @@ function Countries({ recordList, isLoading, isFound }: Props) {
                 </Button>
               </li>
               <li>
-                <Button onClick={() => navigate(`/admin/${recordList.url}/remove/${country.id}`)}>
-                  <DeleteIcon />
+                <Button onClick={() => navigate(`/admin/${recordList.url}/info/${country.id}`)}>
+                  <HelpOutlineIcon />
                 </Button>
               </li>
             </ul>
