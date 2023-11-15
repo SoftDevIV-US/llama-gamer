@@ -18,6 +18,7 @@ const useAddCountry = ({ setIsNameCorrect, setIsTaxCorrect }: Props) => {
       success: (res) => {
         setIsNameCorrect(true);
         setIsTaxCorrect(true);
+        navigate('/admin/countries');
         return `Country ${res.name} created successfully`;
       },
       error: (err) => {
@@ -37,9 +38,6 @@ const useAddCountry = ({ setIsNameCorrect, setIsTaxCorrect }: Props) => {
           setIsNameCorrect(true);
         }
         return error;
-      },
-      finally: () => {
-        navigate('/admin/countries');
       },
     });
     return response;
