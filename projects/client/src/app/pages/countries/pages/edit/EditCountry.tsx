@@ -45,7 +45,12 @@ function EditCountry() {
                 } as UpdateCountryDto
               }
               onSubmit={(values) => {
-                editCountry(values);
+                if (!values.tax || !values.name) return;
+                const newValues = {
+                  ...values,
+                  tax: Number(parseFloat(String(values.tax)).toFixed(2)),
+                };
+                editCountry(newValues);
               }}
               enableReinitialize
             >

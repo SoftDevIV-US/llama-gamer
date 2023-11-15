@@ -20,7 +20,10 @@ type Props = {
 function InputField({ id, children, value, type, placeholder, isCorrect, isDisabled }: Props) {
   return (
     <label htmlFor={id}>
-      <p className='px-4 text-[#1B263B]/50'>{children}</p>
+      <p className='px-4 text-[#1B263B]/50'>
+        {children}
+        <span className='text-red-700'> *</span>
+      </p>
       <Field
         id={id}
         name={value}

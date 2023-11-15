@@ -27,7 +27,12 @@ function AddCountry() {
             } as CreateCountryDto
           }
           onSubmit={(values) => {
-            addCountry(values);
+            if (!values.tax || !values.name) return;
+            const newValues = {
+              ...values,
+              tax: Number(parseFloat(String(values.tax)).toFixed(2)),
+            };
+            addCountry(newValues);
           }}
         >
           <FormFormik className='flex h-full flex-col overflow-y-scroll px-0 py-12 lg:px-16 landscape:gap-4 landscape:py-4 landscape:md:gap-20 landscape:md:py-20'>

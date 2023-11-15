@@ -12,13 +12,15 @@ import {
   MinLength,
 } from 'class-validator';
 
+import { NAME_VALIDATOR } from '@/utils/constants';
+
 class UpdateCountryDto {
   @ApiProperty({
     type: 'String',
     description: 'The name of the country',
     example: 'United States',
   })
-  @Matches(/^[a-zA-Z\s]*$/, {
+  @Matches(NAME_VALIDATOR, {
     message: 'The country must contain only letters and spaces',
   })
   @MaxLength(20, {

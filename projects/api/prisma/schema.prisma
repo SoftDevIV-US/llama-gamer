@@ -11,8 +11,9 @@ model Country {
   id        String   @id @default(uuid()) @db.Uuid()
   name      String   @unique @db.Citext
   tax       Float
-  createdAt DateTime @default(now()) @map(name: "created_at") @db.Timestamptz()
-  updatedAt DateTime @default(now()) @updatedAt @map(name: "updated_at") @db.Timestamptz()
+  createdAt DateTime   @default(now()) @map(name: "created_at") @db.Timestamptz()
+  updatedAt DateTime   @default(now()) @updatedAt @map(name: "updated_at") @db.Timestamptz()
+  suppliers Supplier[]
 
   @@map(name: "countries")
 }
@@ -35,4 +36,16 @@ model Brand {
   updatedAt DateTime @default(now()) @updatedAt @map(name: "updated_at") @db.Timestamptz()
 
   @@map(name: "brands")
+}
+
+model Supplier {
+  id           String   @id @default(uuid()) @db.Uuid()
+  email        String   @unique @db.Citext
+  deliveryTime Int      @map(name: "delivery_time")
+  createdAt    DateTime @default(now()) @map(name: "created_at") @db.Timestamptz()
+  updatedAt    DateTime @default(now()) @updatedAt @map(name: "updated_at") @db.Timestamptz()
+  countryId    String   @map(name: "country_id") @db.Uuid()
+  country      Country  @relation(fields: [countryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@map(name: "suppliers")
 }
