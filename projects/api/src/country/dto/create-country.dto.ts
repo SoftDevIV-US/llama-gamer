@@ -2,13 +2,15 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import { IsNotEmpty, IsNumber, IsPositive, IsString, Matches, Max, MaxLength, MinLength } from 'class-validator';
 
+import { NAME_VALIDATOR } from '@/utils/constants';
+
 class CreateCountryDto {
   @ApiProperty({
     type: 'String',
     description: 'The name of the country',
     example: 'United States',
   })
-  @Matches(/^[a-zA-Z\s]*$/, {
+  @Matches(NAME_VALIDATOR, {
     message: 'The country name must contain only letters and spaces',
   })
   @MaxLength(20, {

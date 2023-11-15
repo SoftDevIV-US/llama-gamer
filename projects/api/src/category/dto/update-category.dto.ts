@@ -2,13 +2,15 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import { IsNotEmpty, IsOptional, IsString, IsUrl, Matches, MaxLength, MinLength } from 'class-validator';
 
+import { NAME_VALIDATOR } from '@/utils/constants';
+
 class UpdateCategoryDto {
   @ApiProperty({
     type: 'String',
     description: 'The name of the category',
     example: 'Mouse',
   })
-  @Matches(/^[A-Za-z\s]+$/, {
+  @Matches(NAME_VALIDATOR, {
     message: 'The category name must only contain letters and spaces',
   })
   @MaxLength(30, {
