@@ -1,7 +1,7 @@
 /* eslint-disable tailwindcss/no-custom-classname */
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import EditIcon from '@mui/icons-material/Edit';
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import InfoIcon from '@mui/icons-material/Info';
 
 import useNavigate from '@/app/hooks/useNavigate';
 
@@ -37,7 +37,7 @@ function Countries({ recordList, isLoading, isFound }: Props) {
         <ul
           className={`grid-cols-${
             recordList.fields.length + 2
-          }  mx-auto grid w-full py-4 text-center lg:max-w-xl landscape:py-0 landscape:md:py-4`}
+          }  mx-auto grid w-full py-4 text-center lg:max-w-5xl landscape:py-0 landscape:md:py-4`}
         >
           {recordList.fields.map((record) => (
             <ListField key={record.key}>{record.key}</ListField>
@@ -63,7 +63,7 @@ function Countries({ recordList, isLoading, isFound }: Props) {
               key={country.id}
               className={`grid-cols-${
                 recordList.fields.length + 2
-              } mx-auto grid w-full items-center text-center lg:max-w-xl`}
+              } mx-auto grid w-full items-center text-center lg:max-w-5xl`}
             >
               {recordList.fields.map((record) => (
                 <li key={record.key}>
@@ -80,7 +80,7 @@ function Countries({ recordList, isLoading, isFound }: Props) {
               </li>
               <li>
                 <Button onClick={() => navigate(`/admin/${recordList.url}/info/${country.id}`)}>
-                  <HelpOutlineIcon />
+                  <InfoIcon />
                 </Button>
               </li>
             </ul>

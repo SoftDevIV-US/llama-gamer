@@ -2,13 +2,15 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import { IsNotEmpty, IsString, IsUrl, Matches, MaxLength, MinLength } from 'class-validator';
 
+import { NAME_VALIDATOR } from '@/utils/constants';
+
 class CreateBrandDto {
   @ApiProperty({
     type: 'String',
     description: 'The name of the brand',
     example: 'Asus',
   })
-  @Matches(/^[A-Za-z\s]+$/, {
+  @Matches(NAME_VALIDATOR, {
     message: 'The brand name must only contain letters and spaces',
   })
   @MaxLength(15, {
