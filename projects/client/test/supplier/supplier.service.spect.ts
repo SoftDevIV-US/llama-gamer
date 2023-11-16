@@ -17,7 +17,7 @@ describe('SupplierService', () => {
 
   describe('createSupplier', () => {
     it('should create a new supplier', async () => {
-      const data = { email: 'testSupplier@gmail.com', deliveryTime: 5, country: '1234bo' };
+      const data = { email: 'testSupplier@gmail.com', deliveryTime: 5, countryId: '1234bo' };
       const response = { data: { id: '1', ...data } };
       (axios.post as jest.MockedFunction<typeof axios.post>).mockResolvedValueOnce(response);
 
@@ -29,7 +29,7 @@ describe('SupplierService', () => {
   });
   describe('getAllSuppliers', () => {
     it('should get all suppliers', async () => {
-      const response = { data: [{ email: 'testSupplier@gmail.com', deliveryTime: 5, country: '1234bo' }] };
+      const response = { data: [{ email: 'testSupplier@gmail.com', deliveryTime: 5, countryId: '1234bo' }] };
       (axios.get as jest.MockedFunction<typeof axios.get>).mockResolvedValueOnce(response);
 
       const result = await getAllSuppliers();
@@ -42,7 +42,7 @@ describe('SupplierService', () => {
   describe('getSupplierById', () => {
     it('should get a supplier by id', async () => {
       const id = '1';
-      const response = { data: { id, email: 'testSupplier@gmail.com', deliveryTime: 5, country: '1234bo' } };
+      const response = { data: { id, email: 'testSupplier@gmail.com', deliveryTime: 5, countryId: '1234bo' } };
       (axios.get as jest.MockedFunction<typeof axios.get>).mockResolvedValueOnce(response);
 
       const result = await getSupplierById(id);
@@ -55,7 +55,7 @@ describe('SupplierService', () => {
   describe('updateSupplierById', () => {
     it('should update a supplier by id', async () => {
       const id = '1';
-      const data = { email: 'testUpdatedSupplier@gmail.com', deliveryTime: 5, country: '1234bo' };
+      const data = { email: 'testUpdatedSupplier@gmail.com', deliveryTime: 5, countryId: '1234bo' };
       const response = { data: { id, ...data } };
       (axios.patch as jest.MockedFunction<typeof axios.patch>).mockResolvedValueOnce(response);
 
@@ -69,7 +69,7 @@ describe('SupplierService', () => {
   describe('deleteSupplierById', () => {
     it('should delete a supplier by id', async () => {
       const id = '1';
-      const response = { data: { id, email: 'testSupplier@gmail.com', deliveryTime: 5, country: '1234bo' } };
+      const response = { data: { id, email: 'testSupplier@gmail.com', deliveryTime: 5, countryId: '1234bo' } };
       (axios.delete as jest.MockedFunction<typeof axios.delete>).mockResolvedValueOnce(response);
 
       const result = await deleteSupplierById(id);

@@ -1,19 +1,19 @@
 interface Supplier extends ApiRecord {
   email: string;
   deliveryTime: number;
-  country: string;
+  countryId: string;
 }
 
 type CreateSupplierDto = {
   email: string;
   deliveryTime: number;
-  country: string;
+  countryId: string;
 };
 
 type UpdateSupplierDto = {
   email?: string;
   deliveryTime?: number;
-  country?: string;
+  countryId?: string;
 };
 
 export type { CreateSupplierDto, Supplier, UpdateSupplierDto };
