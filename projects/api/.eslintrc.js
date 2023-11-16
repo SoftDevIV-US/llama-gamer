@@ -73,5 +73,6 @@ module.exports = {
         js: 'never',
       },
     ],
+    'no-console': 'off',
   },
 };

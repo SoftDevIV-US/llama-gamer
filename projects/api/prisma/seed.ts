@@ -40,7 +40,7 @@ async function seed() {
 
 seed()
   .catch((e) => {
-    throw new Error(`Error seeding database: ${e}`);
+    console.error('Error seeding database', e);
   })
   .finally(async () => {
     await prisma.$disconnect();
