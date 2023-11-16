@@ -17,7 +17,7 @@ const config: Config = {
     '/.turbo/',
   ],
   testEnvironment: 'node',
-  collectCoverageFrom: ['src/**/*.ts', '!src/**/*.module.ts'],
+  collectCoverageFrom: ['src/**/*.ts', '!src/**/*.module.ts', '!src/**/*.entity.ts'],
   coveragePathIgnorePatterns: [
     '<rootDir>/src/main.ts',
     '<rootDir>/src/prisma/prisma.service.ts',

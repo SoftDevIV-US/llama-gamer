@@ -8,17 +8,8 @@ import Supplier from '@/suppliers/entities/supplier.entity';
 import SuppliersService from '@/suppliers/suppliers.service';
 
 describe('SuppliersService', () => {
-  let suppliersService: SuppliersService;
-
-  const prismaService = {
-    supplier: {
-      create: jest.fn(),
-      findMany: jest.fn(),
-      findUnique: jest.fn(),
-      update: jest.fn(),
-      delete: jest.fn(),
-    },
-  };
+  let service: SuppliersService;
+  let prismaService: PrismaService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -26,346 +17,374 @@ describe('SuppliersService', () => {
         SuppliersService,
         {
           provide: PrismaService,
-          useValue: prismaService,
+          useValue: {
+            supplier: {
+              create: jest.fn(),
+              findMany: jest.fn(),
+              findUnique: jest.fn(),
+              update: jest.fn(),
+              delete: jest.fn(),
+            },
+          },
         },
       ],
     }).compile();
 
-    suppliersService = module.get<SuppliersService>(SuppliersService);
+    service = module.get<SuppliersService>(SuppliersService);
+    prismaService = module.get<PrismaService>(PrismaService);
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
-  });
-
-  it('should be defined', () => {
-    expect(suppliersService).toBeDefined();
+    jest.resetAllMocks();
   });
 
   describe('create', () => {
     it('should create a supplier', async () => {
       const createSupplierDto: CreateSupplierDto = {
-        email: 'lenovo@gmail.com',
+        email: 'test@example.com',
         deliveryTime: 5,
-        countryId: '123e4567-e89b-12d3-a456-426814172801',
+        countryId: '123e4567-e89b-12d3-a456-426814174001',
       };
-      const createdSupplier: Supplier = {
-        id: '1',
-        email: 'lenovo@gmail.com',
+      const supplier: Supplier = {
+        id: '123e4567-e89b-12d3-a456-426614174000',
+        email: 'test@example.com',
         deliveryTime: 5,
         createdAt: new Date(),
         updatedAt: new Date(),
-        countryId: '123e4567-e89b-12d3-a456-426814172801',
+        countryId: '123e4567-e89b-12d3-a456-426814174001',
+        country: {
+          id: '123e4567-e89b-12d3-a456-426814174001',
+          name: 'United States',
+          tax: 0.07,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       };
+      jest.spyOn(prismaService.supplier, 'create').mockResolvedValue(supplier);
 
-      prismaService.supplier.create.mockResolvedValue(createdSupplier);
+      const result: Supplier = await service.create(createSupplierDto);
 
-      const result = await suppliersService.create(createSupplierDto);
-
-      expect(result).toEqual(createdSupplier);
       expect(prismaService.supplier.create).toHaveBeenCalledWith({
         data: createSupplierDto,
+        include: {
+          country: true,
+        },
       });
+      expect(result).toEqual(supplier);
     });
 
-    it('should handle a duplicate supplier email', async () => {
+    it('should throw a BadRequestException if the email already exists', async () => {
       const createSupplierDto: CreateSupplierDto = {
-        email: 'lenovo@gmail.com',
-        deliveryTime: 2,
-        countryId: '123e4567-e89b-12d3-af56-426814172801',
-      };
-
-      prismaService.supplier.create.mockRejectedValue({ meta: { target: ['email'] } });
-      let error;
-      try {
-        await suppliersService.create(createSupplierDto);
-      } catch (err) {
-        error = err;
-      }
-      expect(error).toBeInstanceOf(BadRequestException);
-      expect(error.message).toBe('Supplier email already exists');
-      expect(prismaService.supplier.create).toHaveBeenCalledWith({
-        data: createSupplierDto,
-      });
-    });
-
-    it('should handle unexpected errors', async () => {
-      const createSupplierDto: CreateSupplierDto = {
-        email: 'ryzen@gmail.com',
-        deliveryTime: 4,
-        countryId: '123e4567-e89b-12d3-af56-426814172109',
-      };
-
-      prismaService.supplier.create.mockRejectedValue(new BadRequestException('Some unexpected error'));
-      let error;
-      try {
-        await suppliersService.create(createSupplierDto);
-      } catch (err) {
-        error = err;
-      }
-      expect(error).toBeInstanceOf(BadRequestException);
-      expect(error.message).toBe('Something went wrong');
-      expect(prismaService.supplier.create).toHaveBeenCalledWith({
-        data: createSupplierDto,
-      });
-    });
-
-    it('should handle missing email during create', async () => {
-      const createSupplierDto: CreateSupplierDto = {
-        email: '',
+        email: 'test@example.com',
         deliveryTime: 5,
-        countryId: '123e4567-e89b-12d3-a456-426814172801',
+        countryId: '123e4567-e89b-12d3-a456-426814174001',
       };
+      const error = {
+        code: 'P2002',
+      };
+      jest.spyOn(prismaService.supplier, 'create').mockRejectedValue(error);
 
-      let error;
-
-      try {
-        await suppliersService.create(createSupplierDto);
-      } catch (err) {
-        error = err;
-      }
-
-      expect(error).toBeInstanceOf(BadRequestException);
-      expect(prismaService.supplier.create).toHaveBeenCalled();
+      await expect(service.create(createSupplierDto)).rejects.toThrow(BadRequestException);
+      expect(prismaService.supplier.create).toHaveBeenCalledWith({
+        data: createSupplierDto,
+        include: {
+          country: true,
+        },
+      });
     });
 
-    it('should handle missing countryId during create', async () => {
+    it('should throw a BadRequestException if the country ID is not found', async () => {
       const createSupplierDto: CreateSupplierDto = {
-        email: 'lenovo@gmail.com',
+        email: 'test@example.com',
         deliveryTime: 5,
-        countryId: '',
+        countryId: '123e4567-e89b-12d3-a456-426814174001',
       };
+      const error = {
+        code: 'P2023',
+      };
+      jest.spyOn(prismaService.supplier, 'create').mockRejectedValue(error);
 
-      let error;
+      await expect(service.create(createSupplierDto)).rejects.toThrow(BadRequestException);
+      expect(prismaService.supplier.create).toHaveBeenCalledWith({
+        data: createSupplierDto,
+        include: {
+          country: true,
+        },
+      });
+    });
 
-      try {
-        await suppliersService.create(createSupplierDto);
-      } catch (err) {
-        error = err;
-      }
+    it('should throw a BadRequestException if something else goes wrong', async () => {
+      const createSupplierDto: CreateSupplierDto = {
+        email: 'test@example.com',
+        deliveryTime: 5,
+        countryId: '123e4567-e89b-12d3-a456-426814174001',
+      };
+      const error = new Error();
+      jest.spyOn(prismaService.supplier, 'create').mockRejectedValue(error);
 
-      expect(error).toBeInstanceOf(BadRequestException);
-      expect(prismaService.supplier.create).toHaveBeenCalled();
+      await expect(service.create(createSupplierDto)).rejects.toThrow(BadRequestException);
+      expect(prismaService.supplier.create).toHaveBeenCalledWith({
+        data: createSupplierDto,
+        include: {
+          country: true,
+        },
+      });
     });
   });
 
   describe('findAll', () => {
     it('should return an array of suppliers', async () => {
-      const expectedSuppliers: Supplier[] = [
+      const suppliers: Supplier[] = [
         {
-          id: '1',
-          email: 'asus@gmail.com',
-          deliveryTime: 6,
+          id: '123e4567-e89b-12d3-a456-426614174000',
+          email: 'test1@example.com',
+          deliveryTime: 5,
           createdAt: new Date(),
           updatedAt: new Date(),
-          countryId: '123e4567-e89b-12d3-a456-426814172810',
+          countryId: '123e4567-e89b-12d3-a456-426814174001',
+          country: {
+            id: '123e4567-e89b-12d3-a456-426814174001',
+            name: 'United States',
+            tax: 0.07,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          },
         },
         {
-          id: '2',
-          email: 'toshiba@gmail.com',
-          deliveryTime: 8,
+          id: '123e4567-e89b-12d3-a456-426614174001',
+          email: 'test2@example.com',
+          deliveryTime: 10,
           createdAt: new Date(),
           updatedAt: new Date(),
-          countryId: '123e4567-e89b-12d3-a456-426814172818',
+          countryId: '123e4567-e89b-12d3-a456-426814174002',
+          country: {
+            id: '123e4567-e89b-12d3-a456-426814174002',
+            name: 'Canada',
+            tax: 0.05,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          },
         },
       ];
+      jest.spyOn(prismaService.supplier, 'findMany').mockResolvedValue(suppliers);
 
-      prismaService.supplier.findMany.mockResolvedValue(expectedSuppliers);
+      const result: Supplier[] = await service.findAll();
 
-      const result = await suppliersService.findAll();
-
-      expect(result).toEqual(expectedSuppliers);
       expect(prismaService.supplier.findMany).toHaveBeenCalledWith({
         orderBy: {
           createdAt: 'desc',
         },
-      });
-    });
-
-    it('should handle unexpected errors during findMany', async () => {
-      prismaService.supplier.findMany.mockRejectedValue(new BadRequestException('Some unexpected error'));
-
-      let error;
-
-      try {
-        await suppliersService.findAll();
-      } catch (err) {
-        error = err;
-      }
-
-      expect(error).toBeInstanceOf(BadRequestException);
-      expect(prismaService.supplier.findMany).toHaveBeenCalledWith({
-        orderBy: {
-          createdAt: 'desc',
+        include: {
+          country: true,
         },
       });
+      expect(result).toEqual(suppliers);
     });
   });
 
   describe('findOne', () => {
-    it('should return a supplier by ID', async () => {
-      const supplierId = '1';
-      const expectedSupplier: Supplier = {
-        id: supplierId,
-        email: 'hp@gmail.com',
-        deliveryTime: 6,
+    it('should return a supplier', async () => {
+      const id = '123e4567-e89b-12d3-a456-426614174000';
+      const supplier: Supplier = {
+        id,
+        email: 'test@example.com',
+        deliveryTime: 5,
         createdAt: new Date(),
         updatedAt: new Date(),
-        countryId: '123e4567-e89b-12d3-a456-426814172820',
+        countryId: '123e4567-e89b-12d3-a456-426814174001',
+        country: {
+          id: '123e4567-e89b-12d3-a456-426814174001',
+          name: 'United States',
+          tax: 0.07,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       };
+      jest.spyOn(prismaService.supplier, 'findUnique').mockResolvedValue(supplier);
 
-      prismaService.supplier.findUnique.mockResolvedValue(expectedSupplier);
+      const result: Supplier = await service.findOne(id);
 
-      const result = await suppliersService.findOne(supplierId);
-
-      expect(result).toEqual(expectedSupplier);
       expect(prismaService.supplier.findUnique).toHaveBeenCalledWith({
         where: {
-          id: supplierId,
+          id,
+        },
+        include: {
+          country: true,
         },
       });
+      expect(result).toEqual(supplier);
     });
 
-    it('should handle not found scenario', async () => {
-      const supplierId = '98';
+    it('should throw a NotFoundException if the supplier is not found', async () => {
+      const id = '123e4567-e89b-12d3-a456-426614174000';
+      jest.spyOn(prismaService.supplier, 'findUnique').mockResolvedValue(null);
 
-      prismaService.supplier.findUnique.mockResolvedValue(null);
-
-      let error;
-
-      try {
-        await suppliersService.findOne(supplierId);
-      } catch (err) {
-        error = err;
-      }
-
-      expect(error).toBeInstanceOf(NotFoundException);
-      expect(error.message).toBe(`Supplier with ID ${supplierId} not found`);
+      await expect(service.findOne(id)).rejects.toThrow(NotFoundException);
       expect(prismaService.supplier.findUnique).toHaveBeenCalledWith({
         where: {
-          id: supplierId,
+          id,
+        },
+        include: {
+          country: true,
         },
       });
     });
   });
 
   describe('update', () => {
-    it('should update a supplier by ID', async () => {
-      const supplierId = '1';
-      const updateSupplierDto: UpdateSupplierDto = { email: 'dell@gmail.com', deliveryTime: 4 };
-      const updatedSupplier: Supplier = {
-        id: supplierId,
-        email: 'ryzen@gmail.com',
+    it('should update a supplier', async () => {
+      const id = '123e4567-e89b-12d3-a456-426614174000';
+      const updateSupplierDto: UpdateSupplierDto = {
+        email: 'test@example.com',
+        deliveryTime: 5,
+        countryId: '123e4567-e89b-12d3-a456-426814174001',
+      };
+      const supplier: Supplier = {
+        id,
+        email: 'test@example.com',
         deliveryTime: 5,
         createdAt: new Date(),
         updatedAt: new Date(),
-        countryId: '123a4867-e89b-12d3-a456-426814172820',
+        countryId: '123e4567-e89b-12d3-a456-426814174001',
+        country: {
+          id: '123e4567-e89b-12d3-a456-426814174001',
+          name: 'United States',
+          tax: 0.07,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       };
+      jest.spyOn(prismaService.supplier, 'update').mockResolvedValue(supplier);
 
-      prismaService.supplier.update.mockResolvedValue(updatedSupplier);
+      const result: Supplier = await service.update(id, updateSupplierDto);
 
-      const result = await suppliersService.update(supplierId, updateSupplierDto);
-
-      expect(result).toEqual(updatedSupplier);
       expect(prismaService.supplier.update).toHaveBeenCalledWith({
         where: {
-          id: supplierId,
+          id,
         },
         data: updateSupplierDto,
+        include: {
+          country: true,
+        },
+      });
+      expect(result).toEqual(supplier);
+    });
+
+    it('should throw a BadRequestException if the email already exists', async () => {
+      const id = '123e4567-e89b-12d3-a456-426614174000';
+      const updateSupplierDto: UpdateSupplierDto = {
+        email: 'test@example.com',
+        deliveryTime: 5,
+        countryId: '123e4567-e89b-12d3-a456-426814174001',
+      };
+      const error = {
+        code: 'P2002',
+      };
+      jest.spyOn(prismaService.supplier, 'update').mockRejectedValue(error);
+
+      await expect(service.update(id, updateSupplierDto)).rejects.toThrow(BadRequestException);
+      expect(prismaService.supplier.update).toHaveBeenCalledWith({
+        where: {
+          id,
+        },
+        data: updateSupplierDto,
+        include: {
+          country: true,
+        },
       });
     });
 
-    it('should handle a duplicate supplier email during update', async () => {
-      const supplierId = '1';
-      const updateSupplierDto: UpdateSupplierDto = { email: 'dell@gmail.com', deliveryTime: 4 };
+    it('should throw a BadRequestException if the country ID is not found', async () => {
+      const id = '123e4567-e89b-12d3-a456-426614174000';
+      const updateSupplierDto: UpdateSupplierDto = {
+        email: 'test@example.com',
+        deliveryTime: 5,
+        countryId: '123e4567-e89b-12d3-a456-426814174001',
+      };
+      const error = {
+        code: 'P2023',
+      };
+      jest.spyOn(prismaService.supplier, 'update').mockRejectedValue(error);
 
-      prismaService.supplier.update.mockRejectedValue({ meta: { target: ['email'] } });
-
-      let error;
-
-      try {
-        await suppliersService.update(supplierId, updateSupplierDto);
-      } catch (err) {
-        error = err;
-      }
-
-      expect(error).toBeInstanceOf(BadRequestException);
-      expect(error.message).toBe('Supplier email already exists');
+      await expect(service.update(id, updateSupplierDto)).rejects.toThrow(BadRequestException);
       expect(prismaService.supplier.update).toHaveBeenCalledWith({
         where: {
-          id: supplierId,
+          id,
         },
         data: updateSupplierDto,
+        include: {
+          country: true,
+        },
       });
     });
 
-    it('should handle unexpected errors during update', async () => {
-      const supplierId = '1';
-      const updateSupplierDto: UpdateSupplierDto = { email: 'dell@gmail.com', deliveryTime: 4 };
+    it('should throw a BadRequestException if something else goes wrong', async () => {
+      const id = '123e4567-e89b-12d3-a456-426614174000';
+      const updateSupplierDto: UpdateSupplierDto = {
+        email: 'test@example.com',
+        deliveryTime: 5,
+        countryId: '123e4567-e89b-12d3-a456-426814174001',
+      };
+      const error = new Error();
+      jest.spyOn(prismaService.supplier, 'update').mockRejectedValue(error);
 
-      prismaService.supplier.update.mockRejectedValue(new Error('Some unexpected error'));
-
-      let error;
-
-      try {
-        await suppliersService.update(supplierId, updateSupplierDto);
-      } catch (err) {
-        error = err;
-      }
-
-      expect(error).toBeInstanceOf(NotFoundException);
-      expect(error.message).toBe('Supplier with ID 1 not found');
+      await expect(service.update(id, updateSupplierDto)).rejects.toThrow(BadRequestException);
       expect(prismaService.supplier.update).toHaveBeenCalledWith({
         where: {
-          id: supplierId,
+          id,
         },
         data: updateSupplierDto,
+        include: {
+          country: true,
+        },
       });
     });
   });
 
   describe('remove', () => {
-    it('should remove a supplier by ID', async () => {
-      const supplierId = '1';
-      const deletedSupplier: Supplier = {
-        id: supplierId,
-        email: 'acer@gmail.com',
-        deliveryTime: 9,
+    it('should remove a supplier', async () => {
+      const id = '123e4567-e89b-12d3-a456-426614174000';
+      const supplier: Supplier = {
+        id,
+        email: 'test@example.com',
+        deliveryTime: 5,
         createdAt: new Date(),
         updatedAt: new Date(),
-        countryId: '123a4867-e89b-12m8-a456-426814172820',
+        countryId: '123e4567-e89b-12d3-a456-426814174001',
+        country: {
+          id: '123e4567-e89b-12d3-a456-426814174001',
+          name: 'United States',
+          tax: 0.07,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       };
+      jest.spyOn(prismaService.supplier, 'delete').mockResolvedValue(supplier);
 
-      prismaService.supplier.delete.mockResolvedValue(deletedSupplier);
+      const result: Supplier = await service.remove(id);
 
-      const result = await suppliersService.remove(supplierId);
-
-      expect(result).toEqual(deletedSupplier);
       expect(prismaService.supplier.delete).toHaveBeenCalledWith({
         where: {
-          id: supplierId,
+          id,
+        },
+        include: {
+          country: true,
         },
       });
+      expect(result).toEqual(supplier);
     });
 
-    it('should handle unexpected errors during removal', async () => {
-      const supplierId = '1';
+    it('should throw a NotFoundException if the supplier is not found', async () => {
+      const id = '123e4567-e89b-12d3-a456-426614174000';
+      jest.spyOn(prismaService.supplier, 'delete').mockRejectedValue(new Error());
 
-      prismaService.supplier.delete.mockRejectedValue(new Error('Some unexpected error'));
-
-      let error;
-
-      try {
-        await suppliersService.remove(supplierId);
-      } catch (err) {
-        error = err;
-      }
-
-      expect(error).toBeInstanceOf(NotFoundException);
-      expect(error.message).toBe('Supplier with ID 1 not found');
+      await expect(service.remove(id)).rejects.toThrow(NotFoundException);
       expect(prismaService.supplier.delete).toHaveBeenCalledWith({
         where: {
-          id: supplierId,
+          id,
+        },
+        include: {
+          country: true,
         },
       });
     });

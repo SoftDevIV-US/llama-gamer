@@ -1,7 +1,10 @@
+import { Country } from './country.model';
+
 interface Supplier extends ApiRecord {
   email: string;
   deliveryTime: number;
   countryId: string;
+  country: Country;
 }
 
 type CreateSupplierDto = {
