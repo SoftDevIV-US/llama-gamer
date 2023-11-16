@@ -7,7 +7,7 @@ export const createSupplier = async (data: CreateSupplierDto): Promise<Supplier>
   return response.data;
 };
 
-export const getAllSupplier = async (): Promise<Supplier[]> => {
+export const getAllSuppliers = async (): Promise<Supplier[]> => {
   const response = await axios.get('/api/suppliers');
   return response.data;
 };

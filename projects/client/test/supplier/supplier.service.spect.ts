@@ -3,7 +3,7 @@ import axios from 'axios';
 import {
   createSupplier,
   deleteSupplierById,
-  getAllSupplier,
+  getAllSuppliers,
   getSupplierById,
   updateSupplierById,
 } from '@/services/supplier.service';
@@ -27,12 +27,12 @@ describe('SupplierService', () => {
       expect(result).toEqual(response.data);
     });
   });
-  describe('getAllSupplier', () => {
-    it('should get all supplier', async () => {
+  describe('getAllSuppliers', () => {
+    it('should get all suppliers', async () => {
       const response = { data: [{ email: 'testSupplier@gmail.com', deliveryTime: 5, country: '1234bo' }] };
       (axios.get as jest.MockedFunction<typeof axios.get>).mockResolvedValueOnce(response);
 
-      const result = await getAllSupplier();
+      const result = await getAllSuppliers();
 
       expect(axios.get).toHaveBeenCalledWith('/api/suppliers');
       expect(result).toEqual(response.data);
