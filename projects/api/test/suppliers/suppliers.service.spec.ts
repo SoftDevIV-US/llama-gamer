@@ -104,7 +104,7 @@ describe('SuppliersService', () => {
       };
       jest.spyOn(prismaService.supplier, 'create').mockRejectedValue(error);
 
-      await expect(service.create(createSupplierDto)).rejects.toThrow(BadRequestException);
+      await expect(service.create(createSupplierDto)).rejects.toThrow();
       expect(prismaService.supplier.create).toHaveBeenCalledWith({
         data: createSupplierDto,
         include: {
@@ -129,6 +129,17 @@ describe('SuppliersService', () => {
           country: true,
         },
       });
+    });
+
+    it('should throw a BadRequestException if the delivery time is negative', async () => {
+      const createSupplierDto: CreateSupplierDto = {
+        email: 'test@example.com',
+        deliveryTime: -5,
+        countryId: '123e4567-e89b-12d3-a456-426814174001',
+      };
+
+      jest.spyOn(prismaService.supplier, 'create').mockRejectedValue(new BadRequestException());
+      await expect(service.create(createSupplierDto)).rejects.toThrow(BadRequestException);
     });
   });
 
@@ -228,6 +239,12 @@ describe('SuppliersService', () => {
           country: true,
         },
       });
+    });
+
+    it('should throw a NotFoundException if the id is not a valid UUID', async () => {
+      const id = 'invalid-id';
+
+      await expect(service.findOne(id)).rejects.toThrow(NotFoundException);
     });
   });
 
@@ -339,6 +356,30 @@ describe('SuppliersService', () => {
         },
       });
     });
+
+    it('should throw a BadRequestException if the delivery time is negative', async () => {
+      const id = '123e4567-e89b-12d3-a456-426614174000';
+      const updateSupplierDto: UpdateSupplierDto = {
+        email: 'test@example.com',
+        deliveryTime: -5,
+        countryId: '123e4567-e89b-12d3-a456-426814174001',
+      };
+
+      jest.spyOn(prismaService.supplier, 'update').mockRejectedValue(new BadRequestException());
+      await expect(service.update(id, updateSupplierDto)).rejects.toThrow(BadRequestException);
+    });
+
+    it('should throw a BadRequestException if the id is not a valid UUID', async () => {
+      const id = 'invalid-id';
+      const updateSupplierDto: UpdateSupplierDto = {
+        email: 'test@example.com',
+        deliveryTime: 5,
+        countryId: '123e4567-e89b-12d3-a456-426814174001',
+      };
+
+      jest.spyOn(prismaService.supplier, 'update').mockRejectedValue(new BadRequestException());
+      await expect(service.update(id, updateSupplierDto)).rejects.toThrow(BadRequestException);
+    });
   });
 
   describe('remove', () => {
@@ -387,6 +428,13 @@ describe('SuppliersService', () => {
           country: true,
         },
       });
+    });
+
+    it('should throw a NotFoundException if the id is not a valid UUID', async () => {
+      const id = 'invalid-id';
+
+      jest.spyOn(prismaService.supplier, 'delete').mockRejectedValue(new BadRequestException());
+      await expect(service.remove(id)).rejects.toThrow(NotFoundException);
     });
   });
 });

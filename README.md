@@ -16,29 +16,30 @@ This is an E-Commerce built with Nestjs and Vite, this E-Commerce is part of the
 
 To run the project you need to have installed the following programs:
 
-* bun
+* nodejs
+* pnpm
 * docker
 
 ## Installation And Usage
 
-To run the development environment you need to run the following commands:
+To run the development environment in Linux you need to run the following commands:
 
 ```bash
-bun install
-bun run dev
+pnpm install
+pnpm run dev
 ```
 
-To run the production environment you need to run the following commands:
+To run the production environment in Linux you need to run the following commands:
 
 ```bash
-bun install
-bun run build
-bun run start
+pnpm install
+pnpm run build
+pnpm run start:dev
 ```
 
 To test the project you need to run the following commands:
 
 ```bash
-bun install
-bun run test
+pnpm install
+pnpm run test
 ```

@@ -6,17 +6,12 @@ import { brands, categories, countries } from './data/products';
 
 const prisma = new PrismaClient();
 
+/**
+ * Seed the database with data
+ */
 async function seed() {
-  const createdCountries = await prisma.country.createMany({
+  await prisma.country.createMany({
     data: countries,
-  });
-
-  const countryList = await prisma.country.findMany({
-    where: {
-      name: {
-        in: countries.map((country) => country.name),
-      },
-    },
   });
 
   await prisma.brand.createMany({
@@ -28,17 +23,14 @@ async function seed() {
   });
 
   const suppliers: CreateSupplierDto[] = [];
+  const countryList = await prisma.country.findMany();
 
   countryList.forEach((country) => {
-    for (let i = 0; i < 2; i += 1) {
-      const email = `supplier_${country.name.toLowerCase().replace(/\s+/g, '_')}_${i + 1}@example.com`;
-      const deliveryTime = Math.floor(Math.random() * 180) + 1;
-      suppliers.push({
-        email,
-        deliveryTime,
-        countryId: country.id,
-      });
-    }
+    suppliers.push({
+      email: `supplier_${country.name.toLowerCase().replace(/\s+/g, '_')}@example.com`,
+      deliveryTime: Math.floor(Math.random() * 180) + 1,
+      countryId: country.id,
+    });
   });
 
   await prisma.supplier.createMany({
@@ -48,7 +40,7 @@ async function seed() {
 
 seed()
   .catch((e) => {
-    throw new Error(e);
+    throw new Error(`Error seeding database: ${e}`);
   })
   .finally(async () => {
     await prisma.$disconnect();
