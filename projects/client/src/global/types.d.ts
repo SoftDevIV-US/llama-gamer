@@ -5,13 +5,14 @@ declare global {
     id: string;
     createdAt: string;
     updatedAt: string;
-    [key: string]: string | number;
+    [key: string]: any;
   }
 
   type RecordField = {
     key: string;
     value: string;
     decorator?: string;
+    moreValue?: string;
   };
 
   type RecordList = {

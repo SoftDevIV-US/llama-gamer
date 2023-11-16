@@ -1,11 +1,29 @@
+import { useState } from 'react';
+
+import List from '@/app/components/list/List';
 import InnerLayout from '@/app/layouts/InnerLayout';
 
+import useLoadSuppliers from './hooks/useLoadSupplier';
+
 function Suppliers() {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isFound, setIsFound] = useState<boolean>(false);
+
+  const { suppliers } = useLoadSuppliers({ setIsLoading, setIsFound });
+
+  const recordList: RecordList = {
+    title: 'Suppliers ',
+    url: 'suppliers',
+    fields: [
+      { key: 'Email', value: 'email' },
+      { key: 'Delivery Time', value: 'deliveryTime', decorator: ' days' },
+      { key: 'Country', value: 'country', moreValue: 'name' },
+    ],
+    values: suppliers,
+  };
   return (
     <InnerLayout>
-      <div className='grid h-full place-content-center'>
-        <h1 className='text-4xl font-bold'>Suppliers</h1>
-      </div>
+      <List recordList={recordList} isLoading={isLoading} isFound={isFound} />
     </InnerLayout>
   );
 }

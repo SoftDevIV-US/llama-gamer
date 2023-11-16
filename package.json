@@ -71,7 +71,8 @@
     "check:code": "pnpm --parallel lint && pnpm --parallel format",
     "test": "pnpm --parallel test",
     "build": "pnpm --parallel build",
-    "start": "node projects/api/dist/src/main.js"
+    "start": "node projects/api/dist/src/main.js",
+    "start:dev": "DATABASE_URL=\"postgresql://user:password@localhost:3030/llama_gamer_db\" node projects/api/dist/src/main.js"
   },
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",

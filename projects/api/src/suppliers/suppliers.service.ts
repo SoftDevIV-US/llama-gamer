@@ -14,11 +14,20 @@ class SuppliersService {
     try {
       const supplier: Supplier = await this.prisma.supplier.create({
         data: createSupplierDto,
+        include: {
+          country: true,
+        },
       });
       return supplier;
     } catch (error) {
-      if (error?.meta?.target?.includes('email')) {
+      if (!error.code) {
+        throw new BadRequestException('Something went wrong');
+      }
+      if (error?.code === 'P2002') {
         throw new BadRequestException('Supplier email already exists');
+      }
+      if (error?.code === 'P2023') {
+        throw new BadRequestException('Country ID not found');
       }
       throw new BadRequestException('Something went wrong');
     }
@@ -29,6 +38,9 @@ class SuppliersService {
       orderBy: {
         createdAt: 'desc',
       },
+      include: {
+        country: true,
+      },
     });
     return suppliers;
   }
@@ -37,6 +49,9 @@ class SuppliersService {
     const supplier: Supplier = await this.prisma.supplier.findUnique({
       where: {
         id,
+      },
+      include: {
+        country: true,
       },
     });
     if (!supplier) {
@@ -52,13 +67,22 @@ class SuppliersService {
           id,
         },
         data: updateSupplierDto,
+        include: {
+          country: true,
+        },
       });
       return supplier;
     } catch (error) {
-      if (error?.meta?.target?.includes('email')) {
+      if (!error.code) {
+        throw new BadRequestException('Something went wrong');
+      }
+      if (error?.code === 'P2002') {
         throw new BadRequestException('Supplier email already exists');
       }
-      throw new NotFoundException(`Supplier with ID ${id} not found`);
+      if (error?.code === 'P2023') {
+        throw new BadRequestException('Country ID not found');
+      }
+      throw new BadRequestException('Something went wrong');
     }
   }
 
@@ -67,6 +91,9 @@ class SuppliersService {
       const supplier: Supplier = await this.prisma.supplier.delete({
         where: {
           id,
+        },
+        include: {
+          country: true,
         },
       });
       return supplier;

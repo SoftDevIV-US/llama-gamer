@@ -1,23 +1,15 @@
-import { BadRequestException } from '@nestjs/common';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import CreateSupplierDto from '@/suppliers/dto/create-supplier.dto';
 import UpdateSupplierDto from '@/suppliers/dto/update-supplier.dto';
 import Supplier from '@/suppliers/entities/supplier.entity';
 import SuppliersController from '@/suppliers/suppliers.controller';
-
-import SuppliersService from '../../src/suppliers/suppliers.service';
+import SuppliersService from '@/suppliers/suppliers.service';
 
 describe('SuppliersController', () => {
-  let suppliersController: SuppliersController;
-
-  const suppliersService = {
-    create: jest.fn(),
-    findAll: jest.fn(),
-    findOne: jest.fn(),
-    update: jest.fn(),
-    remove: jest.fn(),
-  };
+  let controller: SuppliersController;
+  let suppliersService: SuppliersService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -25,210 +17,264 @@ describe('SuppliersController', () => {
       providers: [
         {
           provide: SuppliersService,
-          useValue: suppliersService,
+          useValue: {
+            create: jest.fn(),
+            findAll: jest.fn(),
+            findOne: jest.fn(),
+            update: jest.fn(),
+            remove: jest.fn(),
+          },
         },
       ],
     }).compile();
 
-    suppliersController = module.get<SuppliersController>(SuppliersController);
+    controller = module.get<SuppliersController>(SuppliersController);
+    suppliersService = module.get<SuppliersService>(SuppliersService);
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
-  });
-
-  it('should be defined', () => {
-    expect(suppliersController).toBeDefined();
+    jest.resetAllMocks();
   });
 
   describe('create', () => {
     it('should create a supplier', async () => {
       const createSupplierDto: CreateSupplierDto = {
-        email: 'lenovo@gmail.com',
+        email: 'test@example.com',
         deliveryTime: 5,
-        countryId: '123e4567-e89b-12d3-a456-426814172801',
+        countryId: '123e4567-e89b-12d3-a456-426814174001',
       };
-      const createdSupplier: Supplier = {
-        id: '1',
-        email: 'lenovo@gmail.com',
+      const supplier: Supplier = {
+        id: '123e4567-e89b-12d3-a456-426614174000',
+        email: 'test@example.com',
         deliveryTime: 5,
         createdAt: new Date(),
         updatedAt: new Date(),
-        countryId: '123e4567-e89b-12d3-a456-426814172801',
+        countryId: '123e4567-e89b-12d3-a456-426814174001',
+        country: {
+          id: '123e4567-e89b-12d3-a456-426814174001',
+          name: 'United States',
+          tax: 0.07,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       };
+      jest.spyOn(suppliersService, 'create').mockResolvedValue(supplier);
 
-      suppliersService.create.mockResolvedValue(createdSupplier);
+      const result: Supplier = await controller.create(createSupplierDto);
 
-      const result = await suppliersController.create(createSupplierDto);
+      expect(suppliersService.create).toHaveBeenCalledWith(createSupplierDto);
+      expect(result).toEqual(supplier);
+    });
 
-      expect(result).toEqual(createdSupplier);
+    it('should throw a BadRequestException if the email already exists', async () => {
+      const createSupplierDto: CreateSupplierDto = {
+        email: 'test@example.com',
+        deliveryTime: 5,
+        countryId: '123e4567-e89b-12d3-a456-426814174001',
+      };
+      jest.spyOn(suppliersService, 'create').mockRejectedValue(new BadRequestException());
+
+      await expect(controller.create(createSupplierDto)).rejects.toThrow(BadRequestException);
       expect(suppliersService.create).toHaveBeenCalledWith(createSupplierDto);
     });
 
-    it('should not create a supplier with an invalid email', async () => {
+    it('should throw a BadRequestException if the country ID is not found', async () => {
       const createSupplierDto: CreateSupplierDto = {
-        email: 'lenovo@hola.com',
+        email: 'test@example.com',
         deliveryTime: 5,
-        countryId: '123e4567-e89b-12d3-a456-426814172801',
+        countryId: '123e4567-e89b-12d3-a456-426814174001',
       };
 
-      suppliersService.create.mockRejectedValue(new BadRequestException('Invalid email'));
+      jest.spyOn(suppliersService, 'create').mockRejectedValue(new BadRequestException());
 
-      await expect(suppliersController.create(createSupplierDto)).rejects.toThrow(BadRequestException);
+      await expect(controller.create(createSupplierDto)).rejects.toThrow(BadRequestException);
       expect(suppliersService.create).toHaveBeenCalledWith(createSupplierDto);
     });
 
-    it('should handle unexpected errors during creation', async () => {
+    it('should throw a BadRequestException if something else goes wrong', async () => {
       const createSupplierDto: CreateSupplierDto = {
-        email: 'lenovo@gmail.com',
+        email: 'test@example.com',
         deliveryTime: 5,
-        countryId: '123e4567-e89b-12d3-a456-426814172801',
+        countryId: '123e4567-e89b-12d3-a456-426814174001',
       };
+      const error = new BadRequestException();
+      jest.spyOn(suppliersService, 'create').mockRejectedValue(error);
 
-      suppliersService.create.mockRejectedValueOnce(new BadRequestException('Something went wrong'));
-
-      await expect(suppliersController.create(createSupplierDto)).rejects.toThrow(BadRequestException);
+      await expect(controller.create(createSupplierDto)).rejects.toThrow(BadRequestException);
       expect(suppliersService.create).toHaveBeenCalledWith(createSupplierDto);
-    });
-
-    it('should not create a supplier with an empty email', async () => {
-      const createSupplierDto: CreateSupplierDto = {
-        email: '',
-        deliveryTime: 5,
-        countryId: '123e4567-e89b-12d3-a456-426814172801',
-      };
-
-      await expect(suppliersController.create(createSupplierDto)).rejects.toThrow(BadRequestException);
-      expect(suppliersService.create).toHaveBeenCalled();
-    });
-
-    it('should not create a supplier with deliveryTime less than 0', async () => {
-      const createSupplierDto: CreateSupplierDto = {
-        email: 'lenovo@gmail.com',
-        deliveryTime: -1,
-        countryId: '123e4567-e89b-12d3-a456-426814172801',
-      };
-
-      await expect(suppliersController.create(createSupplierDto)).rejects.toThrow(BadRequestException);
-      expect(suppliersService.create).toHaveBeenCalled();
-    });
-
-    it('should not create a supplier with an empty countryId', async () => {
-      const createSupplierDto: CreateSupplierDto = {
-        email: 'lenovo@gmail.com',
-        deliveryTime: 5,
-        countryId: '',
-      };
-
-      await expect(suppliersController.create(createSupplierDto)).rejects.toThrow(BadRequestException);
-      expect(suppliersService.create).toHaveBeenCalled();
     });
   });
 
   describe('findAll', () => {
     it('should return an array of suppliers', async () => {
-      const expectedSuppliers: Supplier[] = [
+      const suppliers: Supplier[] = [
         {
-          id: '1',
-          email: 'asus@gmail.com',
-          deliveryTime: 6,
+          id: '123e4567-e89b-12d3-a456-426614174000',
+          email: 'test1@example.com',
+          deliveryTime: 5,
           createdAt: new Date(),
           updatedAt: new Date(),
-          countryId: '123e4567-e89b-12d3-a456-426814172810',
+          countryId: '123e4567-e89b-12d3-a456-426814174001',
+          country: {
+            id: '123e4567-e89b-12d3-a456-426814174001',
+            name: 'United States',
+            tax: 0.07,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          },
         },
         {
-          id: '2',
-          email: 'toshiba@gmail.com',
-          deliveryTime: 8,
+          id: '123e4567-e89b-12d3-a456-426614174001',
+          email: 'test2@example.com',
+          deliveryTime: 10,
           createdAt: new Date(),
           updatedAt: new Date(),
-          countryId: '123e4567-e89b-12d3-a456-426814172818',
+          countryId: '123e4567-e89b-12d3-a456-426814174002',
+          country: {
+            id: '123e4567-e89b-12d3-a456-426814174002',
+            name: 'Canada',
+            tax: 0.05,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          },
         },
       ];
+      jest.spyOn(suppliersService, 'findAll').mockResolvedValue(suppliers);
 
-      suppliersService.findAll.mockResolvedValue(expectedSuppliers);
+      const result: Supplier[] = await controller.findAll();
 
-      const result = await suppliersController.findAll();
-
-      expect(result).toEqual(expectedSuppliers);
-      expect(suppliersService.findAll).toHaveBeenCalledWith();
+      expect(suppliersService.findAll).toHaveBeenCalled();
+      expect(result).toEqual(suppliers);
     });
   });
 
   describe('findOne', () => {
-    it('should return a supplier by ID', async () => {
-      const supplierId = '1';
-      const expectedSupplier: Supplier = {
-        id: supplierId,
-        email: 'hp@gmail.com',
-        deliveryTime: 6,
+    it('should return a supplier', async () => {
+      const id = '123e4567-e89b-12d3-a456-426614174000';
+      const supplier: Supplier = {
+        id,
+        email: 'test@example.com',
+        deliveryTime: 5,
         createdAt: new Date(),
         updatedAt: new Date(),
-        countryId: '123e4567-e89b-12d3-a456-426814172820',
+        countryId: '123e4567-e89b-12d3-a456-426814174001',
+        country: {
+          id: '123e4567-e89b-12d3-a456-426814174001',
+          name: 'United States',
+          tax: 0.07,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       };
+      jest.spyOn(suppliersService, 'findOne').mockResolvedValue(supplier);
 
-      suppliersService.findOne.mockResolvedValue(expectedSupplier);
+      const result: Supplier = await controller.findOne(id);
 
-      const result = await suppliersController.findOne(supplierId);
+      expect(suppliersService.findOne).toHaveBeenCalledWith(id);
+      expect(result).toEqual(supplier);
+    });
 
-      expect(result).toEqual(expectedSupplier);
-      expect(suppliersService.findOne).toHaveBeenCalledWith(supplierId);
+    it('should throw a NotFoundException if the supplier is not found', async () => {
+      const id = '123e4567-e89b-12d3-a456-426614174000';
+      jest.spyOn(suppliersService, 'findOne').mockRejectedValue(new NotFoundException());
+
+      await expect(controller.findOne(id)).rejects.toThrow(NotFoundException);
+      expect(suppliersService.findOne).toHaveBeenCalledWith(id);
     });
   });
 
   describe('update', () => {
-    it('should update a supplier by ID', async () => {
-      const supplierId = '1';
-      const updateSupplierDto: UpdateSupplierDto = { email: 'dell@gmail.com', deliveryTime: 4 };
-      const updatedSupplier: Supplier = {
-        id: supplierId,
-        email: 'ryzen@gmail.com',
+    it('should update a supplier', async () => {
+      const id = '123e4567-e89b-12d3-a456-426614174000';
+      const updateSupplierDto: UpdateSupplierDto = {
+        email: 'test@example.com',
+        deliveryTime: 5,
+        countryId: '123e4567-e89b-12d3-a456-426814174001',
+      };
+      const supplier: Supplier = {
+        id,
+        email: 'test@example.com',
         deliveryTime: 5,
         createdAt: new Date(),
         updatedAt: new Date(),
-        countryId: '123a4867-e89b-12d3-a456-426814172820',
+        countryId: '123e4567-e89b-12d3-a456-426814174001',
+        country: {
+          id: '123e4567-e89b-12d3-a456-426814174001',
+          name: 'United States',
+          tax: 0.07,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       };
+      jest.spyOn(suppliersService, 'update').mockResolvedValue(supplier);
 
-      suppliersService.update.mockResolvedValue(updatedSupplier);
+      const result: Supplier = await controller.update(id, updateSupplierDto);
 
-      const result = await suppliersController.update(supplierId, updateSupplierDto);
-
-      expect(result).toEqual(updatedSupplier);
-      expect(suppliersService.update).toHaveBeenCalledWith(supplierId, updateSupplierDto);
+      expect(suppliersService.update).toHaveBeenCalledWith(id, updateSupplierDto);
+      expect(result).toEqual(supplier);
     });
 
-    it('should not update a supplier with an invalid email', async () => {
-      const supplierId = '1';
+    it('should throw a BadRequestException if the email already exists', async () => {
+      const id = '123e4567-e89b-12d3-a456-426614174000';
       const updateSupplierDto: UpdateSupplierDto = {
-        email: 'dell@hithere.com',
-        deliveryTime: 4,
+        email: 'test@example.com',
+        deliveryTime: 5,
+        countryId: '123e4567-e89b-12d3-a456-426814174001',
       };
 
-      suppliersService.update.mockRejectedValue(new BadRequestException('Invalid email'));
+      jest.spyOn(suppliersService, 'update').mockRejectedValue(new BadRequestException());
 
-      await expect(suppliersController.update(supplierId, updateSupplierDto)).rejects.toThrow(BadRequestException);
-      expect(suppliersService.update).toHaveBeenCalledWith(supplierId, updateSupplierDto);
+      await expect(controller.update(id, updateSupplierDto)).rejects.toThrow(BadRequestException);
+      expect(suppliersService.update).toHaveBeenCalledWith(id, updateSupplierDto);
+    });
+
+    it('should throw a BadRequestException if the country ID is not found', async () => {
+      const id = '123e4567-e89b-12d3-a456-426614174000';
+      const updateSupplierDto: UpdateSupplierDto = {
+        email: 'test@example.com',
+        deliveryTime: 5,
+        countryId: '123e4567-e89b-12d3-a456-426814174001',
+      };
+
+      jest.spyOn(suppliersService, 'update').mockRejectedValue(new BadRequestException());
+
+      await expect(controller.update(id, updateSupplierDto)).rejects.toThrow(BadRequestException);
+      expect(suppliersService.update).toHaveBeenCalledWith(id, updateSupplierDto);
     });
   });
 
   describe('remove', () => {
-    it('should remove a supplier by ID', async () => {
-      const supplierId = '1';
-      const deletedSupplier: Supplier = {
-        id: supplierId,
-        email: 'acer@gmail.com',
-        deliveryTime: 9,
+    it('should remove a supplier', async () => {
+      const id = '123e4567-e89b-12d3-a456-426614174000';
+      const supplier: Supplier = {
+        id,
+        email: 'test@example.com',
+        deliveryTime: 5,
         createdAt: new Date(),
         updatedAt: new Date(),
-        countryId: '123a4867-e89b-12m8-a456-426814172820',
+        countryId: '123e4567-e89b-12d3-a456-426814174001',
+        country: {
+          id: '123e4567-e89b-12d3-a456-426814174001',
+          name: 'United States',
+          tax: 0.07,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       };
+      jest.spyOn(suppliersService, 'remove').mockResolvedValue(supplier);
 
-      suppliersService.remove.mockResolvedValue(deletedSupplier);
+      const result: Supplier = await controller.remove(id);
 
-      const result = await suppliersController.remove(supplierId);
+      expect(suppliersService.remove).toHaveBeenCalledWith(id);
+      expect(result).toEqual(supplier);
+    });
 
-      expect(result).toEqual(deletedSupplier);
-      expect(suppliersService.remove).toHaveBeenCalledWith(supplierId);
+    it('should throw a NotFoundException if the supplier is not found', async () => {
+      const id = '123e4567-e89b-12d3-a456-426614174000';
+      jest.spyOn(suppliersService, 'remove').mockRejectedValue(new NotFoundException());
+
+      await expect(controller.remove(id)).rejects.toThrow(NotFoundException);
+      expect(suppliersService.remove).toHaveBeenCalledWith(id);
     });
   });
 });

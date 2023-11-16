@@ -17,6 +17,9 @@ import Admin from './pages/home/admin/Admin';
 import User from './pages/home/user/User';
 import NotFound from './pages/not-found/NotFound';
 import Products from './pages/products/Products';
+import AddSupplier from './pages/suppliers/pages/add/AddSupplier';
+import EditSupplier from './pages/suppliers/pages/edit/EditSupplier';
+import SupplierInfo from './pages/suppliers/pages/info/SupplierInfo';
 import Suppliers from './pages/suppliers/Suppliers';
 
 function App() {
@@ -39,6 +42,9 @@ function App() {
         <Route path='/admin/categories/info/:id' element={<CategoryInfo />} />
         <Route path='/admin/categories/edit/:id' element={<EditCategory />} />
         <Route path='/admin/suppliers' element={<Suppliers />} />
+        <Route path='/admin/suppliers/add' element={<AddSupplier />} />
+        <Route path='/admin/suppliers/info/:id' element={<SupplierInfo />} />
+        <Route path='/admin/suppliers/edit/:id' element={<EditSupplier />} />
         <Route path='/admin/products' element={<Products />} />
       </Routes>
     </Layout>

@@ -1,5 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 
+import Country from '@/country/entities/country.entity';
+
 class Supplier {
   @ApiProperty({
     type: 'String',
@@ -44,6 +46,12 @@ class Supplier {
     example: '123e4567-e89b-12d3-a456-426814174001',
   })
   readonly countryId: string;
+
+  @ApiProperty({
+    type: () => Country,
+    description: 'The country of the supplier',
+  })
+  readonly country: Country;
 }
 
 export default Supplier;
