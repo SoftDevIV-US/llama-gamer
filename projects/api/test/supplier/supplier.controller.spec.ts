@@ -1,22 +1,22 @@
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 
-import CreateSupplierDto from '@/suppliers/dto/create-supplier.dto';
-import UpdateSupplierDto from '@/suppliers/dto/update-supplier.dto';
-import Supplier from '@/suppliers/entities/supplier.entity';
-import SuppliersController from '@/suppliers/suppliers.controller';
-import SuppliersService from '@/suppliers/suppliers.service';
+import CreateSupplierDto from '@/supplier/dto/create-supplier.dto';
+import UpdateSupplierDto from '@/supplier/dto/update-supplier.dto';
+import Supplier from '@/supplier/entities/supplier.entity';
+import SupplierController from '@/supplier/supplier.controller';
+import SupplierService from '@/supplier/supplier.service';
 
 describe('SuppliersController', () => {
-  let controller: SuppliersController;
-  let suppliersService: SuppliersService;
+  let controller: SupplierController;
+  let supplierService: SupplierService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [SuppliersController],
+      controllers: [SupplierController],
       providers: [
         {
-          provide: SuppliersService,
+          provide: SupplierService,
           useValue: {
             create: jest.fn(),
             findAll: jest.fn(),
@@ -28,8 +28,8 @@ describe('SuppliersController', () => {
       ],
     }).compile();
 
-    controller = module.get<SuppliersController>(SuppliersController);
-    suppliersService = module.get<SuppliersService>(SuppliersService);
+    controller = module.get<SupplierController>(SupplierController);
+    supplierService = module.get<SupplierService>(SupplierService);
   });
 
   afterEach(() => {
@@ -58,11 +58,11 @@ describe('SuppliersController', () => {
           updatedAt: new Date(),
         },
       };
-      jest.spyOn(suppliersService, 'create').mockResolvedValue(supplier);
+      jest.spyOn(supplierService, 'create').mockResolvedValue(supplier);
 
       const result: Supplier = await controller.create(createSupplierDto);
 
-      expect(suppliersService.create).toHaveBeenCalledWith(createSupplierDto);
+      expect(supplierService.create).toHaveBeenCalledWith(createSupplierDto);
       expect(result).toEqual(supplier);
     });
 
@@ -72,10 +72,10 @@ describe('SuppliersController', () => {
         deliveryTime: 5,
         countryId: '123e4567-e89b-12d3-a456-426814174001',
       };
-      jest.spyOn(suppliersService, 'create').mockRejectedValue(new BadRequestException());
+      jest.spyOn(supplierService, 'create').mockRejectedValue(new BadRequestException());
 
       await expect(controller.create(createSupplierDto)).rejects.toThrow(BadRequestException);
-      expect(suppliersService.create).toHaveBeenCalledWith(createSupplierDto);
+      expect(supplierService.create).toHaveBeenCalledWith(createSupplierDto);
     });
 
     it('should throw a BadRequestException if the country ID is not found', async () => {
@@ -85,10 +85,10 @@ describe('SuppliersController', () => {
         countryId: '123e4567-e89b-12d3-a456-426814174001',
       };
 
-      jest.spyOn(suppliersService, 'create').mockRejectedValue(new BadRequestException());
+      jest.spyOn(supplierService, 'create').mockRejectedValue(new BadRequestException());
 
       await expect(controller.create(createSupplierDto)).rejects.toThrow(BadRequestException);
-      expect(suppliersService.create).toHaveBeenCalledWith(createSupplierDto);
+      expect(supplierService.create).toHaveBeenCalledWith(createSupplierDto);
     });
 
     it('should throw a BadRequestException if something else goes wrong', async () => {
@@ -98,10 +98,10 @@ describe('SuppliersController', () => {
         countryId: '123e4567-e89b-12d3-a456-426814174001',
       };
       const error = new BadRequestException();
-      jest.spyOn(suppliersService, 'create').mockRejectedValue(error);
+      jest.spyOn(supplierService, 'create').mockRejectedValue(error);
 
       await expect(controller.create(createSupplierDto)).rejects.toThrow(BadRequestException);
-      expect(suppliersService.create).toHaveBeenCalledWith(createSupplierDto);
+      expect(supplierService.create).toHaveBeenCalledWith(createSupplierDto);
     });
   });
 
@@ -139,11 +139,11 @@ describe('SuppliersController', () => {
           },
         },
       ];
-      jest.spyOn(suppliersService, 'findAll').mockResolvedValue(suppliers);
+      jest.spyOn(supplierService, 'findAll').mockResolvedValue(suppliers);
 
       const result: Supplier[] = await controller.findAll();
 
-      expect(suppliersService.findAll).toHaveBeenCalled();
+      expect(supplierService.findAll).toHaveBeenCalled();
       expect(result).toEqual(suppliers);
     });
   });
@@ -166,20 +166,20 @@ describe('SuppliersController', () => {
           updatedAt: new Date(),
         },
       };
-      jest.spyOn(suppliersService, 'findOne').mockResolvedValue(supplier);
+      jest.spyOn(supplierService, 'findOne').mockResolvedValue(supplier);
 
       const result: Supplier = await controller.findOne(id);
 
-      expect(suppliersService.findOne).toHaveBeenCalledWith(id);
+      expect(supplierService.findOne).toHaveBeenCalledWith(id);
       expect(result).toEqual(supplier);
     });
 
     it('should throw a NotFoundException if the supplier is not found', async () => {
       const id = '123e4567-e89b-12d3-a456-426614174000';
-      jest.spyOn(suppliersService, 'findOne').mockRejectedValue(new NotFoundException());
+      jest.spyOn(supplierService, 'findOne').mockRejectedValue(new NotFoundException());
 
       await expect(controller.findOne(id)).rejects.toThrow(NotFoundException);
-      expect(suppliersService.findOne).toHaveBeenCalledWith(id);
+      expect(supplierService.findOne).toHaveBeenCalledWith(id);
     });
   });
 
@@ -206,11 +206,11 @@ describe('SuppliersController', () => {
           updatedAt: new Date(),
         },
       };
-      jest.spyOn(suppliersService, 'update').mockResolvedValue(supplier);
+      jest.spyOn(supplierService, 'update').mockResolvedValue(supplier);
 
       const result: Supplier = await controller.update(id, updateSupplierDto);
 
-      expect(suppliersService.update).toHaveBeenCalledWith(id, updateSupplierDto);
+      expect(supplierService.update).toHaveBeenCalledWith(id, updateSupplierDto);
       expect(result).toEqual(supplier);
     });
 
@@ -222,10 +222,10 @@ describe('SuppliersController', () => {
         countryId: '123e4567-e89b-12d3-a456-426814174001',
       };
 
-      jest.spyOn(suppliersService, 'update').mockRejectedValue(new BadRequestException());
+      jest.spyOn(supplierService, 'update').mockRejectedValue(new BadRequestException());
 
       await expect(controller.update(id, updateSupplierDto)).rejects.toThrow(BadRequestException);
-      expect(suppliersService.update).toHaveBeenCalledWith(id, updateSupplierDto);
+      expect(supplierService.update).toHaveBeenCalledWith(id, updateSupplierDto);
     });
 
     it('should throw a BadRequestException if the country ID is not found', async () => {
@@ -236,10 +236,10 @@ describe('SuppliersController', () => {
         countryId: '123e4567-e89b-12d3-a456-426814174001',
       };
 
-      jest.spyOn(suppliersService, 'update').mockRejectedValue(new BadRequestException());
+      jest.spyOn(supplierService, 'update').mockRejectedValue(new BadRequestException());
 
       await expect(controller.update(id, updateSupplierDto)).rejects.toThrow(BadRequestException);
-      expect(suppliersService.update).toHaveBeenCalledWith(id, updateSupplierDto);
+      expect(supplierService.update).toHaveBeenCalledWith(id, updateSupplierDto);
     });
   });
 
@@ -261,20 +261,20 @@ describe('SuppliersController', () => {
           updatedAt: new Date(),
         },
       };
-      jest.spyOn(suppliersService, 'remove').mockResolvedValue(supplier);
+      jest.spyOn(supplierService, 'remove').mockResolvedValue(supplier);
 
       const result: Supplier = await controller.remove(id);
 
-      expect(suppliersService.remove).toHaveBeenCalledWith(id);
+      expect(supplierService.remove).toHaveBeenCalledWith(id);
       expect(result).toEqual(supplier);
     });
 
     it('should throw a NotFoundException if the supplier is not found', async () => {
       const id = '123e4567-e89b-12d3-a456-426614174000';
-      jest.spyOn(suppliersService, 'remove').mockRejectedValue(new NotFoundException());
+      jest.spyOn(supplierService, 'remove').mockRejectedValue(new NotFoundException());
 
       await expect(controller.remove(id)).rejects.toThrow(NotFoundException);
-      expect(suppliersService.remove).toHaveBeenCalledWith(id);
+      expect(supplierService.remove).toHaveBeenCalledWith(id);
     });
   });
 });

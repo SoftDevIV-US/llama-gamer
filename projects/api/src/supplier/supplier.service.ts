@@ -7,7 +7,7 @@ import UpdateSupplierDto from './dto/update-supplier.dto';
 import Supplier from './entities/supplier.entity';
 
 @Injectable()
-class SuppliersService {
+class SupplierService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createSupplierDto: CreateSupplierDto): Promise<Supplier> {
@@ -103,4 +103,4 @@ class SuppliersService {
   }
 }
 
-export default SuppliersService;
+export default SupplierService;

@@ -7,6 +7,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  ADMIN
+  USER
+}
+
+enum PurchaseStatus {
+  IN_COMING
+  PENDING
+  CANCELED
+}
+
 model Country {
   id        String     @id @default(uuid()) @db.Uuid()
   name      String     @unique @db.Citext
@@ -19,33 +30,174 @@ model Country {
 }
 
 model Category {
-  id        String   @id @default(uuid()) @db.Uuid()
-  name      String   @unique @db.Citext
+  id        String    @id @default(uuid()) @db.Uuid()
+  name      String    @unique @db.Citext
   image     String
-  createdAt DateTime @default(now()) @map(name: "created_at") @db.Timestamptz()
-  updatedAt DateTime @default(now()) @updatedAt @map(name: "update_at") @db.Timestamptz()
+  createdAt DateTime  @default(now()) @map(name: "created_at") @db.Timestamptz()
+  updatedAt DateTime  @default(now()) @updatedAt @map(name: "update_at") @db.Timestamptz()
+  products  Product[]
 
   @@map(name: "categories")
 }
 
 model Brand {
-  id        String   @id @default(uuid()) @db.Uuid()
-  name      String   @unique @db.Citext
+  id        String    @id @default(uuid()) @db.Uuid()
+  name      String    @unique @db.Citext
   logo      String
-  createdAt DateTime @default(now()) @map(name: "created_at") @db.Timestamptz()
-  updatedAt DateTime @default(now()) @updatedAt @map(name: "updated_at") @db.Timestamptz()
+  createdAt DateTime  @default(now()) @map(name: "created_at") @db.Timestamptz()
+  updatedAt DateTime  @default(now()) @updatedAt @map(name: "updated_at") @db.Timestamptz()
+  products  Product[]
 
   @@map(name: "brands")
 }
 
 model Supplier {
-  id           String   @id @default(uuid()) @db.Uuid()
-  email        String   @unique @db.Citext
-  deliveryTime Int      @map(name: "delivery_time")
-  createdAt    DateTime @default(now()) @map(name: "created_at") @db.Timestamptz()
-  updatedAt    DateTime @default(now()) @updatedAt @map(name: "updated_at") @db.Timestamptz()
-  countryId    String   @map(name: "country_id") @db.Uuid()
-  country      Country  @relation(fields: [countryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  id                String              @id @default(uuid()) @db.Uuid()
+  email             String              @unique @db.Citext
+  deliveryTime      Int                 @map(name: "delivery_time")
+  createdAt         DateTime            @default(now()) @map(name: "created_at") @db.Timestamptz()
+  updatedAt         DateTime            @default(now()) @updatedAt @map(name: "updated_at") @db.Timestamptz()
+  countryId         String              @map(name: "country_id") @db.Uuid()
+  country           Country             @relation(fields: [countryId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  productsSuppliers ProductsSuppliers[]
 
   @@map(name: "suppliers")
+}
+
+model User {
+  id            String          @id @default(uuid()) @db.Uuid()
+  name          String
+  lastName      String          @map(name: "last_name")
+  email         String          @unique @db.Citext
+  password      String
+  role          Role
+  createdAt     DateTime        @default(now()) @map(name: "created_at") @db.Timestamptz()
+  updatedAt     DateTime        @default(now()) @updatedAt @map(name: "updated_at") @db.Timestamptz()
+  penalty       Penalty?
+  wishList      WishList?
+  purchases     Purchase[]
+  usersProducts UsersProducts[]
+
+  @@map(name: "users")
+}
+
+model Penalty {
+  id        String   @id @default(uuid()) @db.Uuid()
+  amount    Int      @default(0)
+  createdAt DateTime @default(now()) @map(name: "created_at") @db.Timestamptz()
+  updatedAt DateTime @default(now()) @updatedAt @map(name: "updated_at") @db.Timestamptz()
+  userId    String   @unique @map(name: "user_id") @db.Uuid()
+  user      User     @relation(fields: [userId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  @@map(name: "penalties")
+}
+
+model WishList {
+  id                String              @id @default(uuid()) @db.Uuid()
+  title             String              @default("My WishList")
+  description       String              @default("")
+  createdAt         DateTime            @default(now()) @map(name: "created_at") @db.Timestamptz()
+  updatedAt         DateTime            @default(now()) @updatedAt @map(name: "updated_at") @db.Timestamptz()
+  userId            String              @unique @map(name: "user_id") @db.Uuid()
+  user              User                @relation(fields: [userId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  wishListsProducts WishListsProducts[]
+
+  @@map(name: "wish_lists")
+}
+
+model Purchase {
+  id                String              @id @default(uuid()) @db.Uuid()
+  totalCost         Float               @map(name: "total_cost")
+  deliveyDay        DateTime            @map(name: "delivery_day")
+  deadline          DateTime
+  status            PurchaseStatus
+  createdAt         DateTime            @default(now()) @map(name: "created_at") @db.Timestamptz()
+  updatedAt         DateTime            @default(now()) @updatedAt @map(name: "updated_at") @db.Timestamptz()
+  userId            String              @map(name: "user_id") @db.Uuid()
+  user              User                @relation(fields: [userId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  purchasesProducts PurchasesProducts[]
+
+  @@map(name: "purchases")
+}
+
+model Product {
+  id                String              @id @default(uuid()) @db.Uuid()
+  name              String              @unique @db.Citext
+  description       String              @default("")
+  stock             Int
+  price             Float
+  isAvailable       Boolean             @default(true) @map(name: "is_available")
+  createdAt         DateTime            @default(now()) @map(name: "created_at") @db.Timestamptz()
+  updatedAt         DateTime            @default(now()) @updatedAt @map(name: "updated_at") @db.Timestamptz()
+  categoryId        String              @map(name: "category_id") @db.Uuid()
+  brandId           String              @map(name: "brand_id") @db.Uuid()
+  category          Category            @relation(fields: [categoryId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  brand             Brand               @relation(fields: [brandId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  productImages     ProductImage[]
+  productsSuppliers ProductsSuppliers[]
+  wishListsProducts WishListsProducts[]
+  usersProducts     UsersProducts[]
+  purchasesProducts PurchasesProducts[]
+
+  @@map(name: "products")
+}
+
+model ProductImage {
+  id        String   @id @default(uuid()) @db.Uuid()
+  image     String
+  createdAt DateTime @default(now()) @map(name: "created_at") @db.Timestamptz()
+  updatedAt DateTime @default(now()) @updatedAt @map(name: "updated_at") @db.Timestamptz()
+  productId String   @map(name: "product_id") @db.Uuid()
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  @@map(name: "product_images")
+}
+
+model ProductsSuppliers {
+  productId  String   @map(name: "product_id") @db.Uuid()
+  supplierId String   @map(name: "supplier_id") @db.Uuid()
+  createdAt  DateTime @default(now()) @map(name: "created_at") @db.Timestamptz()
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  supplier   Supplier @relation(fields: [supplierId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  @@id([productId, supplierId])
+  @@map(name: "products_suppliers")
+}
+
+model WishListsProducts {
+  wishListId String   @map(name: "wish_list_id") @db.Uuid()
+  productId  String   @map(name: "product_id") @db.Uuid()
+  createdAt  DateTime @default(now()) @map(name: "created_at") @db.Timestamptz()
+  wishList   WishList @relation(fields: [wishListId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  @@id([wishListId, productId])
+  @@map("wish_lists_products")
+}
+
+model UsersProducts {
+  userId    String   @map(name: "user_id") @db.Uuid()
+  productId String   @map(name: "product_id") @db.Uuid()
+  rating    Int
+  comment   String
+  createdAt DateTime @default(now()) @map(name: "created_at") @db.Timestamptz()
+  updatedAt DateTime @default(now()) @updatedAt @map(name: "updated_at") @db.Timestamptz()
+  user      User     @relation(fields: [userId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  @@id([userId, productId])
+  @@map(name: "users_products")
+}
+
+model PurchasesProducts {
+  purchaseId String   @map(name: "purchase_id") @db.Uuid()
+  productId  String   @map(name: "product_id") @db.Uuid()
+  quantity   Int
+  createdAt  DateTime @default(now()) @map(name: "created_at") @db.Timestamptz()
+  updatedAt  DateTime @default(now()) @updatedAt @map(name: "updated_at") @db.Timestamptz()
+  purchase   Purchase @relation(fields: [purchaseId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  @@id([purchaseId, productId])
+  @@map(name: "purchases_products")
 }

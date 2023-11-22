@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 
-import CreateSupplierDto from '@/suppliers/dto/create-supplier.dto';
+import CreateSupplierDto from '@/supplier/dto/create-supplier.dto';
 
 import { brands, categories, countries } from './data/products';
 

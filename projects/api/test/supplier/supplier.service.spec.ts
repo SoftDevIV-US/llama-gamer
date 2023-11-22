@@ -2,19 +2,19 @@ import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import PrismaService from '@/prisma/prisma.service';
-import CreateSupplierDto from '@/suppliers/dto/create-supplier.dto';
-import UpdateSupplierDto from '@/suppliers/dto/update-supplier.dto';
-import Supplier from '@/suppliers/entities/supplier.entity';
-import SuppliersService from '@/suppliers/suppliers.service';
+import CreateSupplierDto from '@/supplier/dto/create-supplier.dto';
+import UpdateSupplierDto from '@/supplier/dto/update-supplier.dto';
+import Supplier from '@/supplier/entities/supplier.entity';
+import SupplierService from '@/supplier/supplier.service';
 
 describe('SuppliersService', () => {
-  let service: SuppliersService;
+  let service: SupplierService;
   let prismaService: PrismaService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        SuppliersService,
+        SupplierService,
         {
           provide: PrismaService,
           useValue: {
@@ -30,7 +30,7 @@ describe('SuppliersService', () => {
       ],
     }).compile();
 
-    service = module.get<SuppliersService>(SuppliersService);
+    service = module.get<SupplierService>(SupplierService);
     prismaService = module.get<PrismaService>(PrismaService);
   });
 
