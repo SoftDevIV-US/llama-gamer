@@ -4,12 +4,12 @@ import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import CreateSupplierDto from './dto/create-supplier.dto';
 import UpdateSupplierDto from './dto/update-supplier.dto';
 import Supplier from './entities/supplier.entity';
-import SuppliersService from './suppliers.service';
+import SupplierService from './supplier.service';
 
 @Controller('suppliers')
 @ApiTags('Suppliers')
-class SuppliersController {
-  constructor(private readonly suppliersService: SuppliersService) {}
+class SupplierController {
+  constructor(private readonly suppliersService: SupplierService) {}
 
   @Post()
   @ApiOperation({ summary: 'Create a new supplier' })
@@ -52,4 +52,4 @@ class SuppliersController {
   }
 }
 
-export default SuppliersController;
+export default SupplierController;
