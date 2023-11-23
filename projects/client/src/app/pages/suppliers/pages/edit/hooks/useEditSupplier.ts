@@ -9,11 +9,19 @@ type Props = {
   id: string;
   setIsEmailCorrect: React.Dispatch<React.SetStateAction<boolean>>;
   setIsDeliveryTimeCorrect: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsCountryCorrect: React.Dispatch<React.SetStateAction<boolean>>;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
   setFound: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const useEditSupplier = ({ id, setIsEmailCorrect, setIsDeliveryTimeCorrect, setIsLoading, setFound }: Props) => {
+const useEditSupplier = ({
+  id,
+  setIsEmailCorrect,
+  setIsDeliveryTimeCorrect,
+  setIsCountryCorrect,
+  setIsLoading,
+  setFound,
+}: Props) => {
   const [supplier, setSupplier] = useState<Supplier>({} as Supplier);
   const { navigate } = useNavigate();
 
@@ -39,6 +47,7 @@ const useEditSupplier = ({ id, setIsEmailCorrect, setIsDeliveryTimeCorrect, setI
       success: (res) => {
         setIsEmailCorrect(true);
         setIsDeliveryTimeCorrect(true);
+        setIsCountryCorrect(true);
         return `Supplier ${res.email} updated successfully`;
       },
       error: (err) => {
@@ -52,10 +61,17 @@ const useEditSupplier = ({ id, setIsEmailCorrect, setIsDeliveryTimeCorrect, setI
         if (error.includes('email')) {
           setIsEmailCorrect(false);
           setIsDeliveryTimeCorrect(true);
+          setIsCountryCorrect(true);
         }
-        if (error.includes('delivery time')) {
+        if (error.includes('deliveryTime')) {
           setIsDeliveryTimeCorrect(false);
           setIsEmailCorrect(true);
+          setIsCountryCorrect(true);
+        }
+        if (error.includes('countryId')) {
+          setIsCountryCorrect(false);
+          setIsEmailCorrect(true);
+          setIsDeliveryTimeCorrect(true);
         }
         return error;
       },
