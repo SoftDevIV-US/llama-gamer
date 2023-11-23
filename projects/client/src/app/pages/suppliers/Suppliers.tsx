@@ -3,7 +3,7 @@ import { useState } from 'react';
 import List from '@/app/components/list/List';
 import InnerLayout from '@/app/layouts/InnerLayout';
 
-import useLoadSuppliers from './hooks/useLoadSupplier';
+import useLoadSuppliers from './hooks/useLoadSuppliers';
 
 function Suppliers() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -12,7 +12,7 @@ function Suppliers() {
   const { suppliers } = useLoadSuppliers({ setIsLoading, setIsFound });
 
   const recordList: RecordList = {
-    title: 'Suppliers ',
+    title: 'Suppliers',
     url: 'suppliers',
     fields: [
       { key: 'Email', value: 'email' },
@@ -21,6 +21,7 @@ function Suppliers() {
     ],
     values: suppliers,
   };
+
   return (
     <InnerLayout>
       <List recordList={recordList} isLoading={isLoading} isFound={isFound} />
