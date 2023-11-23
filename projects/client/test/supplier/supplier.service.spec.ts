@@ -37,6 +37,7 @@ describe('SupplierService', () => {
         },
         createdAt: String(new Date()),
         updatedAt: String(new Date()),
+        productsSuppliers: [],
       };
       const response = { data: supplier };
       (axios.post as jest.MockedFunction<typeof axios.post>).mockResolvedValue(response);
@@ -66,6 +67,7 @@ describe('SupplierService', () => {
           },
           createdAt: String(new Date()),
           updatedAt: String(new Date()),
+          productsSuppliers: [],
         },
       ];
       const response = { data: suppliers };
@@ -95,6 +97,7 @@ describe('SupplierService', () => {
         },
         createdAt: String(new Date()),
         updatedAt: String(new Date()),
+        productsSuppliers: [],
       };
       const response = { data: supplier };
       (axios.get as jest.MockedFunction<typeof axios.get>).mockResolvedValue(response);
@@ -128,6 +131,7 @@ describe('SupplierService', () => {
         },
         createdAt: String(new Date()),
         updatedAt: String(new Date()),
+        productsSuppliers: [],
       };
       const response = { data: supplier };
       (axios.patch as jest.MockedFunction<typeof axios.patch>).mockResolvedValue(response);
@@ -156,6 +160,7 @@ describe('SupplierService', () => {
         },
         createdAt: String(new Date()),
         updatedAt: String(new Date()),
+        productsSuppliers: [],
       };
       const response = { data: supplier };
       (axios.delete as jest.MockedFunction<typeof axios.delete>).mockResolvedValue(response);
