@@ -1,5 +1,4 @@
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import axios from 'axios';
 import { Form as FormFormik, Formik } from 'formik';
 import { useState } from 'react';
 
@@ -8,6 +7,7 @@ import Form from '@/app/components/form/Form';
 import ImageField from '@/app/components/image-field/ImageField';
 import InputField from '@/app/components/input-field/InputField';
 import { CreateCategoryDto } from '@/models/category.model';
+import uploadImage from '@/services/cloudinary.service';
 
 import useAddCategory from './hooks/useAddCategory';
 
@@ -30,20 +30,7 @@ function AddCategory() {
         onSubmit={async (values) => {
           if (imageFormData) {
             try {
-              const response = await axios.post(
-                'https://api.cloudinary.com/v1_1/dtywqmn9a/image/upload',
-                imageFormData,
-                {
-                  headers: {
-                    'Content-Type': 'multipart/form-data',
-                  },
-                  params: {
-                    api_key: '627656454763436',
-                    api_secret: '_ETJ5Oj_Jm0S6BIpRh5fpHp8QJc',
-                    upload_preset: 'bmuxr2rx',
-                  },
-                }
-              );
+              const response = await uploadImage(imageFormData);
 
               const imageUrl: string = response.data.secure_url;
 
@@ -70,7 +57,6 @@ function AddCategory() {
             <ImageField
               id='logo'
               value='logo'
-              placeholder='Logo for the brand...'
               size='medium'
               onFormDataChange={(formData) => setImageFormData(formData)}
             >
