@@ -227,8 +227,11 @@ describe('SuppliersService', () => {
     });
 
     it('should throw a NotFoundException if the supplier is not found', async () => {
-      const id = '123e4567-e89b-12d3-a456-426614174000';
-      jest.spyOn(prismaService.supplier, 'findUnique').mockResolvedValue(null);
+      const id = '123e4567-e89b-12d3-a456-426614174900';
+      const error = {
+        code: 'P2023',
+      };
+      jest.spyOn(prismaService.supplier, 'findUnique').mockRejectedValue(error);
 
       await expect(service.findOne(id)).rejects.toThrow(NotFoundException);
       expect(prismaService.supplier.findUnique).toHaveBeenCalledWith({
@@ -243,7 +246,10 @@ describe('SuppliersService', () => {
 
     it('should throw a NotFoundException if the id is not a valid UUID', async () => {
       const id = 'invalid-id';
-
+      const error = {
+        code: 'P2023',
+      };
+      jest.spyOn(prismaService.supplier, 'findUnique').mockRejectedValue(error);
       await expect(service.findOne(id)).rejects.toThrow(NotFoundException);
     });
   });

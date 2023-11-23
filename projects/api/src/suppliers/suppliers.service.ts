@@ -27,7 +27,7 @@ class SuppliersService {
         throw new BadRequestException('Supplier email already exists');
       }
       if (error?.code === 'P2023') {
-        throw new BadRequestException('Country ID not found');
+        throw new NotFoundException('Country ID not found');
       }
       throw new BadRequestException('Something went wrong');
     }
@@ -46,18 +46,25 @@ class SuppliersService {
   }
 
   async findOne(id: string): Promise<Supplier> {
-    const supplier: Supplier = await this.prisma.supplier.findUnique({
-      where: {
-        id,
-      },
-      include: {
-        country: true,
-      },
-    });
-    if (!supplier) {
-      throw new NotFoundException(`Supplier with ID ${id} not found`);
+    try {
+      const supplier: Supplier = await this.prisma.supplier.findUnique({
+        where: {
+          id,
+        },
+        include: {
+          country: true,
+        },
+      });
+      return supplier;
+    } catch (error) {
+      if (!error.code) {
+        throw new BadRequestException('Something went wrong');
+      }
+      if (error?.code === 'P2023') {
+        throw new NotFoundException(`Supplier with ID ${id} not found`);
+      }
+      throw new BadRequestException('Something went wrong');
     }
-    return supplier;
   }
 
   async update(id: string, updateSupplierDto: UpdateSupplierDto): Promise<Supplier> {
