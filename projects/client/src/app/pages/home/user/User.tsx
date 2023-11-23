@@ -1,12 +1,11 @@
-import InnerLayout from '@/app/layouts/InnerLayout';
+import Footer from '@/app/components/footer/Footer';
 
 function User() {
   return (
-    <InnerLayout>
-      <div className='grid h-full place-content-center'>
-        <h2 className='text-4xl font-bold'>User Home</h2>
-      </div>
-    </InnerLayout>
+    <div className='flex h-full flex-col justify-between'>
+      <div />
+      <Footer />
+    </div>
   );
 }
 
