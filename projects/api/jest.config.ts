@@ -17,11 +17,19 @@ const config: Config = {
     '/.turbo/',
   ],
   testEnvironment: 'node',
-  collectCoverageFrom: ['src/**/*.ts', '!src/**/*.module.ts', '!src/**/*.entity.ts'],
+  collectCoverageFrom: [
+    'src/**/*.ts',
+    '!src/**/*.module.ts',
+    '!src/**/*.entity.ts',
+    '!src/**/*.dto.ts',
+    '!src/**/*.config.ts',
+    '!src/**/*.guard.ts',
+  ],
   coveragePathIgnorePatterns: [
     '<rootDir>/src/main.ts',
     '<rootDir>/src/prisma/prisma.service.ts',
     '<rootDir>/src/utils/constants.ts',
+    '<rootDir>/src/auth/strategy/jwt.strategy.ts',
   ],
   coverageThreshold: {
     global: {

@@ -1,5 +1,9 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
-import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+
+import AdminAccess from '@/auth/decorators/admin.decorator';
+import AdminGuard from '@/auth/guard/admin.guard';
+import JwtAuthGuard from '@/auth/guard/jwt.guard';
 
 import BrandService from './brand.service';
 import CreateBrandDto from './dto/create-brand.dto';
@@ -12,6 +16,9 @@ class BrandController {
   constructor(private readonly brandService: BrandService) {}
 
   @Post()
+  @AdminAccess()
+  @UseGuards(JwtAuthGuard, AdminGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Create a new brand' })
   @ApiCreatedResponse({ type: Brand })
   async create(@Body() createBrandDto: CreateBrandDto): Promise<Brand> {
@@ -20,6 +27,8 @@ class BrandController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Get all brands' })
   @ApiCreatedResponse({ type: Brand, isArray: true })
   async findAll(): Promise<Brand[]> {
@@ -28,6 +37,8 @@ class BrandController {
   }
 
   @Get(':id')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Get a brand by id' })
   @ApiCreatedResponse({ type: Brand })
   async findOne(@Param('id') id: string): Promise<Brand> {
@@ -36,6 +47,9 @@ class BrandController {
   }
 
   @Patch(':id')
+  @AdminAccess()
+  @UseGuards(JwtAuthGuard, AdminGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Update a brand by id' })
   @ApiCreatedResponse({ type: Brand })
   async update(@Param('id') id: string, @Body() updateBrandDto: UpdateBrandDto): Promise<Brand> {
@@ -44,6 +58,9 @@ class BrandController {
   }
 
   @Delete(':id')
+  @AdminAccess()
+  @UseGuards(JwtAuthGuard, AdminGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Delete a brand by id' })
   @ApiCreatedResponse({ type: Brand })
   async remove(@Param('id') id: string): Promise<Brand> {

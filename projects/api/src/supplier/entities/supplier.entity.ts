@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Country } from '@prisma/client';
+
+import Country from '@/country/entities/country.entity';
 
 class Supplier {
   @ApiProperty({
@@ -47,7 +48,7 @@ class Supplier {
   readonly countryId: string;
 
   @ApiProperty({
-    type: 'Country',
+    type: () => Country,
     description: 'The country of the supplier',
   })
   readonly country: Country;

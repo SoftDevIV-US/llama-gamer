@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 
+import AuthModule from './auth/auth.module';
 import BrandModule from './brand/brand.module';
 import CategoryModule from './category/category.module';
 import CountryModule from './country/country.module';
@@ -13,11 +14,12 @@ import UserModule from './user/user.module';
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '../../../client/dist'),
     }),
+    AuthModule,
+    UserModule,
     CountryModule,
+    SupplierModule,
     BrandModule,
     CategoryModule,
-    SupplierModule,
-    UserModule,
   ],
 })
 class AppModule {}

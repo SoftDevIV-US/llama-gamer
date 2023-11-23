@@ -1,5 +1,9 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
-import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+
+import AdminAccess from '@/auth/decorators/admin.decorator';
+import AdminGuard from '@/auth/guard/admin.guard';
+import JwtAuthGuard from '@/auth/guard/jwt.guard';
 
 import CountryService from './country.service';
 import CreateCountryDto from './dto/create-country.dto';
@@ -12,6 +16,9 @@ class CountryController {
   constructor(private readonly countriesService: CountryService) {}
 
   @Post()
+  @AdminAccess()
+  @UseGuards(JwtAuthGuard, AdminGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Create a new country' })
   @ApiCreatedResponse({ type: Country })
   async create(@Body() createCountryDto: CreateCountryDto): Promise<Country> {
@@ -20,6 +27,8 @@ class CountryController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Get all countries' })
   @ApiCreatedResponse({ type: Country, isArray: true })
   async findAll(): Promise<Country[]> {
@@ -28,6 +37,8 @@ class CountryController {
   }
 
   @Get(':id')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Get a country by id' })
   @ApiCreatedResponse({ type: Country })
   async findOne(@Param('id') id: string): Promise<Country> {
@@ -36,6 +47,9 @@ class CountryController {
   }
 
   @Patch(':id')
+  @AdminAccess()
+  @UseGuards(JwtAuthGuard, AdminGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Update a country by id' })
   @ApiCreatedResponse({ type: Country })
   async update(@Param('id') id: string, @Body() updateCountryDto: UpdateCountryDto): Promise<Country> {
@@ -44,6 +58,9 @@ class CountryController {
   }
 
   @Delete(':id')
+  @AdminAccess()
+  @UseGuards(JwtAuthGuard, AdminGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Delete a country by id' })
   @ApiCreatedResponse({ type: Country })
   async remove(@Param('id') id: string): Promise<Country> {
