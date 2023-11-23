@@ -1,6 +1,8 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
 
 import PrismaService from '@/prisma/prisma.service';
+import { HASH_SALT } from '@/utils/constants';
 
 import CreateUserDto from './dto/create-user.dto';
 import UpdateUserDto from './dto/update-user.dto';
@@ -12,8 +14,12 @@ class UserService {
 
   async create(createUserDto: CreateUserDto): Promise<User> {
     try {
+      const hashedPassword = await bcrypt.hash(createUserDto.password, HASH_SALT);
       const user = await this.prisma.user.create({
-        data: createUserDto,
+        data: {
+          ...createUserDto,
+          password: hashedPassword,
+        },
         include: {
           penalty: true,
           wishList: true,
@@ -99,6 +105,26 @@ class UserService {
       },
     });
     return user;
+  }
+
+  async findByEmail(email: string): Promise<User> {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        email,
+      },
+      include: {
+        penalty: true,
+        wishList: true,
+        purchases: true,
+        usersProducts: true,
+      },
+    });
+    return user;
+  }
+
+  async comparePassword(password: string, hashedPassword: string): Promise<boolean> {
+    const isPasswordValid = await bcrypt.compare(password, hashedPassword);
+    return isPasswordValid;
   }
 }
 

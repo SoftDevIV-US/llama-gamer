@@ -40,6 +40,7 @@ async function seed() {
 
 seed()
   .catch((e) => {
+    // eslint-disable-next-line no-console
     console.error('Error seeding database', e);
   })
   .finally(async () => {
