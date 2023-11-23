@@ -93,7 +93,7 @@ function InputImage({ id, children, value, isCorrect, isDisabled, requiredSize, 
   };
 
   return (
-    <label htmlFor={id}>
+    <div>
       <p className='px-4 text-[#1B263B]/50'>{children}</p>
       <Field
         id={id}
@@ -149,7 +149,7 @@ function InputImage({ id, children, value, isCorrect, isDisabled, requiredSize, 
           </div>
         )}
       />
-    </label>
+    </div>
   );
 }
 

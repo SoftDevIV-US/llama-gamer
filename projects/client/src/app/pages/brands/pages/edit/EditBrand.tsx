@@ -69,8 +69,12 @@ function EditBrand() {
 
                 const logoUrl = file.secure_url;
 
-                // eslint-disable-next-line no-param-reassign
-                values.logo = logoUrl;
+                const newValues = {
+                  ...values,
+                  logo: logoUrl,
+                };
+
+                editBrand(newValues);
 
                 editBrand(values);
               }}

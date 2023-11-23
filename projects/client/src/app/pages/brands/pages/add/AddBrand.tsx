@@ -49,8 +49,12 @@ function AddBrand() {
 
             const logoUrl = file.secure_url;
 
-            // eslint-disable-next-line no-param-reassign
-            values.logo = logoUrl;
+            const newValues = {
+              ...values,
+              logo: logoUrl,
+            };
+
+            addBrand(newValues);
 
             addBrand(values);
           }}
