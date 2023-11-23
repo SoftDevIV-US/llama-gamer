@@ -7,6 +7,7 @@ const JWT_EXPIRES_IN = '1d';
 const JWT_SECRET = process.env.JWT_SECRET ?? 'secret';
 const NAME_VALIDATOR = /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s']+$/;
 const PASSWORD_VALIDATOR = /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ0-9\s']+$/;
+const PRODUCT_NAME_VALIDATOR = /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑüÜ\s'-]+$/;
 const PORT = process.env.PORT ?? 3000;
 const PREFIX = '/api';
 const PUBLIC_KEY = 'public';
@@ -24,6 +25,7 @@ export {
   PASSWORD_VALIDATOR,
   PORT,
   PREFIX,
+  PRODUCT_NAME_VALIDATOR,
   PUBLIC_KEY,
   TITLE,
   VERSION,
