@@ -1,5 +1,3 @@
-import Role from '@/enums/role.enum';
-
 import Penalty from './penalty.model';
 import Purchase from './purchase.model';
 import UsersProducts from './users-products.model';
@@ -10,7 +8,7 @@ interface User extends ApiRecord {
   lastName: string;
   email: string;
   password: string;
-  role: Role;
+  role: string;
   penalty: Penalty;
   wishList: WishList;
   purchases: Purchase[];
