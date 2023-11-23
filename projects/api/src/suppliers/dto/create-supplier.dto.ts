@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
-import { IsEmail, IsNotEmpty, IsNumber, IsPositive, IsString, Max } from 'class-validator';
+import { IsEmail, IsInt, IsNotEmpty, IsPositive, IsString, Matches, Max } from 'class-validator';
 
 class CreateSupplierDto {
   @ApiProperty({
@@ -30,13 +30,18 @@ class CreateSupplierDto {
   @IsPositive({
     message: 'The supplier delivery time must be a positive number',
   })
-  @IsNumber()
+  @IsInt({
+    message: 'The supplier delivery time must be an integer number',
+  })
   readonly deliveryTime: number;
 
   @ApiProperty({
     type: 'String',
     description: 'The supplier country ID',
     example: '123e4567-e89b-12d3-a456-426814174001',
+  })
+  @Matches(/^[a-zA-Z0-9-]/, {
+    message: 'The country ID must contain only alphanumeric characters and -',
   })
   @IsNotEmpty({
     message: 'The supplier country ID must not be empty',
