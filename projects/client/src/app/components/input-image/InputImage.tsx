@@ -18,22 +18,20 @@ type Props = {
   onChange?: (file: File | null) => void;
 };
 
-const validateLogo = async (file: File | null, requiredSize: '256' | '512'): Promise<boolean> =>
-  new Promise((resolve) => {
-    if (!file) {
-      resolve(false);
-      return;
-    }
+const validateLogo = async (file: File | null, requiredSize: '256' | '512'): Promise<string | null> => {
+  if (!file) {
+    return 'Please select an image file.';
+  }
 
-    const allowedExtensions = ['png'];
-    const extension = file.name.split('.').pop()?.toLowerCase() || '';
-    const isValidExtension = allowedExtensions.includes(extension);
+  const allowedExtensions = ['png'];
+  const extension = file.name.split('.').pop()?.toLowerCase() || '';
+  const isValidExtension = allowedExtensions.includes(extension);
 
-    if (!isValidExtension) {
-      resolve(false);
-      return;
-    }
+  if (!isValidExtension) {
+    return 'Invalid file format. Please upload a PNG image.';
+  }
 
+  return new Promise((resolve) => {
     const reader = new FileReader();
 
     reader.onload = async (e) => {
@@ -50,26 +48,31 @@ const validateLogo = async (file: File | null, requiredSize: '256' | '512'): Pro
       const isValidSizeSmall = requiredSize === '256' && img.width === 256 && img.height === 256;
       const isValidSizeMedium = requiredSize === '512' && img.width === 512 && img.height === 512;
 
-      resolve(isValidSizeSmall || isValidSizeMedium);
+      resolve(
+        isValidSizeSmall || isValidSizeMedium
+          ? null
+          : `Invalid image dimensions only accepts ${requiredSize} x ${requiredSize} `
+      );
     };
 
     reader.readAsDataURL(file);
   });
+};
 
 function InputImage({ id, children, value, isCorrect, isDisabled, requiredSize, onChange }: Props) {
-  const [logoCorrect, setLogoCorrect] = useState<boolean | null>(null);
+  const [logoValidationMessage, setLogoValidationMessage] = useState<string | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
 
   useEffect(() => {
-    if (logoCorrect === false) {
+    if (logoValidationMessage !== null) {
       setPreview(null);
     }
-  }, [logoCorrect]);
+  }, [logoValidationMessage]);
 
   const handleFileChange = async (file: File | null, form: any) => {
-    const isValid = await validateLogo(file, requiredSize);
+    const validationMessage = await validateLogo(file, requiredSize);
 
-    setLogoCorrect(isValid);
+    setLogoValidationMessage(validationMessage);
     form.setFieldValue(value, file);
 
     if (file) {
@@ -79,11 +82,11 @@ function InputImage({ id, children, value, isCorrect, isDisabled, requiredSize, 
       }
     }
 
-    if (onChange && file) {
+    if (onChange && file && validationMessage === null) {
       onChange(file);
     }
 
-    if (isValid) {
+    if (validationMessage === null) {
       const reader = new FileReader();
       reader.onload = (e) => {
         setPreview(e.target?.result as string);
@@ -110,16 +113,18 @@ function InputImage({ id, children, value, isCorrect, isDisabled, requiredSize, 
               accept='image/png'
               onChange={async (event) => {
                 const file = event.target.files?.[0] || null;
-                const isValidSize = await validateLogo(file, requiredSize);
-                if (isValidSize) {
+                const validationMessage = await validateLogo(file, requiredSize);
+                if (validationMessage === null) {
                   handleFileChange(file, form);
                   field.onChange(event);
+                } else {
+                  setLogoValidationMessage(validationMessage);
                 }
               }}
               onDrop={async (event) => {
                 const file = event.dataTransfer.files?.[0] || null;
-                const isValidSize = await validateLogo(file, requiredSize);
-                if (isValidSize) {
+                const validationMessage = await validateLogo(file, requiredSize);
+                if (validationMessage === null) {
                   handleFileChange(file, form);
                   field.onChange({
                     target: {
@@ -127,12 +132,13 @@ function InputImage({ id, children, value, isCorrect, isDisabled, requiredSize, 
                       type: 'file',
                     },
                   });
-
                   const inputElement = document.getElementById(id) as HTMLInputElement;
                   if (inputElement) {
                     inputElement.value = '';
                     inputElement.focus();
                   }
+                } else {
+                  setLogoValidationMessage(validationMessage);
                 }
               }}
               required
@@ -140,8 +146,12 @@ function InputImage({ id, children, value, isCorrect, isDisabled, requiredSize, 
             <div className='flex min-h-[32rem] w-full cursor-pointer flex-col items-center justify-center border-2 border-dashed border-gray-300 bg-slate-50'>
               {!preview && (
                 <div className='flex flex-col items-center'>
-                  <span className='absolute top-40 mb-2 text-gray-500'>Drag the image here to upload</span>
-                  <ImageOutlinedIcon className='absolute bottom-56 scale-[8.8] text-gray-300' />
+                  <span className='absolute top-40 mb-2 text-gray-500'>
+                    {logoValidationMessage || 'Drag the image here to upload'}
+                  </span>
+                  {logoValidationMessage ? null : (
+                    <ImageOutlinedIcon className='absolute bottom-56 scale-[8.8] text-gray-300' />
+                  )}
                 </div>
               )}
               {preview && <img src={preview} alt='Preview' className='mt-3 h-auto max-w-full' />}

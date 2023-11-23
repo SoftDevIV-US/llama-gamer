@@ -1,4 +1,5 @@
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import axios from 'axios';
 import { Form as FormFormik, Formik } from 'formik';
 import { useState } from 'react';
 
@@ -16,49 +17,33 @@ function AddBrand() {
   const [isLogoCorrect, setIsLogoCorrect] = useState(true);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const { addBrand } = useAddBrand({ setIsNameCorrect, setIsLogoCorrect });
+
+  const handleImageUpload = async (values: CreateBrandDto) => {
+    if (!selectedFile) {
+      return;
+    }
+
+    const data = new FormData();
+    data.append('file', selectedFile);
+    data.append('upload_preset', 'brandcloud');
+    data.append('cloud_name', 'dvsg7obzt');
+
+    const response = await axios.post('https://api.cloudinary.com/v1_1/dvsg7obzt/image/upload', data);
+
+    if (response.status !== 200) {
+      throw new Error(`Error: ${response.status} - ${response.statusText}`);
+    }
+
+    const logoUrl = response.data.secure_url;
+
+    const newValues = { ...values, logo: logoUrl };
+    addBrand(newValues);
+  };
+
   return (
     <InnerLayout>
       <Form title='Brand'>
-        <Formik
-          initialValues={
-            {
-              name: '',
-              logo: '',
-            } as CreateBrandDto
-          }
-          onSubmit={async (values) => {
-            if (!selectedFile) {
-              return;
-            }
-
-            const data = new FormData();
-            data.append('file', selectedFile);
-            data.append('upload_preset', 'brandcloud');
-            data.append('cloud_name', 'dvsg7obzt');
-
-            const res = await fetch('https://api.cloudinary.com/v1_1/dvsg7obzt/image/upload', {
-              method: 'POST',
-              body: data,
-            });
-
-            if (!res.ok) {
-              throw new Error(`Error: ${res.status} - ${res.statusText}`);
-            }
-
-            const file = await res.json();
-
-            const logoUrl = file.secure_url;
-
-            const newValues = {
-              ...values,
-              logo: logoUrl,
-            };
-
-            addBrand(newValues);
-
-            addBrand(values);
-          }}
-        >
+        <Formik initialValues={{ name: '', logo: '' } as CreateBrandDto} onSubmit={handleImageUpload}>
           <FormFormik className='flex h-full flex-col overflow-y-scroll px-0 py-12 lg:px-16 landscape:gap-4 landscape:py-4 landscape:md:gap-20 landscape:md:py-20'>
             <div className='flex grow flex-col gap-10  font-normal lg:gap-20'>
               <InputField id='name' value='name' placeholder='Name of the brand...' isCorrect={isNameCorrect}>
