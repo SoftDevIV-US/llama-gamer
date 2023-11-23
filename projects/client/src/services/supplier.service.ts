@@ -1,28 +1,27 @@
-import axios from 'axios';
-
+import instance from '@/config/axios.config';
 import { CreateSupplierDto, Supplier, UpdateSupplierDto } from '@/models/supplier.model';
 
 export const createSupplier = async (data: CreateSupplierDto): Promise<Supplier> => {
-  const response = await axios.post('/api/suppliers', data);
+  const response = await instance.post('/suppliers', data);
   return response.data;
 };
 
 export const getAllSuppliers = async (): Promise<Supplier[]> => {
-  const response = await axios.get('/api/suppliers');
+  const response = await instance.get('/suppliers');
   return response.data;
 };
 
 export const getSupplierById = async (id: string): Promise<Supplier> => {
-  const response = await axios.get(`/api/suppliers/${id}`);
+  const response = await instance.get(`/suppliers/${id}`);
   return response.data;
 };
 
 export const updateSupplierById = async (id: string, data: UpdateSupplierDto): Promise<Supplier> => {
-  const response = await axios.patch(`/api/suppliers/${id}`, data);
+  const response = await instance.patch(`/suppliers/${id}`, data);
   return response.data;
 };
 
 export const deleteSupplierById = async (id: string): Promise<Supplier> => {
-  const response = await axios.delete(`/api/suppliers/${id}`);
+  const response = await instance.delete(`/suppliers/${id}`);
   return response.data;
 };

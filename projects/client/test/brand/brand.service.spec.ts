@@ -3,6 +3,13 @@ import axios from 'axios';
 import { createBrand, deleteBrandById, getAllBrands, getBrandById, updateBrandById } from '@/services/brand.service';
 
 jest.mock('axios');
+jest.mock('@/store/auth.store', () => ({
+  getState: jest.fn(() => ({
+    auth: {
+      token: 'mocked-auth-token',
+    },
+  })),
+}));
 
 describe('BrandService', () => {
   afterEach(() => {
@@ -16,11 +23,18 @@ describe('BrandService', () => {
         logo: 'https://example.com/logo.png',
       };
       const response = { data: { id: '1', ...data } };
+
+      // Mock axios post method
       (axios.post as jest.MockedFunction<typeof axios.post>).mockResolvedValueOnce(response);
 
       const result = await createBrand(data);
 
-      expect(axios.post).toHaveBeenCalledWith('/api/brands', data);
+      expect(axios.post).toHaveBeenCalledWith('/api/brands', data, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer mocked-auth-token',
+        },
+      });
       expect(result).toEqual(response.data);
     });
   });
@@ -32,7 +46,12 @@ describe('BrandService', () => {
 
       const result = await getAllBrands();
 
-      expect(axios.get).toHaveBeenCalledWith('/api/brands');
+      expect(axios.get).toHaveBeenCalledWith('/api/brands', {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer mocked-auth-token',
+        },
+      });
       expect(result).toEqual(response.data);
     });
   });
@@ -45,7 +64,12 @@ describe('BrandService', () => {
 
       const result = await getBrandById(id);
 
-      expect(axios.get).toHaveBeenCalledWith(`/api/brands/${id}`);
+      expect(axios.get).toHaveBeenCalledWith(`/api/brands/${id}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer mocked-auth-token',
+        },
+      });
       expect(result).toEqual(response.data);
     });
   });
@@ -59,7 +83,12 @@ describe('BrandService', () => {
 
       const result = await updateBrandById(id, data);
 
-      expect(axios.patch).toHaveBeenCalledWith(`/api/brands/${id}`, data);
+      expect(axios.patch).toHaveBeenCalledWith(`/api/brands/${id}`, data, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer mocked-auth-token',
+        },
+      });
       expect(result).toEqual(response.data);
     });
   });
@@ -72,7 +101,12 @@ describe('BrandService', () => {
 
       const result = await deleteBrandById(id);
 
-      expect(axios.delete).toHaveBeenCalledWith(`/api/brands/${id}`);
+      expect(axios.delete).toHaveBeenCalledWith(`/api/brands/${id}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer mocked-auth-token',
+        },
+      });
       expect(result).toEqual(response.data);
     });
   });
