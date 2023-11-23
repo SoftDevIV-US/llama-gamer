@@ -6,6 +6,7 @@ import AuthModule from './auth/auth.module';
 import BrandModule from './brand/brand.module';
 import CategoryModule from './category/category.module';
 import CountryModule from './country/country.module';
+import ProductModule from './product/product.module';
 import SupplierModule from './supplier/supplier.module';
 import UserModule from './user/user.module';
 
@@ -20,6 +21,7 @@ import UserModule from './user/user.module';
     SupplierModule,
     BrandModule,
     CategoryModule,
+    ProductModule,
   ],
 })
 class AppModule {}
