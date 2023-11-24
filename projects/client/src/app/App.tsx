@@ -1,14 +1,18 @@
 import { Route, Routes } from 'react-router-dom';
 
 import Layout from './layouts/Layout';
+import About from './pages/about/about';
+import Account from './pages/account/account';
 import Brands from './pages/brands/Brands';
 import AddBrand from './pages/brands/pages/add/AddBrand';
 import EditBrand from './pages/brands/pages/edit/EditBrand';
 import BrandInfo from './pages/brands/pages/info/BrandInfo';
+import Cart from './pages/cart/cart';
 import Categories from './pages/categories/Categories';
 import AddCategory from './pages/categories/pages/add/AddCategory';
 import EditCategory from './pages/categories/pages/edit/EditCategory';
 import CategoryInfo from './pages/categories/pages/info/CategoryInfo';
+import Contact from './pages/contact/contact';
 import Countries from './pages/countries/Countries';
 import AddCountry from './pages/countries/pages/add/AddCountry';
 import EditCountry from './pages/countries/pages/edit/EditCountry';
@@ -21,6 +25,8 @@ import AddSupplier from './pages/suppliers/pages/add/AddSupplier';
 import EditSupplier from './pages/suppliers/pages/edit/EditSupplier';
 import SupplierInfo from './pages/suppliers/pages/info/SupplierInfo';
 import Suppliers from './pages/suppliers/Suppliers';
+import TermsConditions from './pages/termsConditions/TermsConditions';
+import Wishlist from './pages/wishlist/wishList';
 
 function App() {
   return (
@@ -46,6 +52,12 @@ function App() {
         <Route path='/admin/suppliers/info/:id' element={<SupplierInfo />} />
         <Route path='/admin/suppliers/edit/:id' element={<EditSupplier />} />
         <Route path='/admin/products' element={<Products />} />
+        <Route path='/about' element={<About />} />
+        <Route path='/contact' element={<Contact />} />
+        <Route path='/wishList' element={<Wishlist />} />
+        <Route path='/termsConditions' element={<TermsConditions />} />
+        <Route path='/cart' element={<Cart />} />
+        <Route path='/account' element={<Account />} />
       </Routes>
     </Layout>
   );
