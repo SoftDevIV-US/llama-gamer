@@ -21,10 +21,7 @@ import UserModule from './user/user.module';
     SupplierModule,
     BrandModule,
     CategoryModule,
-<<<<<<< HEAD
-=======
     UserModule,
->>>>>>> 902b714 (feat: add auth module and guards for jwt)
     ProductModule,
   ],
 })
