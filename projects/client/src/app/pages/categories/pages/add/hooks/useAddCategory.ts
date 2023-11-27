@@ -23,12 +23,8 @@ const useAddCategory = ({ setIsNameCorrect, setIsImageCorrect }: Props) => {
       },
       error: (err) => {
         const { message } = err.response.data;
-        let error = '';
-        if (message instanceof Array) {
-          [error] = message;
-        } else {
-          error = message;
-        }
+        const error = Array.isArray(message) ? message[0] : message;
+
         if (error.includes('name')) {
           setIsNameCorrect(false);
           setIsImageCorrect(true);

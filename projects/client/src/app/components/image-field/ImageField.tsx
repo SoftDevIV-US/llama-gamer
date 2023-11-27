@@ -1,6 +1,8 @@
 import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
 import React, { useState } from 'react';
 
+import { ALLOWED_EXTENSIONS, MEDIUM_IMAGE_DIMENSIONS, SMALL_IMAGE_DIMENSIONS } from '@/app/constants/constants';
+
 type Props = {
   id: string;
   children: React.ReactNode;
@@ -20,9 +22,8 @@ function ImageField({ id, children, value, isDisabled, size, onFormDataChange, i
     const file = event.target.files?.[0] || null;
 
     if (file) {
-      const allowedExtensions = ['png'];
       const extension = file.name.split('.').pop()?.toLowerCase() || '';
-      const isValidExtension = allowedExtensions.includes(extension);
+      const isValidExtension = ALLOWED_EXTENSIONS.includes(extension);
 
       if (!isValidExtension) {
         setLogoCorrect(false);
@@ -44,8 +45,10 @@ function ImageField({ id, children, value, isDisabled, size, onFormDataChange, i
           img.src = result;
         });
 
-        const isValidSizeSmall = img.width === 256 && img.height === 256;
-        const isValidSizeMedium = img.width === 512 && img.height === 512;
+        const isValidSizeSmall =
+          img.width === SMALL_IMAGE_DIMENSIONS.width && img.height === SMALL_IMAGE_DIMENSIONS.height;
+        const isValidSizeMedium =
+          img.width === MEDIUM_IMAGE_DIMENSIONS.width && img.height === MEDIUM_IMAGE_DIMENSIONS.height;
 
         if ((size === 'small' && !isValidSizeSmall) || (size === 'medium' && !isValidSizeMedium)) {
           setLogoCorrect(false);
@@ -73,7 +76,7 @@ function ImageField({ id, children, value, isDisabled, size, onFormDataChange, i
         {children}
         {showRequired && <span className='text-red-700'> *</span>}
       </p>
-      <div className=' border-2 border-dashed bg-slate-50'>
+      <div className=' border-2 border-dashed bg-slate-50' style={{ position: 'relative' }}>
         <input
           id={id}
           name={value}
@@ -83,6 +86,7 @@ function ImageField({ id, children, value, isDisabled, size, onFormDataChange, i
           onChange={handleFileChange}
           required={isRequired}
           disabled={isDisabled}
+          style={{ position: 'absolute', width: '100%', height: '100' }}
         />
         <div
           className={`w-full rounded-lg px-3 py-4 ${
@@ -96,7 +100,7 @@ function ImageField({ id, children, value, isDisabled, size, onFormDataChange, i
                 <span className='text-gray-500'>Drag the image here to upload...</span>
               </div>
               <div>
-                <ImageOutlinedIcon className='mb-10 scale-[3] text-gray-300' />
+                <ImageOutlinedIcon className='mb-10 scale-[3] text-gray-300' style={{ pointerEvents: 'none' }} />
               </div>
             </div>
           )}
