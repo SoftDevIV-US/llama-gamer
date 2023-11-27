@@ -33,20 +33,20 @@ class CreateProductDto {
       'Experience cable-free freedom and exceptional performance with our Wireless RGB Mechanical Keyboard. Its high-quality switches provide precise tactile responses, while the customizable RGB backlight adds a stylish touch to your workspace. With low-latency wireless connectivity, outstanding durability, and an ergonomic design, this keyboard is the perfect choice for gamers and professionals seeking the ideal balance of form and function.',
   })
   @MaxLength(1000, {
-    message: 'The product name must be at most 50 characters',
+    message: 'The product description must be at most 1000 characters',
   })
   @MinLength(1, {
-    message: 'The product name must be at least 3 characters',
+    message: 'The product description must be at least 1 characters',
   })
   @IsNotEmpty({
-    message: 'The product name must not be empty',
+    message: 'The product description must not be empty',
   })
   readonly description: string;
 
   @ApiProperty({
     type: 'Integer',
     description: 'The stock of the product',
-    example: '5',
+    example: '190',
   })
   @Min(180, {
     message: 'The product stock must be at most 180',
