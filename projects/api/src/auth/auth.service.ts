@@ -4,6 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import CreateUserDto from '@/user/dto/create-user.dto';
 import User from '@/user/entities/user.entity';
 import UserService from '@/user/user.service';
+import { JWT_EXPIRES_IN, JWT_REFRESH_EXPIRES_IN, JWT_REFRESH_SECRET, JWT_SECRET } from '@/utils/constants';
 
 import LoginDto from './dto/login.dto';
 import Auth from './entities/auth.entity';
@@ -17,15 +18,17 @@ class AuthService {
 
   async register(createUserDto: CreateUserDto): Promise<Auth> {
     const user = await this.userService.create(createUserDto);
-    return this.generateToken(user);
+    const token = await this.generateToken(user);
+    return token;
   }
 
   async login(loginDto: LoginDto): Promise<Auth> {
     const user = await this.validateUser(loginDto);
-    return this.generateToken(user);
+    const token = await this.generateToken(user);
+    return token;
   }
 
-  private async validateUser(loginDto: LoginDto): Promise<User> {
+  async validateUser(loginDto: LoginDto): Promise<User> {
     const { email, password } = loginDto;
 
     const user = await this.userService.findByEmail(email);
@@ -43,16 +46,40 @@ class AuthService {
     return user;
   }
 
-  private generateToken(user: User): Auth {
+  async validateUserWithId(id: string): Promise<User> {
+    const user = await this.userService.findOne(id);
+
+    if (!user) {
+      throw new UnauthorizedException('Invalid Credentials');
+    }
+
+    return user;
+  }
+
+  async generateToken(user: User, refreshToken?: string): Promise<Auth> {
     const payload = {
       id: user.id,
       role: user.role,
     };
 
     return {
-      token: this.jwtService.sign(payload),
+      token: await this.jwtService.signAsync(payload, { secret: JWT_SECRET, expiresIn: JWT_EXPIRES_IN }),
+      refreshToken:
+        refreshToken ||
+        (await this.jwtService.signAsync(payload, { secret: JWT_REFRESH_SECRET, expiresIn: JWT_REFRESH_EXPIRES_IN })),
       user,
     };
+  }
+
+  async refreshToken(refreshToken: string): Promise<Auth> {
+    const payload = await this.jwtService.verifyAsync(refreshToken, {
+      secret: JWT_REFRESH_SECRET,
+    });
+
+    const user = await this.validateUserWithId(payload.id);
+    const token = await this.generateToken(user, refreshToken);
+
+    return token;
   }
 }
 

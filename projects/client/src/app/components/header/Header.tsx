@@ -25,9 +25,9 @@ function Header() {
         <div className='flex place-items-center gap-5'>
           {auth ? (
             <>
-              <div>
+              <div className='relative'>
                 <Button
-                  className='pr-2 text-4xl lg:p-0 lg:text-2xl'
+                  className='text-4xl lg:p-0 lg:text-2xl'
                   onClick={() => {
                     setIsOpen((open) => !open);
                   }}
@@ -35,7 +35,7 @@ function Header() {
                   <PersonIcon fontSize='inherit' />
                 </Button>
                 {isOpen && (
-                  <div className='fixed mt-2 rounded-xl border border-black bg-white px-6 py-3 '>
+                  <div className='absolute right-0 mt-2 rounded-xl border border-black bg-white px-6 py-3 lg:right-auto'>
                     <Button
                       onClick={() => {
                         if (auth.user.role === 'ADMIN') navigate('/');

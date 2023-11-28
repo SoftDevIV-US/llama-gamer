@@ -63,6 +63,7 @@ class UserService {
         usersProducts: true,
       },
     });
+
     if (!user) {
       throw new BadRequestException(`User with ID ${id} not found`);
     }

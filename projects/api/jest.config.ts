@@ -23,13 +23,12 @@ const config: Config = {
     '!src/**/*.entity.ts',
     '!src/**/*.dto.ts',
     '!src/**/*.config.ts',
-    '!src/**/*.guard.ts',
+    '!src/auth/**',
   ],
   coveragePathIgnorePatterns: [
     '<rootDir>/src/main.ts',
     '<rootDir>/src/prisma/prisma.service.ts',
     '<rootDir>/src/utils/constants.ts',
-    '<rootDir>/src/auth/strategy/jwt.strategy.ts',
   ],
   coverageThreshold: {
     global: {

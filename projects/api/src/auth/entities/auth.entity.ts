@@ -11,6 +11,13 @@ class Auth {
   readonly token: string;
 
   @ApiProperty({
+    type: 'String',
+    description: 'Refresh token',
+    example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXCVI9',
+  })
+  readonly refreshToken: string;
+
+  @ApiProperty({
     type: User,
     description: 'The user that was authenticated',
   })

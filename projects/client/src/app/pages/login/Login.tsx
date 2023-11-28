@@ -21,6 +21,7 @@ function Login() {
   const togglePassword = () => {
     setPasswordType(passwordType === 'password' ? 'text' : 'password');
   };
+
   if (auth) {
     if (auth.user.role === 'ADMIN') {
       navigate('/admin');
@@ -71,7 +72,7 @@ function Login() {
                 <Field
                   type={passwordType}
                   name='password'
-                  placeholder='Enter password'
+                  placeholder='••••••••••'
                   className='w-full bg-transparent outline-none'
                   required
                 />

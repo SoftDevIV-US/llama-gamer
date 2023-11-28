@@ -1,5 +1,5 @@
-import axios from 'axios';
-
+import instance from '@/config/axios.config';
+import { Category, CreateCategoryDto, UpdateCategoryDto } from '@/models/category.model';
 import {
   createCategory,
   deleteCategoryById,
@@ -8,78 +8,118 @@ import {
   updateCategoryById,
 } from '@/services/category.service';
 
-jest.mock('axios');
+jest.mock('@/config/axios.config');
 
-describe('CountryService', () => {
+describe('Category Service', () => {
   afterEach(() => {
-    jest.resetAllMocks();
+    jest.clearAllMocks();
   });
 
-  describe('createCategory', () => {
-    it('should create a new category', async () => {
-      const data = {
-        name: 'Test Category',
-        image: 'https://www.digitaloutlet.com.uy/imgs/productos/productos31_15439.png',
-      };
-      const response = { data: { id: '1', ...data } };
-      (axios.post as jest.MockedFunction<typeof axios.post>).mockResolvedValueOnce(response);
+  it('should create a category', async () => {
+    const mockData: CreateCategoryDto = {
+      name: 'Test Category',
+      image: 'test-image.png',
+    };
 
-      const result = await createCategory(data);
+    const mockResponse: Category = {
+      id: '1',
+      createdAt: '2022-01-01',
+      updatedAt: '2022-01-01',
+      name: 'Test Category',
+      image: 'test-image.png',
+    };
 
-      expect(axios.post).toHaveBeenCalledWith('/api/categories', data);
-      expect(result).toEqual(response.data);
-    });
+    (instance.post as jest.Mock).mockResolvedValueOnce({ data: mockResponse });
+
+    const result = await createCategory(mockData);
+
+    expect(instance.post).toHaveBeenCalledWith('/categories', mockData);
+    expect(result).toEqual(mockResponse);
   });
 
-  describe('getAllCategories', () => {
-    it('should get all categories', async () => {
-      const response = { data: [{ id: '1', name: 'Test Category' }] };
-      (axios.get as jest.MockedFunction<typeof axios.get>).mockResolvedValueOnce(response);
+  it('should get all categories', async () => {
+    const mockResponse: Category[] = [
+      {
+        id: '1',
+        createdAt: '2022-01-01',
+        updatedAt: '2022-01-01',
+        name: 'Category 1',
+        image: 'image1.png',
+      },
+      {
+        id: '2',
+        createdAt: '2022-01-02',
+        updatedAt: '2022-01-02',
+        name: 'Category 2',
+        image: 'image2.png',
+      },
+    ];
 
-      const result = await getAllCategories();
+    (instance.get as jest.Mock).mockResolvedValueOnce({ data: mockResponse });
 
-      expect(axios.get).toHaveBeenCalledWith('/api/categories');
-      expect(result).toEqual(response.data);
-    });
+    const result = await getAllCategories();
+
+    expect(instance.get).toHaveBeenCalledWith('/categories');
+    expect(result).toEqual(mockResponse);
   });
 
-  describe('getCategoryById', () => {
-    it('should get a category by id', async () => {
-      const id = '1';
-      const response = { data: { id, name: 'Test Category' } };
-      (axios.get as jest.MockedFunction<typeof axios.get>).mockResolvedValueOnce(response);
+  it('should get a category by ID', async () => {
+    const categoryId = '1';
 
-      const result = await getCategoryById(id);
+    const mockResponse: Category = {
+      id: '1',
+      createdAt: '2022-01-01',
+      updatedAt: '2022-01-01',
+      name: 'Test Category',
+      image: 'test-image.png',
+    };
 
-      expect(axios.get).toHaveBeenCalledWith(`/api/categories/${id}`);
-      expect(result).toEqual(response.data);
-    });
+    (instance.get as jest.Mock).mockResolvedValueOnce({ data: mockResponse });
+
+    const result = await getCategoryById(categoryId);
+
+    expect(instance.get).toHaveBeenCalledWith(`/categories/${categoryId}`);
+    expect(result).toEqual(mockResponse);
   });
 
-  describe('updateCategoryById', () => {
-    it('should update a category by id', async () => {
-      const id = '1';
-      const data = { name: 'Updated Test Category' };
-      const response = { data: { id, ...data } };
-      (axios.patch as jest.MockedFunction<typeof axios.patch>).mockResolvedValueOnce(response);
+  it('should update a category by ID', async () => {
+    const categoryId = '1';
+    const mockData: UpdateCategoryDto = {
+      name: 'Updated Category',
+    };
 
-      const result = await updateCategoryById(id, data);
+    const mockResponse: Category = {
+      id: '1',
+      createdAt: '2022-01-01',
+      updatedAt: '2022-01-02',
+      name: 'Updated Category',
+      image: 'test-image.png',
+    };
 
-      expect(axios.patch).toHaveBeenCalledWith(`/api/categories/${id}`, data);
-      expect(result).toEqual(response.data);
-    });
+    (instance.patch as jest.Mock).mockResolvedValueOnce({ data: mockResponse });
+
+    const result = await updateCategoryById(categoryId, mockData);
+
+    expect(instance.patch).toHaveBeenCalledWith(`/categories/${categoryId}`, mockData);
+    expect(result).toEqual(mockResponse);
   });
 
-  describe('deleteCategoryById', () => {
-    it('should delete a category by id', async () => {
-      const id = '1';
-      const response = { data: { id, name: 'Test Category' } };
-      (axios.delete as jest.MockedFunction<typeof axios.delete>).mockResolvedValueOnce(response);
+  it('should delete a category by ID', async () => {
+    const categoryId = '1';
 
-      const result = await deleteCategoryById(id);
+    const mockResponse: Category = {
+      id: '1',
+      createdAt: '2022-01-01',
+      updatedAt: '2022-01-01',
+      name: 'Test Category',
+      image: 'test-image.png',
+    };
 
-      expect(axios.delete).toHaveBeenCalledWith(`/api/categories/${id}`);
-      expect(result).toEqual(response.data);
-    });
+    (instance.delete as jest.Mock).mockResolvedValueOnce({ data: mockResponse });
+
+    const result = await deleteCategoryById(categoryId);
+
+    expect(instance.delete).toHaveBeenCalledWith(`/categories/${categoryId}`);
+    expect(result).toEqual(mockResponse);
   });
 });

@@ -21,6 +21,9 @@ class LoginDto {
     message: 'The email must not be empty',
     groups: ['validate'],
   })
+  @Transform(({ value }) => value.replace(/\s+/g, ' '), {
+    groups: ['transform'],
+  })
   @Transform(({ value }) => value.trim(), {
     groups: ['transform'],
   })
