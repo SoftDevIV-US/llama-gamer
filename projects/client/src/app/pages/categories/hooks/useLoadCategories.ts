@@ -23,7 +23,7 @@ const useLoadCategories = ({ setIsLoading, setIsFound }: Props) => {
       },
       error: () => {
         setIsFound(false);
-        return 'Error Categories not found';
+        return 'Categories not found';
       },
       finally: () => setIsLoading(false),
     });

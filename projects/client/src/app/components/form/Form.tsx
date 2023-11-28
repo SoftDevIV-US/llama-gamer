@@ -1,4 +1,4 @@
-import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 
 import Button from '@/app/components/button/Button';
 import Line from '@/app/components/line/Line';
@@ -17,7 +17,7 @@ function Form({ title, children }: Props) {
       <div className='flex justify-between px-3'>
         <h1 className='text-3xl text-[#0D1B2A]/70'>{title}</h1>
         <Button onClick={() => navigate(-1)} className='rounded-full bg-[#223343] px-[6px] py-1'>
-          <KeyboardBackspaceIcon className='text-white' />
+          <CloseOutlinedIcon className='text-white' />
         </Button>
       </div>
       <Line />

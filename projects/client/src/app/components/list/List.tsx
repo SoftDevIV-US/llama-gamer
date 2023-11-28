@@ -21,12 +21,12 @@ function Countries({ recordList, isLoading, isFound }: Props) {
 
   return (
     <section
-      className={`flex h-full max-h-full w-full flex-col gap-4 border-2 border-black p-4 font-bold ${
+      className={`flex h-full max-h-full w-full flex-col gap-4 border-2 border-black p-4${
         isLoading || recordList.values.length === 0 ? 'h-full' : ''
       }`}
     >
       <div className='flex place-items-center gap-10 px-3'>
-        <h1 className='text-3xl text-[#0D1B2A]/70'>{recordList.title}</h1>
+        <h1 className='text-3xl font-bold text-[#0D1B2A]/70'>{recordList.title}</h1>
         <Button className='flex place-items-center gap-1' onClick={() => navigate(`/admin/${recordList.url}/add`)}>
           <AddCircleOutlineIcon className='text-[#3E93FF]' />
           <p className='text-base text-[#3E93FF]'>Add</p>

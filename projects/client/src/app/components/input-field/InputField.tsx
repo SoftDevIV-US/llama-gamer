@@ -5,6 +5,7 @@ const defaultProps = {
   isCorrect: true,
   isDisabled: false,
   type: 'text',
+  showRequired: true,
 };
 
 type Props = {
@@ -15,14 +16,15 @@ type Props = {
   type?: string;
   isCorrect?: boolean;
   isDisabled?: boolean;
+  showRequired?: boolean;
 };
 
-function InputField({ id, children, value, type, placeholder, isCorrect, isDisabled }: Props) {
+function InputField({ id, children, value, type, placeholder, isCorrect, isDisabled, showRequired }: Props) {
   return (
     <label htmlFor={id}>
       <p className='px-4 text-[#1B263B]/50'>
         {children}
-        <span className='text-red-700'> *</span>
+        {showRequired && <span className='text-red-700'> *</span>}
       </p>
       <Field
         id={id}
