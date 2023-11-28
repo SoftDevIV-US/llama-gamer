@@ -76,7 +76,7 @@ function EditCountry() {
                     isSubmit
                   >
                     <EditIcon />
-                    <p className='text-xl'>Edit</p>
+                    <p className='text-xl'>Save</p>
                   </Button>
                 </div>
               </FormFormik>
