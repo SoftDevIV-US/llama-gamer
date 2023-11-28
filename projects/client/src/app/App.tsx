@@ -3,18 +3,18 @@ import { Route, Routes } from 'react-router-dom';
 import AdminRoute from '@/routes/admin.route';
 import UserRoute from '@/routes/user.route';
 
-import About from './pages/about/about';
-import Account from './pages/account/account';
+import About from './pages/about/About';
+import Account from './pages/account/Account';
 import Brands from './pages/brands/Brands';
 import AddBrand from './pages/brands/pages/add/AddBrand';
 import EditBrand from './pages/brands/pages/edit/EditBrand';
 import BrandInfo from './pages/brands/pages/info/BrandInfo';
-import Cart from './pages/cart/cart';
+import Cart from './pages/cart/Cart';
 import Categories from './pages/categories/Categories';
 import AddCategory from './pages/categories/pages/add/AddCategory';
 import EditCategory from './pages/categories/pages/edit/EditCategory';
 import CategoryInfo from './pages/categories/pages/info/CategoryInfo';
-import Contact from './pages/contact/contact';
+import Contact from './pages/contact/Contact';
 import Countries from './pages/countries/Countries';
 import AddCountry from './pages/countries/pages/add/AddCountry';
 import EditCountry from './pages/countries/pages/edit/EditCountry';
@@ -28,8 +28,8 @@ import AddSupplier from './pages/suppliers/pages/add/AddSupplier';
 import EditSupplier from './pages/suppliers/pages/edit/EditSupplier';
 import SupplierInfo from './pages/suppliers/pages/info/SupplierInfo';
 import Suppliers from './pages/suppliers/Suppliers';
-import TermsConditions from './pages/termsConditions/TermsConditions';
-import Wishlist from './pages/wishlist/wishList';
+import TermsConditions from './pages/terms-conditions/TermsConditions';
+import WishList from './pages/wish-list/WishList';
 
 function App() {
   return (
@@ -40,7 +40,7 @@ function App() {
         <Route path='/' element={<User />} />
         <Route path='/about' element={<About />} />
         <Route path='/contact' element={<Contact />} />
-        <Route path='/wish-list' element={<Wishlist />} />
+        <Route path='/wish-list' element={<WishList />} />
         <Route path='/terms-conditions' element={<TermsConditions />} />
         <Route path='/cart' element={<Cart />} />
         <Route path='/account' element={<Account />} />

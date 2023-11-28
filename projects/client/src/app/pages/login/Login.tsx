@@ -35,9 +35,9 @@ function Login() {
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
       <section className='flex h-full min-h-screen w-full flex-col justify-center gap-4 overflow-y-scroll bg-white p-5 md:w-5/12 md:rounded-r-2xl md:p-6 lg:w-1/3 lg:p-12'>
-        <div className='hidden w-full items-center justify-center md:flex'>
+        <Button className='hidden w-full items-center justify-center md:flex' onClick={() => navigate('/')}>
           <img src={logoIcon} alt='The logo of the company' />
-        </div>
+        </Button>
         <h1 className='text-center text-[24px] font-bold landscape:hidden'>LLama Gamer</h1>
         <h2 className='text-center text-[14px] md:text-start landscape:text-[20px] landscape:font-bold'>
           Nice to see you again

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { CLOUDINARY_CONFIG, CLOUDINARY_URL } from '@/config/config';
+import { CLOUDINARY_CONFIG, CLOUDINARY_URL } from '@/config/cloudinary.config';
 
 const uploadImage = async (imageFormData: FormData): Promise<any> => {
   try {

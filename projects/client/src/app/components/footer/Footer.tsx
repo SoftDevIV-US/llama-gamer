@@ -52,10 +52,10 @@ function Footer() {
           <Button onClick={() => navigate('/contact')} className={commonColor}>
             Contact
           </Button>
-          <Button onClick={() => navigate('/wishList')} className={commonColor}>
+          <Button onClick={() => navigate('/wish-list')} className={commonColor}>
             Wish List
           </Button>
-          <Button onClick={() => navigate('/termsConditions')} className={commonColor}>
+          <Button onClick={() => navigate('/terms-conditions')} className={commonColor}>
             Terms & Conditions
           </Button>
         </div>

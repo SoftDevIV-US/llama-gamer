@@ -1,5 +1,6 @@
 import { Navigate, Outlet } from 'react-router-dom';
 
+import UserLayout from '@/app/layouts/UserLayout';
 import useAuthStore from '@/store/auth.store';
 
 function UserRoute() {
@@ -9,7 +10,11 @@ function UserRoute() {
     return <Navigate to='/admin' replace />;
   }
 
-  return <Outlet />;
+  return (
+    <UserLayout>
+      <Outlet />
+    </UserLayout>
+  );
 }
 
 export default UserRoute;
