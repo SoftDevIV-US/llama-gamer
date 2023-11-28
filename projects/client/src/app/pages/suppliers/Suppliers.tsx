@@ -16,7 +16,6 @@ function Suppliers() {
     url: 'suppliers',
     fields: [
       { key: 'Email', value: 'email' },
-      { key: 'Delivery Time', value: 'deliveryTime', decorator: ' days' },
       { key: 'Country', value: 'country', moreValue: 'name' },
     ],
     values: suppliers,
