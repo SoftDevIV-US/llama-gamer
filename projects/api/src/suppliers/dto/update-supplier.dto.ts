@@ -1,12 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
-import { IsEmail, IsNumber, IsOptional, IsPositive, IsString, Max } from 'class-validator';
+import { IsEmail, IsNumber, IsOptional, IsPositive, IsString, Matches, Max } from 'class-validator';
 
 class UpdateSupplierDto {
   @ApiProperty({
     type: 'String',
     description: 'The supplier email',
     example: 'intel@gmail.com',
+  })
+  @Matches(/^[a-zA-Z0-9]+([_]?[a-zA-Z0-9]+)*@[a-zA-Z0-9]+\.[a-zA-Z]{2,}$/, {
+    message: 'Invalid email format. Only @ . and _ before the @ are allowed as special characters.',
   })
   @IsEmail()
   @Transform(({ value }) => value.replace(/\s+/g, ' '))
