@@ -122,6 +122,7 @@ function InputImage({ id, children, value, isCorrect, isDisabled, requiredSize, 
                 }
               }}
               onDrop={async (event) => {
+                event.preventDefault();
                 const file = event.dataTransfer.files?.[0] || null;
                 const validationMessage = await validateLogo(file, requiredSize);
                 if (validationMessage === null) {
@@ -143,14 +144,14 @@ function InputImage({ id, children, value, isCorrect, isDisabled, requiredSize, 
               }}
               required
             />
-            <div className='flex min-h-[32rem] w-full cursor-pointer flex-col items-center justify-center border-2 border-dashed border-gray-300 bg-slate-50'>
+            <div className='flex min-h-[8rem] w-full cursor-pointer flex-col items-center justify-center border-2 border-dashed border-gray-300 bg-slate-50'>
               {!preview && (
                 <div className='flex flex-col items-center'>
-                  <span className='absolute top-40 mb-2 text-gray-500'>
+                  <span className='pointer-events-none absolute top-5 text-gray-500'>
                     {logoValidationMessage || 'Drag the image here to upload'}
                   </span>
                   {logoValidationMessage ? null : (
-                    <ImageOutlinedIcon className='absolute bottom-56 scale-[8.8] text-gray-300' />
+                    <ImageOutlinedIcon className='pointer-events-none absolute mb-10 scale-[3] text-gray-300' />
                   )}
                 </div>
               )}
