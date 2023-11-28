@@ -6,8 +6,6 @@ const uploadImage = async (imageFormData: FormData): Promise<any> => {
   try {
     const response = await axios.post(`${CLOUDINARY_URL.url}upload`, imageFormData, CLOUDINARY_CONFIG);
     return response;
-
-    return response;
   } catch (error: any) {
     throw new Error(`Error uploading image: ${error.message}`);
   }
