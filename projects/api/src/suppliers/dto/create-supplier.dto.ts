@@ -8,6 +8,9 @@ class CreateSupplierDto {
     description: 'The supplier email',
     example: 'intel@gmail.com',
   })
+  @Matches(/^[a-zA-Z0-9]+([_]?[a-zA-Z0-9]+)*@[a-zA-Z0-9]+\.[a-zA-Z]{2,}$/, {
+    message: 'Invalid email format. Only @ . and _ before the @ are allowed as special characters.',
+  })
   @IsEmail()
   @IsNotEmpty({
     message: 'The supplier email must not be empty',

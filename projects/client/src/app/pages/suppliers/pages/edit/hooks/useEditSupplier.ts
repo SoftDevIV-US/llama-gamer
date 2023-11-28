@@ -48,6 +48,7 @@ const useEditSupplier = ({
         setIsEmailCorrect(true);
         setIsDeliveryTimeCorrect(true);
         setIsCountryCorrect(true);
+        navigate('/admin/suppliers');
         return `Supplier ${res.email} updated successfully`;
       },
       error: (err) => {
@@ -74,9 +75,6 @@ const useEditSupplier = ({
           setIsDeliveryTimeCorrect(true);
         }
         return error;
-      },
-      finally: () => {
-        navigate('/admin/suppliers');
       },
     });
 
