@@ -4,4 +4,4 @@
 pnpm install
 pnpm run build
 pnpm run check:code
-# pnpm run test
+pnpm run test

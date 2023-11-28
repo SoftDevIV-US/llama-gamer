@@ -1,5 +1,7 @@
-import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
 
+import instance from '@/config/axios.config';
+import { Country, CreateCountryDto, UpdateCountryDto } from '@/models/country.model';
 import {
   createCountry,
   deleteCountryById,
@@ -8,75 +10,85 @@ import {
   updateCountryById,
 } from '@/services/country.service';
 
-jest.mock('axios');
+const mockCountry: Country = {
+  id: '1',
+  createdAt: '2023-01-01T00:00:00.000Z',
+  updatedAt: '2023-01-01T00:00:00.000Z',
+  name: 'Test Country',
+  tax: 10,
+};
 
-describe('CountryService', () => {
+const mockCreateCountryDto: CreateCountryDto = {
+  name: 'Test Country',
+  tax: 10,
+};
+
+const mockUpdateCountryDto: UpdateCountryDto = {
+  name: 'Updated Test Country',
+  tax: 15,
+};
+
+describe('Country Service', () => {
+  let mock: MockAdapter;
+
+  beforeEach(() => {
+    mock = new MockAdapter(instance);
+  });
+
   afterEach(() => {
-    jest.resetAllMocks();
+    mock.reset();
   });
 
   describe('createCountry', () => {
     it('should create a new country', async () => {
-      const data = { name: 'Test Country', tax: 0.1 };
-      const response = { data: { id: '1', ...data } };
-      (axios.post as jest.MockedFunction<typeof axios.post>).mockResolvedValueOnce(response);
+      mock.onPost('/countries').reply(200, mockCountry);
 
-      const result = await createCountry(data);
+      const result = await createCountry(mockCreateCountryDto);
 
-      expect(axios.post).toHaveBeenCalledWith('/api/countries', data);
-      expect(result).toEqual(response.data);
+      expect(result).toEqual(mockCountry);
     });
   });
 
   describe('getAllCountries', () => {
     it('should get all countries', async () => {
-      const response = { data: [{ id: '1', name: 'Test Country' }] };
-      (axios.get as jest.MockedFunction<typeof axios.get>).mockResolvedValueOnce(response);
+      mock.onGet('/countries').reply(200, [mockCountry]);
 
       const result = await getAllCountries();
 
-      expect(axios.get).toHaveBeenCalledWith('/api/countries');
-      expect(result).toEqual(response.data);
+      expect(result).toEqual([mockCountry]);
     });
   });
 
   describe('getCountryById', () => {
     it('should get a country by id', async () => {
-      const id = '1';
-      const response = { data: { id, name: 'Test Country' } };
-      (axios.get as jest.MockedFunction<typeof axios.get>).mockResolvedValueOnce(response);
+      const countryId = '1';
+      mock.onGet(`/countries/${countryId}`).reply(200, mockCountry);
 
-      const result = await getCountryById(id);
+      const result = await getCountryById(countryId);
 
-      expect(axios.get).toHaveBeenCalledWith(`/api/countries/${id}`);
-      expect(result).toEqual(response.data);
+      expect(result).toEqual(mockCountry);
     });
   });
 
   describe('updateCountryById', () => {
     it('should update a country by id', async () => {
-      const id = '1';
-      const data = { name: 'Updated Test Country' };
-      const response = { data: { id, ...data } };
-      (axios.patch as jest.MockedFunction<typeof axios.patch>).mockResolvedValueOnce(response);
+      const countryId = '1';
+      mock.onPatch(`/countries/${countryId}`).reply(200, { ...mockCountry, ...mockUpdateCountryDto });
 
-      const result = await updateCountryById(id, data);
+      const result = await updateCountryById(countryId, mockUpdateCountryDto);
 
-      expect(axios.patch).toHaveBeenCalledWith(`/api/countries/${id}`, data);
-      expect(result).toEqual(response.data);
+      expect(result).toEqual({ ...mockCountry, ...mockUpdateCountryDto });
     });
   });
 
   describe('deleteCountryById', () => {
     it('should delete a country by id', async () => {
-      const id = '1';
-      const response = { data: { id, name: 'Test Country' } };
-      (axios.delete as jest.MockedFunction<typeof axios.delete>).mockResolvedValueOnce(response);
+      const countryId = '1';
+      mock.onDelete(`/countries/${countryId}`).reply(200, mockCountry);
 
-      const result = await deleteCountryById(id);
+      const result = await deleteCountryById(countryId);
 
-      expect(axios.delete).toHaveBeenCalledWith(`/api/countries/${id}`);
-      expect(result).toEqual(response.data);
+      expect(result).toEqual(mockCountry);
     });
   });
 });

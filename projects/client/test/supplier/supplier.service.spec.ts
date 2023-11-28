@@ -1,6 +1,4 @@
-import axios from 'axios';
-
-import { CreateSupplierDto, Supplier, UpdateSupplierDto } from '@/models/supplier.model';
+import instance from '@/config/axios.config';
 import {
   createSupplier,
   deleteSupplierById,
@@ -9,167 +7,181 @@ import {
   updateSupplierById,
 } from '@/services/supplier.service';
 
-jest.mock('axios');
+jest.mock('@/config/axios.config');
 
-describe('SupplierService', () => {
+describe('Supplier Service', () => {
   afterEach(() => {
-    jest.resetAllMocks();
+    jest.clearAllMocks();
   });
 
-  describe('createSupplier', () => {
-    it('should create a new supplier', async () => {
-      const data: CreateSupplierDto = {
-        email: 'test@test.com',
-        deliveryTime: 2,
-        countryId: '123',
-      };
-      const supplier: Supplier = {
-        id: '456',
-        email: 'test@test.com',
-        deliveryTime: 2,
-        countryId: '123',
-        country: {
-          id: '123',
-          name: 'Test Country',
-          tax: 10,
-          createdAt: String(new Date()),
-          updatedAt: String(new Date()),
-        },
-        createdAt: String(new Date()),
-        updatedAt: String(new Date()),
-        productsSuppliers: [],
-      };
-      const response = { data: supplier };
-      (axios.post as jest.MockedFunction<typeof axios.post>).mockResolvedValue(response);
+  it('should create a supplier', async () => {
+    const mockData = {
+      email: 'test@example.com',
+      deliveryTime: 3,
+      countryId: '123',
+    };
 
-      const result = await createSupplier(data);
+    const mockResponse = {
+      id: '1',
+      createdAt: '2023-01-01T00:00:00.000Z',
+      updatedAt: '2023-01-01T12:00:00.000Z',
+      email: 'test@example.com',
+      deliveryTime: 3,
+      countryId: '123',
+      country: {
+        id: '123',
+        createdAt: '2023-01-01T00:00:00.000Z',
+        updatedAt: '2023-01-01T12:00:00.000Z',
+        name: 'Mocked Country',
+        tax: 10,
+      },
+      productsSuppliers: [],
+    };
 
-      expect(axios.post).toHaveBeenCalledTimes(1);
-      expect(axios.post).toHaveBeenCalledWith('/api/suppliers', data);
-      expect(result).toEqual(supplier);
-    });
+    (instance.post as jest.Mock).mockResolvedValueOnce({ data: mockResponse });
+
+    const result = await createSupplier(mockData);
+
+    expect(instance.post).toHaveBeenCalledWith('/suppliers', mockData);
+    expect(result).toEqual(mockResponse);
   });
 
-  describe('getAllSuppliers', () => {
-    it('should get all suppliers', async () => {
-      const suppliers: Supplier[] = [
+  it('should get all suppliers', async () => {
+    const mockResponse = {
+      data: [
         {
-          id: '456',
-          email: 'test@test.com',
-          deliveryTime: 2,
+          id: '1',
+          createdAt: '2023-01-01T00:00:00.000Z',
+          updatedAt: '2023-01-01T12:00:00.000Z',
+          email: 'test1@example.com',
+          deliveryTime: 3,
           countryId: '123',
           country: {
             id: '123',
-            name: 'Test Country',
+            createdAt: '2023-01-01T00:00:00.000Z',
+            updatedAt: '2023-01-01T12:00:00.000Z',
+            name: 'Mocked Country 1',
             tax: 10,
-            createdAt: String(new Date()),
-            updatedAt: String(new Date()),
           },
-          createdAt: String(new Date()),
-          updatedAt: String(new Date()),
           productsSuppliers: [],
         },
-      ];
-      const response = { data: suppliers };
-      (axios.get as jest.MockedFunction<typeof axios.get>).mockResolvedValue(response);
+        {
+          id: '2',
+          createdAt: '2023-01-02T00:00:00.000Z',
+          updatedAt: '2023-01-02T12:00:00.000Z',
+          email: 'test2@example.com',
+          deliveryTime: 4,
+          countryId: '456',
+          country: {
+            id: '456',
+            createdAt: '2023-01-02T00:00:00.000Z',
+            updatedAt: '2023-01-02T12:00:00.000Z',
+            name: 'Mocked Country 2',
+            tax: 15,
+          },
+          productsSuppliers: [],
+        },
+      ],
+    };
 
-      const result = await getAllSuppliers();
+    (instance.get as jest.Mock).mockResolvedValueOnce(mockResponse);
 
-      expect(axios.get).toHaveBeenCalledTimes(1);
-      expect(axios.get).toHaveBeenCalledWith('/api/suppliers');
-      expect(result).toEqual(suppliers);
-    });
+    const result = await getAllSuppliers();
+
+    expect(instance.get).toHaveBeenCalledWith('/suppliers');
+    expect(result).toEqual(mockResponse.data);
   });
 
-  describe('getSupplierById', () => {
-    it('should get a supplier by id', async () => {
-      const supplier: Supplier = {
-        id: '456',
-        email: 'test@test.com',
-        deliveryTime: 2,
+  it('should get a supplier by ID', async () => {
+    const supplierId = '1';
+
+    const mockResponse = {
+      data: {
+        id: '1',
+        createdAt: '2023-01-01T00:00:00.000Z',
+        updatedAt: '2023-01-01T12:00:00.000Z',
+        email: 'test@example.com',
+        deliveryTime: 3,
         countryId: '123',
         country: {
           id: '123',
-          name: 'Test Country',
+          createdAt: '2023-01-01T00:00:00.000Z',
+          updatedAt: '2023-01-01T12:00:00.000Z',
+          name: 'Mocked Country',
           tax: 10,
-          createdAt: String(new Date()),
-          updatedAt: String(new Date()),
         },
-        createdAt: String(new Date()),
-        updatedAt: String(new Date()),
         productsSuppliers: [],
-      };
-      const response = { data: supplier };
-      (axios.get as jest.MockedFunction<typeof axios.get>).mockResolvedValue(response);
+      },
+    };
 
-      const result = await getSupplierById('456');
+    (instance.get as jest.Mock).mockResolvedValueOnce(mockResponse);
 
-      expect(axios.get).toHaveBeenCalledTimes(1);
-      expect(axios.get).toHaveBeenCalledWith('/api/suppliers/456');
-      expect(result).toEqual(supplier);
-    });
+    const result = await getSupplierById(supplierId);
+
+    expect(instance.get).toHaveBeenCalledWith(`/suppliers/${supplierId}`);
+    expect(result).toEqual(mockResponse.data);
   });
 
-  describe('updateSupplierById', () => {
-    it('should update a supplier by id', async () => {
-      const data: UpdateSupplierDto = {
-        email: 'test@test.com',
-        deliveryTime: 2,
-        countryId: '123',
-      };
-      const supplier: Supplier = {
-        id: '456',
-        email: 'test@test.com',
-        deliveryTime: 2,
+  it('should update a supplier by ID', async () => {
+    const supplierId = '1';
+    const mockData = {
+      email: 'updated@example.com',
+    };
+
+    const mockResponse = {
+      data: {
+        id: '1',
+        createdAt: '2023-01-01T00:00:00.000Z',
+        updatedAt: '2023-01-02T12:00:00.000Z',
+        email: 'updated@example.com',
+        deliveryTime: 3,
         countryId: '123',
         country: {
           id: '123',
-          name: 'Test Country',
+          createdAt: '2023-01-01T00:00:00.000Z',
+          updatedAt: '2023-01-01T12:00:00.000Z',
+          name: 'Mocked Country',
           tax: 10,
-          createdAt: String(new Date()),
-          updatedAt: String(new Date()),
         },
-        createdAt: String(new Date()),
-        updatedAt: String(new Date()),
         productsSuppliers: [],
-      };
-      const response = { data: supplier };
-      (axios.patch as jest.MockedFunction<typeof axios.patch>).mockResolvedValue(response);
+      },
+    };
 
-      const result = await updateSupplierById('456', data);
+    (instance.patch as jest.Mock).mockResolvedValueOnce({ data: mockResponse });
 
-      expect(axios.patch).toHaveBeenCalledTimes(1);
-      expect(axios.patch).toHaveBeenCalledWith('/api/suppliers/456', data);
-      expect(result).toEqual(supplier);
-    });
+    const result = await updateSupplierById(supplierId, mockData);
+
+    expect(instance.patch).toHaveBeenCalledWith(`/suppliers/${supplierId}`, mockData);
+    expect(result).toEqual(mockResponse);
   });
 
-  describe('deleteSupplierById', () => {
-    it('should delete a supplier by id', async () => {
-      const supplier: Supplier = {
-        id: '456',
-        email: 'test@test.com',
-        deliveryTime: 2,
+  it('should delete a supplier by ID', async () => {
+    const supplierId = '1';
+
+    const mockResponse = {
+      data: {
+        id: '1',
+        createdAt: '2023-01-01T00:00:00.000Z',
+        updatedAt: '2023-01-01T12:00:00.000Z',
+        email: 'test@example.com',
+        deliveryTime: 3,
         countryId: '123',
         country: {
           id: '123',
-          name: 'Test Country',
+          createdAt: '2023-01-01T00:00:00.000Z',
+          updatedAt: '2023-01-01T12:00:00.000Z',
+          name: 'Mocked Country',
           tax: 10,
-          createdAt: String(new Date()),
-          updatedAt: String(new Date()),
         },
-        createdAt: String(new Date()),
-        updatedAt: String(new Date()),
         productsSuppliers: [],
-      };
-      const response = { data: supplier };
-      (axios.delete as jest.MockedFunction<typeof axios.delete>).mockResolvedValue(response);
+      },
+    };
 
-      const result = await deleteSupplierById('456');
+    (instance.delete as jest.Mock).mockResolvedValueOnce({ data: mockResponse });
 
-      expect(axios.delete).toHaveBeenCalledTimes(1);
-      expect(axios.delete).toHaveBeenCalledWith('/api/suppliers/456');
-      expect(result).toEqual(supplier);
-    });
+    const result = await deleteSupplierById(supplierId);
+
+    expect(instance.delete).toHaveBeenCalledWith(`/suppliers/${supplierId}`);
+    expect(result).toEqual(mockResponse);
   });
 });

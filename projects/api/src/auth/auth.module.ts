@@ -1,26 +1,25 @@
+/* eslint-disable simple-import-sort/imports */
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 
 import UserModule from '@/user/user.module';
-import { JWT_EXPIRES_IN, JWT_SECRET } from '@/utils/constants';
 
 import AuthController from './auth.controller';
 import AuthService from './auth.service';
+import JwtRefreshStrategy from './strategy/jwt-refresh.strategy';
 import JwtStrategy from './strategy/jwt.strategy';
 
 @Module({
   imports: [
-    UserModule,
+    PassportModule,
     JwtModule.register({
       global: true,
-      secret: JWT_SECRET,
-      signOptions: { expiresIn: JWT_EXPIRES_IN },
     }),
-    PassportModule,
+    UserModule,
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy],
+  providers: [AuthService, JwtStrategy, JwtRefreshStrategy],
 })
 class AuthModule {}
 

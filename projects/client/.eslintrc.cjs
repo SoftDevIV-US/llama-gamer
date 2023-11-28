@@ -85,5 +85,6 @@ module.exports = {
     ],
     'jsx-a11y/label-has-associated-control': 'off',
     'no-nested-ternary': 'off',
+    'no-underscore-dangle': 'off',
   },
 };

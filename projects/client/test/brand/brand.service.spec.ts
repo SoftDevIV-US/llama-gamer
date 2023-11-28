@@ -1,113 +1,119 @@
-import axios from 'axios';
-
+import instance from '@/config/axios.config';
+import { Brand, CreateBrandDto, UpdateBrandDto } from '@/models/brand.model';
 import { createBrand, deleteBrandById, getAllBrands, getBrandById, updateBrandById } from '@/services/brand.service';
 
-jest.mock('axios');
-jest.mock('@/store/auth.store', () => ({
-  getState: jest.fn(() => ({
-    auth: {
-      token: 'mocked-auth-token',
-    },
-  })),
-}));
+jest.mock('@/config/axios.config');
 
-describe('BrandService', () => {
+describe('Brand Service', () => {
   afterEach(() => {
-    jest.resetAllMocks();
+    jest.clearAllMocks();
   });
 
-  describe('createBrand', () => {
-    it('should create a new brand', async () => {
-      const data = {
-        name: 'Test Brand',
-        logo: 'https://example.com/logo.png',
-      };
-      const response = { data: { id: '1', ...data } };
+  it('should create a brand', async () => {
+    const mockData: CreateBrandDto = {
+      name: 'Test Brand',
+      logo: 'test-logo.png',
+    };
 
-      // Mock axios post method
-      (axios.post as jest.MockedFunction<typeof axios.post>).mockResolvedValueOnce(response);
+    const mockResponse: Brand = {
+      id: '1',
+      createdAt: '2022-01-01',
+      updatedAt: '2022-01-01',
+      name: 'Test Brand',
+      logo: 'test-logo.png',
+    };
 
-      const result = await createBrand(data);
+    (instance.post as jest.Mock).mockResolvedValueOnce({ data: mockResponse });
 
-      expect(axios.post).toHaveBeenCalledWith('/api/brands', data, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer mocked-auth-token',
-        },
-      });
-      expect(result).toEqual(response.data);
-    });
+    const result = await createBrand(mockData);
+
+    expect(instance.post).toHaveBeenCalledWith('/brands', mockData);
+    expect(result).toEqual(mockResponse);
   });
 
-  describe('getAllBrands', () => {
-    it('should get all brands', async () => {
-      const response = { data: [{ id: '1', name: 'Test Brand' }] };
-      (axios.get as jest.MockedFunction<typeof axios.get>).mockResolvedValueOnce(response);
+  it('should get all brands', async () => {
+    const mockResponse: Brand[] = [
+      {
+        id: '1',
+        createdAt: '2022-01-01',
+        updatedAt: '2022-01-01',
+        name: 'Brand 1',
+        logo: 'logo1.png',
+      },
+      {
+        id: '2',
+        createdAt: '2022-01-02',
+        updatedAt: '2022-01-02',
+        name: 'Brand 2',
+        logo: 'logo2.png',
+      },
+    ];
 
-      const result = await getAllBrands();
+    (instance.get as jest.Mock).mockResolvedValueOnce({ data: mockResponse });
 
-      expect(axios.get).toHaveBeenCalledWith('/api/brands', {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer mocked-auth-token',
-        },
-      });
-      expect(result).toEqual(response.data);
-    });
+    const result = await getAllBrands();
+
+    expect(instance.get).toHaveBeenCalledWith('/brands');
+    expect(result).toEqual(mockResponse);
   });
 
-  describe('getBrandById', () => {
-    it('should get a brand by id', async () => {
-      const id = '1';
-      const response = { data: { id, name: 'Test Brand' } };
-      (axios.get as jest.MockedFunction<typeof axios.get>).mockResolvedValueOnce(response);
+  it('should get a brand by ID', async () => {
+    const brandId = '1';
 
-      const result = await getBrandById(id);
+    const mockResponse: Brand = {
+      id: '1',
+      createdAt: '2022-01-01',
+      updatedAt: '2022-01-01',
+      name: 'Test Brand',
+      logo: 'test-logo.png',
+    };
 
-      expect(axios.get).toHaveBeenCalledWith(`/api/brands/${id}`, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer mocked-auth-token',
-        },
-      });
-      expect(result).toEqual(response.data);
-    });
+    (instance.get as jest.Mock).mockResolvedValueOnce({ data: mockResponse });
+
+    const result = await getBrandById(brandId);
+
+    expect(instance.get).toHaveBeenCalledWith(`/brands/${brandId}`);
+    expect(result).toEqual(mockResponse);
   });
 
-  describe('updateBrandById', () => {
-    it('should update a brand by id', async () => {
-      const id = '1';
-      const data = { name: 'Updated Test Brand' };
-      const response = { data: { id, ...data } };
-      (axios.patch as jest.MockedFunction<typeof axios.patch>).mockResolvedValueOnce(response);
+  it('should update a brand by ID', async () => {
+    const brandId = '1';
+    const mockData: UpdateBrandDto = {
+      name: 'Updated Brand',
+    };
 
-      const result = await updateBrandById(id, data);
+    const mockResponse: Brand = {
+      id: '1',
+      createdAt: '2022-01-01',
+      updatedAt: '2022-01-02',
+      name: 'Updated Brand',
+      logo: 'test-logo.png',
+    };
 
-      expect(axios.patch).toHaveBeenCalledWith(`/api/brands/${id}`, data, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer mocked-auth-token',
-        },
-      });
-      expect(result).toEqual(response.data);
-    });
+    (instance.patch as jest.Mock).mockResolvedValueOnce({ data: mockResponse });
+
+    const result = await updateBrandById(brandId, mockData);
+
+    expect(instance.patch).toHaveBeenCalledWith(`/brands/${brandId}`, mockData);
+    expect(result).toEqual(mockResponse);
   });
 
-  describe('deleteBrandById', () => {
-    it('should delete a brand by id', async () => {
-      const id = '1';
-      const response = { data: { id, name: 'Test Brand' } };
-      (axios.delete as jest.MockedFunction<typeof axios.delete>).mockResolvedValueOnce(response);
+  it('should delete a brand by ID', async () => {
+    const brandId = '1';
 
-      const result = await deleteBrandById(id);
+    const mockResponse: Brand = {
+      id: '1',
+      createdAt: '2022-01-01',
+      updatedAt: '2022-01-01',
+      name: 'Test Brand',
+      logo: 'test-logo.png',
+    };
 
-      expect(axios.delete).toHaveBeenCalledWith(`/api/brands/${id}`, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer mocked-auth-token',
-        },
-      });
-      expect(result).toEqual(response.data);
-    });
+    (instance.delete as jest.Mock).mockResolvedValueOnce({ data: mockResponse });
+
+    const result = await deleteBrandById(brandId);
+
+    expect(instance.delete).toHaveBeenCalledWith(`/brands/${brandId}`);
+    expect(result).toEqual(mockResponse);
   });
 });
