@@ -76,7 +76,7 @@ function ImageField({ id, children, value, isDisabled, size, onFormDataChange, i
         {children}
         {showRequired && <span className='text-red-700'> *</span>}
       </p>
-      <div className=' border-2 border-dashed bg-slate-50' style={{ position: 'relative' }}>
+      <div className='border-2 border-dashed bg-slate-50' style={{ position: 'relative' }}>
         <input
           id={id}
           name={value}
@@ -92,6 +92,7 @@ function ImageField({ id, children, value, isDisabled, size, onFormDataChange, i
           className={`w-full rounded-lg px-3 py-4 ${
             logoCorrect ? 'border-gray-300 focus:border-blue-500 focus:outline-none' : 'border-red-500'
           }`}
+          style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}
         >
           {previewUrl && <img src={previewUrl} alt='Preview' className='mb-2 max-h-40 rounded-lg' />}
           {!previewUrl && (
@@ -104,7 +105,11 @@ function ImageField({ id, children, value, isDisabled, size, onFormDataChange, i
               </div>
             </div>
           )}
-          {!logoCorrect && <p className='mt-2 text-sm text-red-500'>Select a valid PNG image.</p>}
+          {!logoCorrect && (
+            <p className='mt-2 text-sm text-red-500'>
+              Select a valid PNG image with dimensions {size === 'small' ? '256 x 256' : '512 x 512'}.
+            </p>
+          )}
         </div>
       </div>
     </label>

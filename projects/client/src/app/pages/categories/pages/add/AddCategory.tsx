@@ -1,4 +1,5 @@
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import CircularProgress from '@mui/material/CircularProgress';
 import { Form as FormFormik, Formik } from 'formik';
 import { useState } from 'react';
 
@@ -16,6 +17,7 @@ function AddCategory() {
   const [isNameCorrect, setIsNameCorrect] = useState(true);
   const [, setIsImageCorrect] = useState(true);
   const [imageFormData, setImageFormData] = useState<FormData | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { addCategory } = useAddCategory({ setIsNameCorrect, setIsImageCorrect });
 
@@ -31,6 +33,7 @@ function AddCategory() {
           }
           onSubmit={async (values) => {
             if (imageFormData) {
+              setIsLoading(true);
               try {
                 const response = await uploadImage(imageFormData);
 
@@ -42,10 +45,12 @@ function AddCategory() {
                 } as CreateCategoryDto;
 
                 addCategory(createCategory);
-
-                setImageFormData(null);
+                setIsImageCorrect(true);
               } catch (error: any) {
+                setIsLoading(false);
                 throw new Error(error);
+              } finally {
+                setIsLoading(false);
               }
             }
           }}
@@ -66,9 +71,19 @@ function AddCategory() {
               </ImageField>
             </div>
             <div className='flex justify-center py-6'>
-              <Button className='flex place-items-center gap-2 rounded-xl bg-[#223343] px-6 py-2 text-white' isSubmit>
-                <AddCircleOutlineIcon />
-                <p className='text-xl'>Save</p>
+              <Button
+                className='flex place-items-center gap-2 rounded-xl bg-[#223343] px-6 py-2 text-white'
+                isSubmit
+                isLoading={isLoading}
+              >
+                {isLoading ? (
+                  <CircularProgress />
+                ) : (
+                  <>
+                    <AddCircleOutlineIcon />
+                    <p className='text-xl'>Save</p>
+                  </>
+                )}
               </Button>
             </div>
           </FormFormik>
