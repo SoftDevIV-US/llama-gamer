@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 
 import PrismaService from '@/prisma/prisma.service';
@@ -65,7 +65,7 @@ class UserService {
     });
 
     if (!user) {
-      throw new BadRequestException(`User with ID ${id} not found`);
+      throw new NotFoundException(`User with ID ${id} not found`);
     }
     return user;
   }
@@ -89,23 +89,27 @@ class UserService {
       if (error?.code === 'P2002') {
         throw new BadRequestException('User email already exists');
       }
-      throw new BadRequestException('Something went wrong');
+      throw new NotFoundException(`User with ID ${id} not found`);
     }
   }
 
   async remove(id: string): Promise<User> {
-    const user = await this.prisma.user.delete({
-      where: {
-        id,
-      },
-      include: {
-        penalty: true,
-        wishList: true,
-        purchases: true,
-        usersProducts: true,
-      },
-    });
-    return user;
+    try {
+      const user = await this.prisma.user.delete({
+        where: {
+          id,
+        },
+        include: {
+          penalty: true,
+          wishList: true,
+          purchases: true,
+          usersProducts: true,
+        },
+      });
+      return user;
+    } catch (error) {
+      throw new NotFoundException(`User with ID ${id} not found`);
+    }
   }
 
   async findByEmail(email: string): Promise<User> {
@@ -120,6 +124,11 @@ class UserService {
         usersProducts: true,
       },
     });
+
+    if (!user) {
+      throw new NotFoundException(`User with email ${email} not found`);
+    }
+
     return user;
   }
 

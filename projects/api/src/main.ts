@@ -13,11 +13,7 @@ async function main() {
 
   app.useGlobalPipes(
     new ValidationPipe({
-      whitelist: true,
       transform: true,
-      transformOptions: {
-        enableImplicitConversion: true,
-      },
     })
   );
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
