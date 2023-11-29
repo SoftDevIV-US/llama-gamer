@@ -60,8 +60,8 @@ class UpdateProductDto {
     description: 'The stock of the product',
     example: '190',
   })
-  @Min(180, {
-    message: 'The product stock must be at most 180',
+  @Min(1, {
+    message: 'The product stock must be at most 1',
   })
   @IsPositive({
     message: 'The product stock must be a positive number',
@@ -73,7 +73,7 @@ class UpdateProductDto {
   @ApiProperty({
     type: 'Float',
     description: 'The price of the product',
-    example: '0.07',
+    example: '156.50',
   })
   @IsPositive({
     message: 'The price must be a positive number',
