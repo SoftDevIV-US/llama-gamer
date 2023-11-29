@@ -27,7 +27,7 @@ class Product {
   @ApiProperty({
     type: 'Integer',
     description: 'The stock quantity of the product',
-    example: 100,
+    example: 190,
   })
   readonly stock: number;
 

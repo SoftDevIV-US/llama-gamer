@@ -1,5 +1,9 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
-import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+
+import AdminAccess from '@/auth/decorators/admin.decorator';
+import AdminGuard from '@/auth/guard/admin.guard';
+import JwtAuthGuard from '@/auth/guard/jwt.guard';
 
 import CreateProductDto from './dto/create-product.dto';
 import UpdateProductDto from './dto/update-product.dto';
@@ -12,6 +16,9 @@ class ProductController {
   constructor(private readonly productService: ProductService) {}
 
   @Post()
+  @AdminAccess()
+  @UseGuards(JwtAuthGuard, AdminGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Create a new Product' })
   @ApiCreatedResponse({ type: Product })
   async create(@Body() createProductDto: CreateProductDto): Promise<Product> {
@@ -20,6 +27,8 @@ class ProductController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Get all products' })
   @ApiCreatedResponse({ type: Product, isArray: true })
   async findAll(): Promise<Product[]> {
@@ -28,6 +37,8 @@ class ProductController {
   }
 
   @Get(':id')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Get a product by id' })
   @ApiCreatedResponse({ type: Product })
   async findOne(@Param('id') id: string): Promise<Product> {
@@ -36,6 +47,9 @@ class ProductController {
   }
 
   @Patch(':id')
+  @AdminAccess()
+  @UseGuards(JwtAuthGuard, AdminGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Update a product by id' })
   @ApiCreatedResponse({ type: Product })
   async update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto): Promise<Product> {
@@ -44,6 +58,9 @@ class ProductController {
   }
 
   @Delete(':id')
+  @AdminAccess()
+  @UseGuards(JwtAuthGuard, AdminGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Delete a product by id' })
   @ApiCreatedResponse({ type: Product })
   async remove(@Param('id') id: string): Promise<Product> {

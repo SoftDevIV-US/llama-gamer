@@ -58,7 +58,7 @@ class UpdateProductDto {
   @ApiProperty({
     type: 'Integer',
     description: 'The stock of the product',
-    example: '5',
+    example: '190',
   })
   @Min(180, {
     message: 'The product stock must be at most 180',
@@ -77,6 +77,9 @@ class UpdateProductDto {
   })
   @IsPositive({
     message: 'The price must be a positive number',
+  })
+  @Min(1, {
+    message: 'The product price must be at most 1.00',
   })
   @IsNumber(
     {
