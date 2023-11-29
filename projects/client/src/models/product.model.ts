@@ -19,4 +19,24 @@ interface Product extends ApiRecord {
   purchasesProducts: PurchasesProducts[];
 }
 
-export default Product;
+type CreateProductDto = {
+  name: string;
+  description: string;
+  stock: number;
+  price: number;
+  isAvailable: boolean;
+  brandId: string;
+  countryId: string;
+};
+
+type UpdateProductDto = {
+  name: string;
+  description: string;
+  stock: number;
+  price: number;
+  isAvailable: boolean;
+  brandId: string;
+  countryId: string;
+};
+
+export type { CreateProductDto, Product, UpdateProductDto };
