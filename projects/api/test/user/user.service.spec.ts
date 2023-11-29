@@ -1,4 +1,4 @@
-import { BadRequestException } from '@nestjs/common';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Role } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
@@ -243,7 +243,7 @@ describe('UserService', () => {
 
       (prismaService.user.update as jest.Mock).mockRejectedValue(new Error('Some unexpected error'));
 
-      await expect(userService.update(userId, updateUserDto)).rejects.toThrow(BadRequestException);
+      await expect(userService.update(userId, updateUserDto)).rejects.toThrow(NotFoundException);
 
       expect(prismaService.user.update).toHaveBeenCalledWith({
         where: {

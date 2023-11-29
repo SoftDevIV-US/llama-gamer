@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Role } from '@prisma/client';
 import { Transform } from 'class-transformer';
-import { IsEmail, IsNotEmpty, IsString, Length, Matches } from 'class-validator';
+import { IsEmail, IsEnum, IsNotEmpty, IsString, Length, Matches } from 'class-validator';
 
 import { NAME_VALIDATOR, PASSWORD_VALIDATOR } from '@/utils/constants';
 
@@ -115,6 +115,10 @@ class CreateUserDto {
     enum: Role,
     description: 'The role of the user',
     example: 'ADMIN',
+  })
+  @IsEnum(Role, {
+    message: 'The role must be a valid role',
+    groups: ['validate'],
   })
   @IsNotEmpty({
     message: 'The role must not be empty',
