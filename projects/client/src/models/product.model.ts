@@ -58,8 +58,8 @@ interface Product extends ApiRecord {
   isAvailable: boolean;
   categoryId: string;
   brandId: string;
-  category: Category;
-  brand: Brand;
+  category: PrismaCategory;
+  brand: PrismaBrand;
   productImages: ProductImage[];
   productsSuppliers: OnlySuppliers[];
   wishListsProducts: WishListsProducts[];
