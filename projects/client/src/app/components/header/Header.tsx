@@ -82,7 +82,7 @@ function Header() {
               onClick={() => {
                 navigate('/login');
               }}
-              className='w-full rounded-lg bg-[#586a84] px-6 py-2 font-bold text-white'
+              className='w-full rounded-lg bg-[#586a84] px-4 py-2 text-xs font-bold text-white lg:px-6 lg:text-base'
             >
               Login
             </Button>

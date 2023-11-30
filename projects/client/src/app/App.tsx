@@ -14,6 +14,7 @@ import Categories from './pages/categories/Categories';
 import AddCategory from './pages/categories/pages/add/AddCategory';
 import EditCategory from './pages/categories/pages/edit/EditCategory';
 import CategoryInfo from './pages/categories/pages/info/CategoryInfo';
+import UserCategory from './pages/categories/pages/user-category/UserCategory';
 import Contact from './pages/contact/Contact';
 import Countries from './pages/countries/Countries';
 import AddCountry from './pages/countries/pages/add/AddCountry';
@@ -26,6 +27,7 @@ import NotFound from './pages/not-found/NotFound';
 import AddProduct from './pages/products/pages/add/AddProduct';
 import EditProduct from './pages/products/pages/edit/EditProduct';
 import ProductInfo from './pages/products/pages/info/ProductInfo';
+import UserProduct from './pages/products/pages/user-product/UserProduct';
 import Products from './pages/products/Products';
 import AddSupplier from './pages/suppliers/pages/add/AddSupplier';
 import EditSupplier from './pages/suppliers/pages/edit/EditSupplier';
@@ -47,6 +49,8 @@ function App() {
         <Route path='/terms-conditions' element={<TermsConditions />} />
         <Route path='/cart' element={<Cart />} />
         <Route path='/account' element={<Account />} />
+        <Route path='/product/:id' element={<UserProduct />} />
+        <Route path='/category/:id' element={<UserCategory />} />
       </Route>
       <Route element={<AdminRoute />}>
         <Route path='/admin' element={<Admin />} />

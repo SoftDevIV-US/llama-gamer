@@ -7,7 +7,7 @@ type Props = {
 
 function UserLayout({ children }: Props) {
   return (
-    <div className='flex h-screen w-full flex-col overflow-y-auto bg-[#e4e3e8]'>
+    <div className='flex h-screen w-screen flex-col overflow-y-auto overflow-x-hidden bg-[#e4e3e8]'>
       <Header />
       <main className='h-fit grow'>{children}</main>
       <Footer />

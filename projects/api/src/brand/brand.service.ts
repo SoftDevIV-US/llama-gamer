@@ -17,7 +17,7 @@ class BrandService {
         include: {
           products: {
             orderBy: {
-              name: 'asc',
+              stock: 'desc',
             },
             include: {
               category: true,
@@ -47,7 +47,7 @@ class BrandService {
       include: {
         products: {
           orderBy: {
-            name: 'asc',
+            stock: 'desc',
           },
           include: {
             category: true,
@@ -70,7 +70,7 @@ class BrandService {
       include: {
         products: {
           orderBy: {
-            name: 'asc',
+            stock: 'desc',
           },
           include: {
             category: true,
@@ -99,7 +99,7 @@ class BrandService {
         include: {
           products: {
             orderBy: {
-              name: 'asc',
+              stock: 'desc',
             },
             include: {
               category: true,
@@ -130,7 +130,7 @@ class BrandService {
         include: {
           products: {
             orderBy: {
-              name: 'asc',
+              stock: 'desc',
             },
             include: {
               category: true,

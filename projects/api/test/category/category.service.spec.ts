@@ -64,7 +64,7 @@ describe('CategoryService', () => {
         include: {
           products: {
             orderBy: {
-              name: 'asc',
+              stock: 'desc',
             },
             include: {
               productImages: {
@@ -95,7 +95,7 @@ describe('CategoryService', () => {
         include: {
           products: {
             orderBy: {
-              name: 'asc',
+              stock: 'desc',
             },
             include: {
               productImages: {
@@ -126,7 +126,7 @@ describe('CategoryService', () => {
         include: {
           products: {
             orderBy: {
-              name: 'asc',
+              stock: 'desc',
             },
             include: {
               productImages: {
@@ -168,12 +168,12 @@ describe('CategoryService', () => {
         expect(result).toEqual(expectedCategories);
         expect(prismaService.category.findMany).toHaveBeenCalledWith({
           orderBy: {
-            createdAt: 'desc',
+            name: 'asc',
           },
           include: {
             products: {
               orderBy: {
-                name: 'asc',
+                stock: 'desc',
               },
               include: {
                 productImages: {
@@ -212,7 +212,7 @@ describe('CategoryService', () => {
           include: {
             products: {
               orderBy: {
-                name: 'asc',
+                stock: 'desc',
               },
               include: {
                 productImages: {
@@ -248,7 +248,7 @@ describe('CategoryService', () => {
           include: {
             products: {
               orderBy: {
-                name: 'asc',
+                stock: 'desc',
               },
               include: {
                 productImages: {
@@ -289,7 +289,7 @@ describe('CategoryService', () => {
           include: {
             products: {
               orderBy: {
-                name: 'asc',
+                stock: 'desc',
               },
               include: {
                 productImages: {
@@ -327,7 +327,7 @@ describe('CategoryService', () => {
           include: {
             products: {
               orderBy: {
-                name: 'asc',
+                stock: 'desc',
               },
               include: {
                 productImages: {
@@ -365,7 +365,7 @@ describe('CategoryService', () => {
           include: {
             products: {
               orderBy: {
-                name: 'asc',
+                stock: 'desc',
               },
               include: {
                 productImages: {
@@ -404,7 +404,7 @@ describe('CategoryService', () => {
           include: {
             products: {
               orderBy: {
-                name: 'asc',
+                stock: 'desc',
               },
               include: {
                 productImages: {
@@ -440,7 +440,7 @@ describe('CategoryService', () => {
           include: {
             products: {
               orderBy: {
-                name: 'asc',
+                stock: 'desc',
               },
               include: {
                 productImages: {
