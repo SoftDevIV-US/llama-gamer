@@ -38,6 +38,7 @@ describe('BrandController', () => {
         logo: 'https://test-logo.com/test.png',
         createdAt: new Date(),
         updatedAt: new Date(),
+        products: [],
       };
 
       jest.spyOn(brandService, 'create').mockResolvedValue(createdBrand);
@@ -58,6 +59,7 @@ describe('BrandController', () => {
           logo: 'https://test-logo.com/logo-1.png',
           createdAt: new Date(),
           updatedAt: new Date(),
+          products: [],
         },
         {
           id: '2',
@@ -65,6 +67,7 @@ describe('BrandController', () => {
           logo: 'https://test-logo.com/logo-2.png',
           createdAt: new Date(),
           updatedAt: new Date(),
+          products: [],
         },
       ];
 
@@ -86,6 +89,7 @@ describe('BrandController', () => {
         logo: 'https://test-logo.com/logo-1.png',
         createdAt: new Date(),
         updatedAt: new Date(),
+        products: [],
       };
 
       jest.spyOn(brandService, 'findOne').mockResolvedValue(expectedBrand);
@@ -107,6 +111,7 @@ describe('BrandController', () => {
         logo: 'https://test-logo.com/updated-logo.png',
         createdAt: new Date(),
         updatedAt: new Date(),
+        products: [],
       };
 
       jest.spyOn(brandService, 'update').mockResolvedValue(updatedBrand);
@@ -127,6 +132,7 @@ describe('BrandController', () => {
         logo: 'https://test-logo.com/deleted-logo.png',
         createdAt: new Date(),
         updatedAt: new Date(),
+        products: [],
       };
 
       jest.spyOn(brandService, 'remove').mockResolvedValue(deletedBrand);

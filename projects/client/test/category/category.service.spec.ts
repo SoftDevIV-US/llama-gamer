@@ -1,5 +1,5 @@
 import instance from '@/config/axios.config';
-import { Category, CreateCategoryDto, UpdateCategoryDto } from '@/models/category.model';
+import { Category, CreateCategoryDto, UpdateCategoryDto } from '@/models/product.model';
 import {
   createCategory,
   deleteCategoryById,
@@ -27,6 +27,7 @@ describe('Category Service', () => {
       updatedAt: '2022-01-01',
       name: 'Test Category',
       image: 'test-image.png',
+      products: [],
     };
 
     (instance.post as jest.Mock).mockResolvedValueOnce({ data: mockResponse });
@@ -45,6 +46,7 @@ describe('Category Service', () => {
         updatedAt: '2022-01-01',
         name: 'Category 1',
         image: 'image1.png',
+        products: [],
       },
       {
         id: '2',
@@ -52,6 +54,7 @@ describe('Category Service', () => {
         updatedAt: '2022-01-02',
         name: 'Category 2',
         image: 'image2.png',
+        products: [],
       },
     ];
 
@@ -72,6 +75,7 @@ describe('Category Service', () => {
       updatedAt: '2022-01-01',
       name: 'Test Category',
       image: 'test-image.png',
+      products: [],
     };
 
     (instance.get as jest.Mock).mockResolvedValueOnce({ data: mockResponse });
@@ -94,6 +98,7 @@ describe('Category Service', () => {
       updatedAt: '2022-01-02',
       name: 'Updated Category',
       image: 'test-image.png',
+      products: [],
     };
 
     (instance.patch as jest.Mock).mockResolvedValueOnce({ data: mockResponse });
@@ -113,6 +118,7 @@ describe('Category Service', () => {
       updatedAt: '2022-01-01',
       name: 'Test Category',
       image: 'test-image.png',
+      products: [],
     };
 
     (instance.delete as jest.Mock).mockResolvedValueOnce({ data: mockResponse });

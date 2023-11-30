@@ -18,7 +18,15 @@ class ProductService {
           category: true,
           brand: true,
           productImages: true,
-          productsSuppliers: true,
+          productsSuppliers: {
+            select: {
+              supplier: {
+                include: {
+                  country: true,
+                },
+              },
+            },
+          },
         },
       });
       return product;
@@ -40,7 +48,15 @@ class ProductService {
         category: true,
         brand: true,
         productImages: true,
-        productsSuppliers: true,
+        productsSuppliers: {
+          select: {
+            supplier: {
+              include: {
+                country: true,
+              },
+            },
+          },
+        },
       },
     });
     return products;
@@ -55,7 +71,15 @@ class ProductService {
         category: true,
         brand: true,
         productImages: true,
-        productsSuppliers: true,
+        productsSuppliers: {
+          include: {
+            supplier: {
+              include: {
+                country: true,
+              },
+            },
+          },
+        },
       },
     });
     if (!product) {
@@ -75,7 +99,15 @@ class ProductService {
           category: true,
           brand: true,
           productImages: true,
-          productsSuppliers: true,
+          productsSuppliers: {
+            select: {
+              supplier: {
+                include: {
+                  country: true,
+                },
+              },
+            },
+          },
         },
       });
       return product;
@@ -97,7 +129,15 @@ class ProductService {
           category: true,
           brand: true,
           productImages: true,
-          productsSuppliers: true,
+          productsSuppliers: {
+            select: {
+              supplier: {
+                include: {
+                  country: true,
+                },
+              },
+            },
+          },
         },
       });
       return product;

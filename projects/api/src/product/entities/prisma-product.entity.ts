@@ -1,11 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-import PrismaBrand from '@/brand/entities/prisma-brand.entity';
-import PrismaCategory from '@/category/entities/prisma-category.entity';
-import ProductImage from '@/product-image/entities/product-image.entity';
-import SuppliersOnly from '@/products-suppliers/entities/suppliers-only.entity';
-
-class Product {
+class PrismaProduct {
   @ApiProperty({
     type: 'String',
     format: 'uuid',
@@ -78,32 +73,6 @@ class Product {
     example: '123e4567-e89b-12d3-a456-426814174003',
   })
   readonly brandId: string;
-
-  @ApiProperty({
-    type: () => PrismaCategory,
-    description: 'The category of the product',
-  })
-  readonly category: PrismaCategory;
-
-  @ApiProperty({
-    type: () => PrismaBrand,
-    description: 'The brand of the product',
-  })
-  readonly brand: PrismaBrand;
-
-  @ApiProperty({
-    type: () => ProductImage,
-    isArray: true,
-    description: 'Images associated with the product',
-  })
-  readonly productImages: ProductImage[];
-
-  @ApiProperty({
-    type: () => SuppliersOnly,
-    isArray: true,
-    description: 'Suppliers associated with the product',
-  })
-  readonly productsSuppliers: SuppliersOnly[];
 }
 
-export default Product;
+export default PrismaProduct;

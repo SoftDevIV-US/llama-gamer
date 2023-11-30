@@ -48,6 +48,7 @@ describe('CategoryController', () => {
         image: 'wwww.testImage.com',
         createdAt: new Date(),
         updatedAt: new Date(),
+        products: [],
       };
 
       categoryService.create.mockResolvedValue(createdCategory);
@@ -68,6 +69,7 @@ describe('CategoryController', () => {
           image: 'www.testImage.com',
           createdAt: new Date(),
           updatedAt: new Date(),
+          products: [],
         },
         {
           id: '2',
@@ -75,6 +77,7 @@ describe('CategoryController', () => {
           image: 'www.testImage.com',
           createdAt: new Date(),
           updatedAt: new Date(),
+          products: [],
         },
       ];
 
@@ -96,6 +99,7 @@ describe('CategoryController', () => {
         image: 'www.testImage.com',
         createdAt: new Date(),
         updatedAt: new Date(),
+        products: [],
       };
 
       categoryService.findOne.mockResolvedValue(expectedCategory);
@@ -117,6 +121,7 @@ describe('CategoryController', () => {
         image: 'www.category.com',
         createdAt: new Date(),
         updatedAt: new Date(),
+        products: [],
       };
 
       categoryService.update.mockResolvedValue(updatedCategory);
@@ -137,6 +142,7 @@ describe('CategoryController', () => {
         image: 'www.image.com',
         createdAt: new Date(),
         updatedAt: new Date(),
+        products: [],
       };
 
       categoryService.remove.mockResolvedValue(deletedCategory);

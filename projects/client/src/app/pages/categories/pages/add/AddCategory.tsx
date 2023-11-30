@@ -8,7 +8,7 @@ import Form from '@/app/components/form/Form';
 import ImageField from '@/app/components/image-field/ImageField';
 import InputField from '@/app/components/input-field/InputField';
 import InnerLayout from '@/app/layouts/InnerLayout';
-import { CreateCategoryDto } from '@/models/category.model';
+import { CreateCategoryDto } from '@/models/product.model';
 import uploadImage from '@/services/cloudinary.service';
 
 import useAddCategory from './hooks/useAddCategory';

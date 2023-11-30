@@ -1,10 +1,10 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { Brand } from '@prisma/client';
 
 import PrismaService from '@/prisma/prisma.service';
 
 import CreateBrandDto from './dto/create-brand.dto';
 import UpdateBrandDto from './dto/update-brand.dto';
+import Brand from './entities/brand.entity';
 
 @Injectable()
 class BrandService {
@@ -14,6 +14,16 @@ class BrandService {
     try {
       const brand: Brand = await this.prisma.brand.create({
         data: createBrandDto,
+        include: {
+          products: {
+            orderBy: {
+              name: 'asc',
+            },
+            include: {
+              category: true,
+            },
+          },
+        },
       });
       return brand;
     } catch (error) {
@@ -27,7 +37,17 @@ class BrandService {
   async findAll(): Promise<Brand[]> {
     const brands = await this.prisma.brand.findMany({
       orderBy: {
-        name: 'desc',
+        createdAt: 'desc',
+      },
+      include: {
+        products: {
+          orderBy: {
+            name: 'asc',
+          },
+          include: {
+            category: true,
+          },
+        },
       },
     });
 
@@ -37,6 +57,16 @@ class BrandService {
   async findOne(id: string): Promise<Brand> {
     const brand: Brand = await this.prisma.brand.findUnique({
       where: { id },
+      include: {
+        products: {
+          orderBy: {
+            name: 'asc',
+          },
+          include: {
+            category: true,
+          },
+        },
+      },
     });
     if (!brand) {
       throw new NotFoundException(`Brand with ID ${id} not found`);
@@ -51,6 +81,16 @@ class BrandService {
           id,
         },
         data: updateBrandDto,
+        include: {
+          products: {
+            orderBy: {
+              name: 'asc',
+            },
+            include: {
+              category: true,
+            },
+          },
+        },
       });
       return brand;
     } catch (error) {
@@ -66,6 +106,16 @@ class BrandService {
       const brand: Brand = await this.prisma.brand.delete({
         where: {
           id,
+        },
+        include: {
+          products: {
+            orderBy: {
+              name: 'asc',
+            },
+            include: {
+              category: true,
+            },
+          },
         },
       });
       return brand;

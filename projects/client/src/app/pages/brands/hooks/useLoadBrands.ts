@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
-import { Brand } from '@/models/brand.model';
+import { Brand } from '@/models/product.model';
 import { getAllBrands } from '@/services/brand.service';
 
 type Props = {

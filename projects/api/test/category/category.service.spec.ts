@@ -1,10 +1,10 @@
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { Category } from '@prisma/client';
 
 import CategoryService from '@/category/category.service';
 import CreateCategoryDto from '@/category/dto/create-category.dto';
 import UpdateCategoryDto from '@/category/dto/update-category.dto';
+import Category from '@/category/entities/category.entity';
 import PrismaService from '@/prisma/prisma.service';
 
 describe('CategoryService', () => {
@@ -51,6 +51,7 @@ describe('CategoryService', () => {
         image: 'www.image.com',
         createdAt: new Date(),
         updatedAt: new Date(),
+        products: [],
       };
 
       prismaService.category.create.mockResolvedValue(createdCategory);
@@ -60,6 +61,13 @@ describe('CategoryService', () => {
       expect(result).toEqual(createdCategory);
       expect(prismaService.category.create).toHaveBeenCalledWith({
         data: createCategoryDto,
+        include: {
+          products: {
+            orderBy: {
+              name: 'asc',
+            },
+          },
+        },
       });
     });
 
@@ -77,6 +85,13 @@ describe('CategoryService', () => {
       expect(error.message).toBe('Category name already exists');
       expect(prismaService.category.create).toHaveBeenCalledWith({
         data: createCategoryDto,
+        include: {
+          products: {
+            orderBy: {
+              name: 'asc',
+            },
+          },
+        },
       });
     });
 
@@ -94,6 +109,13 @@ describe('CategoryService', () => {
       expect(error.message).toBe('Something went wrong');
       expect(prismaService.category.create).toHaveBeenCalledWith({
         data: createCategoryDto,
+        include: {
+          products: {
+            orderBy: {
+              name: 'asc',
+            },
+          },
+        },
       });
     });
 
@@ -106,6 +128,7 @@ describe('CategoryService', () => {
             image: 'www.image.com',
             createdAt: new Date(),
             updatedAt: new Date(),
+            products: [],
           },
           {
             id: '2',
@@ -113,6 +136,7 @@ describe('CategoryService', () => {
             image: 'www.image.com',
             createdAt: new Date(),
             updatedAt: new Date(),
+            products: [],
           },
         ];
 
@@ -124,6 +148,13 @@ describe('CategoryService', () => {
         expect(prismaService.category.findMany).toHaveBeenCalledWith({
           orderBy: {
             createdAt: 'desc',
+          },
+          include: {
+            products: {
+              orderBy: {
+                name: 'asc',
+              },
+            },
           },
         });
       });
@@ -138,6 +169,7 @@ describe('CategoryService', () => {
           image: 'www.image.com',
           createdAt: new Date(),
           updatedAt: new Date(),
+          products: [],
         };
 
         prismaService.category.findUnique.mockResolvedValue(expectedCategory);
@@ -148,6 +180,13 @@ describe('CategoryService', () => {
         expect(prismaService.category.findUnique).toHaveBeenCalledWith({
           where: {
             id: categoryId,
+          },
+          include: {
+            products: {
+              orderBy: {
+                name: 'asc',
+              },
+            },
           },
         });
       });
@@ -171,6 +210,13 @@ describe('CategoryService', () => {
           where: {
             id: countryId,
           },
+          include: {
+            products: {
+              orderBy: {
+                name: 'asc',
+              },
+            },
+          },
         });
       });
     });
@@ -185,6 +231,7 @@ describe('CategoryService', () => {
           image: 'www.test.com',
           createdAt: new Date(),
           updatedAt: new Date(),
+          products: [],
         };
 
         prismaService.category.update.mockResolvedValue(updatedCategory);
@@ -197,6 +244,13 @@ describe('CategoryService', () => {
             id: categoryId,
           },
           data: updateCategoryDto,
+          include: {
+            products: {
+              orderBy: {
+                name: 'asc',
+              },
+            },
+          },
         });
       });
 
@@ -221,6 +275,13 @@ describe('CategoryService', () => {
             id: categoryId,
           },
           data: updateCategoryDto,
+          include: {
+            products: {
+              orderBy: {
+                name: 'asc',
+              },
+            },
+          },
         });
       });
 
@@ -245,6 +306,13 @@ describe('CategoryService', () => {
             id: categoryId,
           },
           data: updateCategoryDto,
+          include: {
+            products: {
+              orderBy: {
+                name: 'asc',
+              },
+            },
+          },
         });
       });
     });
@@ -258,6 +326,7 @@ describe('CategoryService', () => {
           image: 'www.image.com',
           createdAt: new Date(),
           updatedAt: new Date(),
+          products: [],
         };
 
         prismaService.category.delete.mockResolvedValue(deletedCategory);
@@ -268,6 +337,13 @@ describe('CategoryService', () => {
         expect(prismaService.category.delete).toHaveBeenCalledWith({
           where: {
             id: categoryId,
+          },
+          include: {
+            products: {
+              orderBy: {
+                name: 'asc',
+              },
+            },
           },
         });
       });
@@ -290,6 +366,13 @@ describe('CategoryService', () => {
         expect(prismaService.category.delete).toHaveBeenCalledWith({
           where: {
             id: countryId,
+          },
+          include: {
+            products: {
+              orderBy: {
+                name: 'asc',
+              },
+            },
           },
         });
       });

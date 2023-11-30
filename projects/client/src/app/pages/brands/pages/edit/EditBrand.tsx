@@ -10,7 +10,7 @@ import InputImage from '@/app/components/input-image/InputImage';
 import Loading from '@/app/components/loading/Loading';
 import NotFound from '@/app/components/not-found/NotFound';
 import InnerLayout from '@/app/layouts/InnerLayout';
-import { UpdateBrandDto } from '@/models/brand.model';
+import { UpdateBrandDto } from '@/models/product.model';
 
 import useEditBrand from './hooks/useEditBrand';
 
