@@ -109,6 +109,7 @@ export type {
   CreateCategoryDto,
   CreateProductDto,
   PrismaCategoryProduct,
+  PrismaProduct,
   Product,
   UpdateBrandDto,
   UpdateCategoryDto,
