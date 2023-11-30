@@ -1,4 +1,6 @@
 import EditIcon from '@mui/icons-material/Edit';
+import CircularProgress from '@mui/material/CircularProgress';
+import axios from 'axios';
 import { Form as FormFormik, Formik } from 'formik';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -30,6 +32,43 @@ function EditBrand() {
     setFound,
   });
 
+  const handleImageUpload = async (values: UpdateBrandDto) => {
+    const NAME_VALIDATOR = /^[a-zA-Z\s]+$/;
+    const maxLength = 15;
+    const minLength = 2;
+
+    try {
+      setIsLoading(true);
+
+      if (!selectedFile) {
+        return;
+      }
+      if (brand.name.length > maxLength || brand.name.length < minLength || !NAME_VALIDATOR.test(brand.name)) {
+        const err = '';
+        const newValues = { ...values, logo: err };
+        editBrand(newValues);
+      } else {
+        const data = new FormData();
+        data.append('file', selectedFile);
+        data.append('upload_preset', 'brandcloud');
+        data.append('cloud_name', 'dvsg7obzt');
+
+        const response = await axios.post('https://api.cloudinary.com/v1_1/dvsg7obzt/image/upload', data);
+
+        if (response.status !== 200) {
+          throw new Error(`Error: ${response.status} - ${response.statusText}`);
+        }
+
+        const logoUrl = response.data.secure_url;
+
+        const newValues = { ...values, logo: logoUrl };
+        editBrand(newValues);
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <InnerLayout>
       <Form title='Brand'>
@@ -46,38 +85,7 @@ function EditBrand() {
                   logo: brand.logo,
                 } as UpdateBrandDto
               }
-              onSubmit={async (values) => {
-                if (!selectedFile) {
-                  return;
-                }
-
-                const data = new FormData();
-                data.append('file', selectedFile);
-                data.append('upload_preset', 'brandcloud');
-                data.append('cloud_name', 'dvsg7obzt');
-
-                const res = await fetch('https://api.cloudinary.com/v1_1/dvsg7obzt/image/upload', {
-                  method: 'POST',
-                  body: data,
-                });
-
-                if (!res.ok) {
-                  throw new Error(`Error: ${res.status} - ${res.statusText}`);
-                }
-
-                const file = await res.json();
-
-                const logoUrl = file.secure_url;
-
-                const newValues = {
-                  ...values,
-                  logo: logoUrl,
-                };
-
-                editBrand(newValues);
-
-                editBrand(values);
-              }}
+              onSubmit={handleImageUpload}
               enableReinitialize
             >
               <FormFormik className='flex h-full flex-col px-0 py-12 lg:px-16 landscape:gap-4 landscape:py-4 landscape:md:gap-20 landscape:md:py-20'>
@@ -100,9 +108,16 @@ function EditBrand() {
                   <Button
                     className='flex place-items-center gap-2 rounded-xl bg-[#223343] px-6 py-2 text-white'
                     isSubmit
+                    isLoading={isLoading}
                   >
-                    <EditIcon />
-                    <p className='text-xl'>Edit</p>
+                    {isLoading ? (
+                      <CircularProgress size={24} color='inherit' />
+                    ) : (
+                      <>
+                        <EditIcon />
+                        <p className='text-xl'>Edit</p>
+                      </>
+                    )}
                   </Button>
                 </div>
               </FormFormik>

@@ -122,24 +122,17 @@ function InputImage({ id, children, value, isCorrect, isDisabled, requiredSize, 
                 }
               }}
               onDrop={async (event) => {
-                event.preventDefault();
                 const file = event.dataTransfer.files?.[0] || null;
+
                 const validationMessage = await validateLogo(file, requiredSize);
+
                 if (validationMessage === null) {
                   handleFileChange(file, form);
-                  field.onChange({
-                    target: {
-                      value: file,
-                      type: 'file',
-                    },
-                  });
-                  const inputElement = document.getElementById(id) as HTMLInputElement;
-                  if (inputElement) {
-                    inputElement.value = '';
-                    inputElement.focus();
-                  }
+                  event.preventDefault();
                 } else {
+                  handleFileChange(null, form);
                   setLogoValidationMessage(validationMessage);
+                  event.preventDefault();
                 }
               }}
               required

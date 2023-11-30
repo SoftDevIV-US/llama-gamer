@@ -20,14 +20,14 @@ const useEditBrand = ({ id, setIsNameCorrect, setIsLogoCorrect, setIsLoading, se
   useEffect(() => {
     setIsLoading(true);
     toast.promise(getBrandById(id), {
-      loading: 'Loading country...',
+      loading: 'Loading brand...',
       success: (res) => {
         setBrand(res);
-        return `Country ${res.name} loaded successfully`;
+        return `Brand ${res.name} loaded successfully`;
       },
       error: () => {
         setFound(false);
-        return 'Error Country not found';
+        return 'Error Brand not found';
       },
       finally: () => setIsLoading(false),
     });
