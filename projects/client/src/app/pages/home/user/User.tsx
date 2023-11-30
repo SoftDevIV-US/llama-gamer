@@ -27,7 +27,10 @@ function User() {
       </div>
       <div className='min-h-screen w-screen bg-[#e4e3e8] p-14'>
         {isLoading ? (
-          <Loading />
+          <div className='grid h-full w-full place-content-center gap-5 text-center'>
+            <Loading />
+            <span className='text-2xl font-normal'>Loading Products...</span>
+          </div>
         ) : (
           <div className='flex w-full flex-col gap-14'>
             {brands.length >= 1 && <BrandCarousel brand={brands[0]} />}
