@@ -18,7 +18,12 @@ const useLoadProducts = ({ setIsLoading }: Props) => {
       if (response.length === 0) return;
       const randomBrands = response.sort(() => Math.random() - Math.random()).slice(0, Math.min(2, response.length));
 
-      setBrands(randomBrands);
+      const result = randomBrands.map((brand) => ({
+        ...brand,
+        products: brand.products.slice(0, Math.min(10, brand.products.length)),
+      }));
+
+      setBrands(result);
     };
 
     const loadCategories = async () => {

@@ -47,7 +47,7 @@ describe('BrandService', () => {
         include: {
           products: {
             orderBy: {
-              name: 'asc',
+              stock: 'desc',
             },
             include: {
               category: true,
@@ -112,7 +112,7 @@ describe('BrandService', () => {
         include: {
           products: {
             orderBy: {
-              name: 'asc',
+              stock: 'desc',
             },
             include: {
               category: true,
@@ -149,7 +149,7 @@ describe('BrandService', () => {
         include: {
           products: {
             orderBy: {
-              name: 'asc',
+              stock: 'desc',
             },
             include: {
               category: true,
@@ -198,7 +198,7 @@ describe('BrandService', () => {
         include: {
           products: {
             orderBy: {
-              name: 'asc',
+              stock: 'desc',
             },
             include: {
               category: true,
@@ -262,7 +262,7 @@ describe('BrandService', () => {
         include: {
           products: {
             orderBy: {
-              name: 'asc',
+              stock: 'desc',
             },
             include: {
               category: true,

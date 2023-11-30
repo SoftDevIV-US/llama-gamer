@@ -1,3 +1,4 @@
+import 'react-multi-carousel/lib/styles.css';
 import './assets/styles/index.css';
 
 import { StrictMode } from 'react';

@@ -17,7 +17,7 @@ class CategoryService {
         include: {
           products: {
             orderBy: {
-              name: 'asc',
+              stock: 'desc',
             },
             include: {
               productImages: {
@@ -43,12 +43,12 @@ class CategoryService {
   async findAll(): Promise<Category[]> {
     const categories: Category[] = await this.prisma.category.findMany({
       orderBy: {
-        createdAt: 'desc',
+        name: 'asc',
       },
       include: {
         products: {
           orderBy: {
-            name: 'asc',
+            stock: 'desc',
           },
           include: {
             productImages: {
@@ -70,7 +70,7 @@ class CategoryService {
       include: {
         products: {
           orderBy: {
-            name: 'asc',
+            stock: 'desc',
           },
           include: {
             productImages: {
@@ -100,7 +100,7 @@ class CategoryService {
         include: {
           products: {
             orderBy: {
-              name: 'asc',
+              stock: 'desc',
             },
             include: {
               productImages: {
@@ -129,7 +129,7 @@ class CategoryService {
         include: {
           products: {
             orderBy: {
-              name: 'asc',
+              stock: 'desc',
             },
             include: {
               productImages: {
