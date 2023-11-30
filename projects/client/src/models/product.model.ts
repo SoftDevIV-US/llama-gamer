@@ -1,3 +1,5 @@
+import { Brand } from './brand.model';
+import { Category } from './category.model';
 import ProductImage from './product-images.model';
 import PurchasesProducts from './purchases-products.model';
 import { Supplier } from './supplier.model';
@@ -58,8 +60,8 @@ interface Product extends ApiRecord {
   isAvailable: boolean;
   categoryId: string;
   brandId: string;
-  category: PrismaCategory;
-  brand: PrismaBrand;
+  category: Category;
+  brand: Brand;
   productImages: ProductImage[];
   productsSuppliers: OnlySuppliers[];
   wishListsProducts: WishListsProducts[];
