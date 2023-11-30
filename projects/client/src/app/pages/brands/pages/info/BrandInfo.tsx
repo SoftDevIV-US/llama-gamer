@@ -29,13 +29,15 @@ function BrandInfo() {
               <Field title='ID'>{brand.id}</Field>
               <Field title='Name'>{brand.name}</Field>
               <Field title='Logo'>
-                <img className='relative left-96' src={brand.logo} alt={`Logo of ${brand.name}`} />
+                <div className='flex items-center justify-center'>
+                  <img className='h-auto max-w-full' src={brand.logo} alt={`Logo of ${brand.name}`} />
+                </div>
               </Field>
               <Field title='Created At'>{brand.createdAt.toString().substring(0, 10)}</Field>
               <Field title='Updated At'>{brand.updatedAt.toString().substring(0, 10)}</Field>
             </>
           ) : (
-            <NotFound>Country</NotFound>
+            <NotFound>Brand</NotFound>
           )}
         </section>
       </Form>

@@ -1,4 +1,5 @@
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import CircularProgress from '@mui/material/CircularProgress';
 import axios from 'axios';
 import { Form as FormFormik, Formik } from 'formik';
 import { useState } from 'react';
@@ -16,30 +17,46 @@ function AddBrand() {
   const [isNameCorrect, setIsNameCorrect] = useState(true);
   const [isLogoCorrect, setIsLogoCorrect] = useState(true);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
   const { addBrand } = useAddBrand({ setIsNameCorrect, setIsLogoCorrect });
 
   const handleImageUpload = async (values: CreateBrandDto) => {
-    if (!selectedFile) {
-      return;
+    const NAME_VALIDATOR = /^[a-zA-Z\s]+$/;
+    const maxLength = 15;
+    const minLength = 2;
+
+    try {
+      setIsLoading(true);
+
+      if (!selectedFile) {
+        return;
+      }
+      if (values.name.length > maxLength || values.name.length < minLength || !NAME_VALIDATOR.test(values.name)) {
+        const err = '';
+        const newValues = { ...values, logo: err };
+        addBrand(newValues);
+      } else {
+        const data = new FormData();
+        data.append('file', selectedFile);
+        data.append('upload_preset', 'brandcloud');
+        data.append('cloud_name', 'dvsg7obzt');
+
+        const response = await axios.post('https://api.cloudinary.com/v1_1/dvsg7obzt/image/upload', data);
+
+        if (response.status !== 200) {
+          throw new Error(`Error: ${response.status} - ${response.statusText}`);
+        }
+
+        const logoUrl = response.data.secure_url;
+
+        const newValues = { ...values, logo: logoUrl };
+        addBrand(newValues);
+      }
+    } finally {
+      setIsLoading(false);
     }
-
-    const data = new FormData();
-    data.append('file', selectedFile);
-    data.append('upload_preset', 'brandcloud');
-    data.append('cloud_name', 'dvsg7obzt');
-
-    const response = await axios.post('https://api.cloudinary.com/v1_1/dvsg7obzt/image/upload', data);
-
-    if (response.status !== 200) {
-      throw new Error(`Error: ${response.status} - ${response.statusText}`);
-    }
-
-    const logoUrl = response.data.secure_url;
-
-    const newValues = { ...values, logo: logoUrl };
-    addBrand(newValues);
   };
-
   return (
     <InnerLayout>
       <Form title='Brand'>
@@ -61,9 +78,19 @@ function AddBrand() {
               </InputImage>
             </div>
             <div className='flex justify-center py-6'>
-              <Button className='flex place-items-center gap-2 rounded-xl bg-[#223343] px-6 py-2 text-white' isSubmit>
-                <AddCircleOutlineIcon />
-                <p className='text-xl'>Add</p>
+              <Button
+                className='flex place-items-center gap-2 rounded-xl bg-[#223343] px-6 py-2 text-white'
+                isSubmit
+                isLoading={isLoading}
+              >
+                {isLoading ? (
+                  <CircularProgress size={24} color='inherit' />
+                ) : (
+                  <>
+                    <AddCircleOutlineIcon />
+                    <p className='text-xl'>Add</p>
+                  </>
+                )}
               </Button>
             </div>
           </FormFormik>
