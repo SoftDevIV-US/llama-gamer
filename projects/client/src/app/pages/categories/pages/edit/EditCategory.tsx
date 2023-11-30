@@ -1,4 +1,5 @@
 import EditIcon from '@mui/icons-material/Edit';
+import CircularProgress from '@mui/material/CircularProgress';
 import { Form as FormFormik, Formik } from 'formik';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -16,8 +17,8 @@ import uploadImage from '@/services/cloudinary.service';
 import useEditCategory from './hooks/useEditCategory';
 
 function EditCategory() {
-  const [isNameCorrect, setIsNameCorrect] = useState<boolean>(true);
-  const [, setIsImageCorrect] = useState<boolean>(true);
+  const [isNameCorrect, setIsNameCorrect] = useState(true);
+  const [, setIsImageCorrect] = useState(true);
   const [imageFormData, setImageFormData] = useState<FormData | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [found, setFound] = useState<boolean>(true);
@@ -49,28 +50,38 @@ function EditCategory() {
               }
               onSubmit={async (values) => {
                 if (imageFormData) {
+                  setIsLoading(true);
                   try {
                     const response = await uploadImage(imageFormData);
 
                     const imageUrl: string = response.data.secure_url;
 
-                    const createCategory = {
+                    const updateCategory = {
                       name: values.name,
                       image: imageUrl,
                     } as UpdateCategoryDto;
 
-                    editCategory(createCategory);
-
-                    setImageFormData(null);
+                    await editCategory(updateCategory);
+                    setIsImageCorrect(true);
                   } catch (error: any) {
+                    setIsLoading(false);
                     throw new Error(error);
+                  } finally {
+                    setIsLoading(false);
                   }
+                } else {
+                  const updateCategory = {
+                    name: values.name,
+                    image: category.image,
+                  } as UpdateCategoryDto;
+                  await editCategory(updateCategory);
+                  setIsImageCorrect(true);
                 }
               }}
               enableReinitialize
             >
-              <FormFormik className='flex h-full flex-col px-0 py-12 lg:px-16 landscape:gap-4 landscape:py-4 landscape:md:gap-20 landscape:md:py-20'>
-                <div className='flex grow flex-col gap-10 font-normal lg:gap-20'>
+              <FormFormik className='flex h-full flex-col overflow-y-scroll px-0 py-12 lg:px-16 landscape:gap-4 landscape:py-4 landscape:md:gap-20 landscape:md:py-20'>
+                <div className='flex grow flex-col gap-10  font-normal lg:gap-20'>
                   <InputField
                     id='name'
                     value='name'
@@ -97,9 +108,16 @@ function EditCategory() {
                   <Button
                     className='flex place-items-center gap-2 rounded-xl bg-[#223343] px-6 py-2 text-white'
                     isSubmit
+                    isLoading={isLoading}
                   >
-                    <EditIcon />
-                    <p className='text-xl'>Save</p>
+                    {isLoading ? (
+                      <CircularProgress />
+                    ) : (
+                      <>
+                        <EditIcon />
+                        <p className='text-xl'>Save</p>
+                      </>
+                    )}
                   </Button>
                 </div>
               </FormFormik>
