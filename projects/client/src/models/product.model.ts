@@ -1,5 +1,3 @@
-import { Brand } from './brand.model';
-import { Category } from './category.model';
 import ProductImage from './product-images.model';
 import PurchasesProducts from './purchases-products.model';
 import { Supplier } from './supplier.model';

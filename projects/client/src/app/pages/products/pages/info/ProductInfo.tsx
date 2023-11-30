@@ -18,7 +18,7 @@ function ProductInfo() {
 
   return (
     <InnerLayout>
-      <Form title='Category'>
+      <Form title='Product'>
         <section className='flex h-full flex-col gap-4 overflow-y-scroll px-0 lg:gap-10 lg:px-16 landscape:py-4 landscape:md:py-10'>
           {isLoading ? (
             <div className='grid h-full place-content-center py-5'>
@@ -31,14 +31,16 @@ function ProductInfo() {
               <Field title='Description'>{product.description}</Field>
               <Field title='Stock'>{product.stock}</Field>
               <Field title='Price'>{product.price}</Field>
-              <Field title='Available'>{product.isAvailable}</Field>
               <Field title='Category'>{product.category.name}</Field>
               <Field title='brand'>{product.brand.name}</Field>
               <Field title='Image'>
-                <img src={product.productImages.length.valueOf.name} alt={product.name} />
+                <img src={product.productImages[product.productImages.length - 1].image} alt={product.name} />
               </Field>
               <Field title='Created At'>{product.createdAt.toString().substring(0, 10)}</Field>
               <Field title='Updated At'>{product.updatedAt.toString().substring(0, 10)}</Field>
+              <Field title='Supplier'>
+                {product.productsSuppliers.map((supplier) => supplier.supplier.email).join(', ')}
+              </Field>
             </>
           ) : (
             <NotFound>Product</NotFound>
