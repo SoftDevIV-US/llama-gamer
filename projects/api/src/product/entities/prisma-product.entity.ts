@@ -1,5 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 
+import ProductImage from '@/product-image/entities/product-image.entity';
+
 class PrismaProduct {
   @ApiProperty({
     type: 'String',
@@ -73,6 +75,13 @@ class PrismaProduct {
     example: '123e4567-e89b-12d3-a456-426814174003',
   })
   readonly brandId: string;
+
+  @ApiProperty({
+    type: () => ProductImage,
+    isArray: true,
+    description: 'The images of the product',
+  })
+  readonly productImages: ProductImage[];
 }
 
 export default PrismaProduct;

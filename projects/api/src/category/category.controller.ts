@@ -27,8 +27,6 @@ class CategoryController {
   }
 
   @Get()
-  @UseGuards(JwtAuthGuard)
-  @ApiBearerAuth()
   @ApiOperation({ summary: 'Get all categories' })
   @ApiCreatedResponse({ type: Category, isArray: true })
   async findAll(): Promise<Category[]> {
@@ -37,8 +35,6 @@ class CategoryController {
   }
 
   @Get(':id')
-  @UseGuards(JwtAuthGuard)
-  @ApiBearerAuth()
   @ApiOperation({ summary: 'Get a category by id' })
   @ApiCreatedResponse({ type: Category })
   async findOne(@Param('id') id: string): Promise<Category> {

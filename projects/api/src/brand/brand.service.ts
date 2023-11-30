@@ -21,6 +21,11 @@ class BrandService {
             },
             include: {
               category: true,
+              productImages: {
+                orderBy: {
+                  createdAt: 'desc',
+                },
+              },
             },
           },
         },
@@ -46,6 +51,11 @@ class BrandService {
           },
           include: {
             category: true,
+            productImages: {
+              orderBy: {
+                createdAt: 'desc',
+              },
+            },
           },
         },
       },
@@ -64,6 +74,11 @@ class BrandService {
           },
           include: {
             category: true,
+            productImages: {
+              orderBy: {
+                createdAt: 'desc',
+              },
+            },
           },
         },
       },
@@ -88,6 +103,11 @@ class BrandService {
             },
             include: {
               category: true,
+              productImages: {
+                orderBy: {
+                  createdAt: 'desc',
+                },
+              },
             },
           },
         },
@@ -114,6 +134,11 @@ class BrandService {
             },
             include: {
               category: true,
+              productImages: {
+                orderBy: {
+                  createdAt: 'desc',
+                },
+              },
             },
           },
         },

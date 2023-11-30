@@ -51,6 +51,11 @@ describe('BrandService', () => {
             },
             include: {
               category: true,
+              productImages: {
+                orderBy: {
+                  createdAt: 'desc',
+                },
+              },
             },
           },
         },
@@ -111,6 +116,11 @@ describe('BrandService', () => {
             },
             include: {
               category: true,
+              productImages: {
+                orderBy: {
+                  createdAt: 'desc',
+                },
+              },
             },
           },
         },
@@ -143,6 +153,11 @@ describe('BrandService', () => {
             },
             include: {
               category: true,
+              productImages: {
+                orderBy: {
+                  createdAt: 'desc',
+                },
+              },
             },
           },
         },
@@ -187,6 +202,11 @@ describe('BrandService', () => {
             },
             include: {
               category: true,
+              productImages: {
+                orderBy: {
+                  createdAt: 'desc',
+                },
+              },
             },
           },
         },
@@ -246,6 +266,11 @@ describe('BrandService', () => {
             },
             include: {
               category: true,
+              productImages: {
+                orderBy: {
+                  createdAt: 'desc',
+                },
+              },
             },
           },
         },

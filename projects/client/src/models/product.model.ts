@@ -75,6 +75,7 @@ interface PrismaProduct extends ApiRecord {
   isAvailable: boolean;
   categoryId: string;
   brandId: string;
+  productImages: ProductImage[];
 }
 
 interface PrismaCategoryProduct extends PrismaProduct {
@@ -107,6 +108,7 @@ export type {
   CreateBrandDto,
   CreateCategoryDto,
   CreateProductDto,
+  PrismaCategoryProduct,
   Product,
   UpdateBrandDto,
   UpdateCategoryDto,

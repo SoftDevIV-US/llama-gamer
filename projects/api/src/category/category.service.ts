@@ -19,6 +19,13 @@ class CategoryService {
             orderBy: {
               name: 'asc',
             },
+            include: {
+              productImages: {
+                orderBy: {
+                  createdAt: 'desc',
+                },
+              },
+            },
           },
         },
       });
@@ -43,6 +50,13 @@ class CategoryService {
           orderBy: {
             name: 'asc',
           },
+          include: {
+            productImages: {
+              orderBy: {
+                createdAt: 'desc',
+              },
+            },
+          },
         },
       },
     });
@@ -57,6 +71,13 @@ class CategoryService {
         products: {
           orderBy: {
             name: 'asc',
+          },
+          include: {
+            productImages: {
+              orderBy: {
+                createdAt: 'desc',
+              },
+            },
           },
         },
       },
@@ -81,6 +102,13 @@ class CategoryService {
             orderBy: {
               name: 'asc',
             },
+            include: {
+              productImages: {
+                orderBy: {
+                  createdAt: 'desc',
+                },
+              },
+            },
           },
         },
       });
@@ -102,6 +130,13 @@ class CategoryService {
           products: {
             orderBy: {
               name: 'asc',
+            },
+            include: {
+              productImages: {
+                orderBy: {
+                  createdAt: 'desc',
+                },
+              },
             },
           },
         },

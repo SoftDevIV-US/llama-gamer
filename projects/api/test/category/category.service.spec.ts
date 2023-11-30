@@ -66,6 +66,13 @@ describe('CategoryService', () => {
             orderBy: {
               name: 'asc',
             },
+            include: {
+              productImages: {
+                orderBy: {
+                  createdAt: 'desc',
+                },
+              },
+            },
           },
         },
       });
@@ -90,6 +97,13 @@ describe('CategoryService', () => {
             orderBy: {
               name: 'asc',
             },
+            include: {
+              productImages: {
+                orderBy: {
+                  createdAt: 'desc',
+                },
+              },
+            },
           },
         },
       });
@@ -113,6 +127,13 @@ describe('CategoryService', () => {
           products: {
             orderBy: {
               name: 'asc',
+            },
+            include: {
+              productImages: {
+                orderBy: {
+                  createdAt: 'desc',
+                },
+              },
             },
           },
         },
@@ -154,6 +175,13 @@ describe('CategoryService', () => {
               orderBy: {
                 name: 'asc',
               },
+              include: {
+                productImages: {
+                  orderBy: {
+                    createdAt: 'desc',
+                  },
+                },
+              },
             },
           },
         });
@@ -186,6 +214,13 @@ describe('CategoryService', () => {
               orderBy: {
                 name: 'asc',
               },
+              include: {
+                productImages: {
+                  orderBy: {
+                    createdAt: 'desc',
+                  },
+                },
+              },
             },
           },
         });
@@ -214,6 +249,13 @@ describe('CategoryService', () => {
             products: {
               orderBy: {
                 name: 'asc',
+              },
+              include: {
+                productImages: {
+                  orderBy: {
+                    createdAt: 'desc',
+                  },
+                },
               },
             },
           },
@@ -249,6 +291,13 @@ describe('CategoryService', () => {
               orderBy: {
                 name: 'asc',
               },
+              include: {
+                productImages: {
+                  orderBy: {
+                    createdAt: 'desc',
+                  },
+                },
+              },
             },
           },
         });
@@ -280,6 +329,13 @@ describe('CategoryService', () => {
               orderBy: {
                 name: 'asc',
               },
+              include: {
+                productImages: {
+                  orderBy: {
+                    createdAt: 'desc',
+                  },
+                },
+              },
             },
           },
         });
@@ -310,6 +366,13 @@ describe('CategoryService', () => {
             products: {
               orderBy: {
                 name: 'asc',
+              },
+              include: {
+                productImages: {
+                  orderBy: {
+                    createdAt: 'desc',
+                  },
+                },
               },
             },
           },
@@ -343,6 +406,13 @@ describe('CategoryService', () => {
               orderBy: {
                 name: 'asc',
               },
+              include: {
+                productImages: {
+                  orderBy: {
+                    createdAt: 'desc',
+                  },
+                },
+              },
             },
           },
         });
@@ -371,6 +441,13 @@ describe('CategoryService', () => {
             products: {
               orderBy: {
                 name: 'asc',
+              },
+              include: {
+                productImages: {
+                  orderBy: {
+                    createdAt: 'desc',
+                  },
+                },
               },
             },
           },

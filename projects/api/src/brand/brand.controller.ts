@@ -27,8 +27,6 @@ class BrandController {
   }
 
   @Get()
-  @UseGuards(JwtAuthGuard)
-  @ApiBearerAuth()
   @ApiOperation({ summary: 'Get all brands' })
   @ApiCreatedResponse({ type: Brand, isArray: true })
   async findAll(): Promise<Brand[]> {
@@ -37,8 +35,6 @@ class BrandController {
   }
 
   @Get(':id')
-  @UseGuards(JwtAuthGuard)
-  @ApiBearerAuth()
   @ApiOperation({ summary: 'Get a brand by id' })
   @ApiCreatedResponse({ type: Brand })
   async findOne(@Param('id') id: string): Promise<Brand> {
