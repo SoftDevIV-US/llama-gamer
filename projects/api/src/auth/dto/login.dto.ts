@@ -8,7 +8,7 @@ class LoginDto {
   @ApiProperty({
     type: 'String',
     description: 'The email of the user',
-    example: 'john.doe@gmail.com',
+    example: 'admin@admin.com',
   })
   @IsEmail(
     {},
@@ -36,7 +36,7 @@ class LoginDto {
   @ApiProperty({
     type: 'String',
     description: 'The password of the user',
-    example: 'AbadA312',
+    example: 'admin123',
   })
   @Matches(PASSWORD_VALIDATOR, {
     message: 'The password only accepts letters, and numbers',

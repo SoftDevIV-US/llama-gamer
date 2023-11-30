@@ -1,5 +1,5 @@
 import instance from '@/config/axios.config';
-import { Brand, CreateBrandDto, UpdateBrandDto } from '@/models/brand.model';
+import { Brand, CreateBrandDto, UpdateBrandDto } from '@/models/product.model';
 import { createBrand, deleteBrandById, getAllBrands, getBrandById, updateBrandById } from '@/services/brand.service';
 
 jest.mock('@/config/axios.config');
@@ -21,6 +21,7 @@ describe('Brand Service', () => {
       updatedAt: '2022-01-01',
       name: 'Test Brand',
       logo: 'test-logo.png',
+      products: [],
     };
 
     (instance.post as jest.Mock).mockResolvedValueOnce({ data: mockResponse });
@@ -39,6 +40,7 @@ describe('Brand Service', () => {
         updatedAt: '2022-01-01',
         name: 'Brand 1',
         logo: 'logo1.png',
+        products: [],
       },
       {
         id: '2',
@@ -46,6 +48,7 @@ describe('Brand Service', () => {
         updatedAt: '2022-01-02',
         name: 'Brand 2',
         logo: 'logo2.png',
+        products: [],
       },
     ];
 
@@ -66,6 +69,7 @@ describe('Brand Service', () => {
       updatedAt: '2022-01-01',
       name: 'Test Brand',
       logo: 'test-logo.png',
+      products: [],
     };
 
     (instance.get as jest.Mock).mockResolvedValueOnce({ data: mockResponse });
@@ -88,6 +92,7 @@ describe('Brand Service', () => {
       updatedAt: '2022-01-02',
       name: 'Updated Brand',
       logo: 'test-logo.png',
+      products: [],
     };
 
     (instance.patch as jest.Mock).mockResolvedValueOnce({ data: mockResponse });
@@ -107,6 +112,7 @@ describe('Brand Service', () => {
       updatedAt: '2022-01-01',
       name: 'Test Brand',
       logo: 'test-logo.png',
+      products: [],
     };
 
     (instance.delete as jest.Mock).mockResolvedValueOnce({ data: mockResponse });

@@ -1,5 +1,5 @@
 import instance from '@/config/axios.config';
-import { Category, CreateCategoryDto, UpdateCategoryDto } from '@/models/category.model';
+import { Category, CreateCategoryDto, UpdateCategoryDto } from '@/models/product.model';
 
 export const createCategory = async (data: CreateCategoryDto): Promise<Category> => {
   const response = await instance.post('/categories', data);

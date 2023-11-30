@@ -14,6 +14,13 @@ class CategoryService {
     try {
       const category: Category = await this.prisma.category.create({
         data: createCategoryDto,
+        include: {
+          products: {
+            orderBy: {
+              name: 'asc',
+            },
+          },
+        },
       });
 
       return category;
@@ -31,6 +38,13 @@ class CategoryService {
       orderBy: {
         createdAt: 'desc',
       },
+      include: {
+        products: {
+          orderBy: {
+            name: 'asc',
+          },
+        },
+      },
     });
 
     return categories;
@@ -39,6 +53,13 @@ class CategoryService {
   async findOne(id: string): Promise<Category> {
     const category: Category = await this.prisma.category.findUnique({
       where: { id },
+      include: {
+        products: {
+          orderBy: {
+            name: 'asc',
+          },
+        },
+      },
     });
 
     if (!category) {
@@ -55,6 +76,13 @@ class CategoryService {
           id: categoryId,
         },
         data: updateCategoryDto,
+        include: {
+          products: {
+            orderBy: {
+              name: 'asc',
+            },
+          },
+        },
       });
       return updatedCategory;
     } catch (error) {
@@ -70,6 +98,13 @@ class CategoryService {
     try {
       const deletedCategory = await this.prisma.category.delete({
         where: { id },
+        include: {
+          products: {
+            orderBy: {
+              name: 'asc',
+            },
+          },
+        },
       });
 
       return deletedCategory;

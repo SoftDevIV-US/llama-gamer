@@ -1,10 +1,10 @@
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { Brand } from '@prisma/client';
 
 import BrandService from '@/brand/brand.service';
 import CreateBrandDto from '@/brand/dto/create-brand.dto';
 import UpdateBrandDto from '@/brand/dto/update-brand.dto';
+import Brand from '@/brand/entities/brand.entity';
 import PrismaService from '@/prisma/prisma.service';
 
 describe('BrandService', () => {
@@ -36,6 +36,7 @@ describe('BrandService', () => {
         logo: createBrandDto.logo,
         createdAt: new Date(),
         updatedAt: new Date(),
+        products: [],
       };
       jest.spyOn(prismaService.brand, 'create').mockResolvedValueOnce(brand);
 
@@ -43,6 +44,16 @@ describe('BrandService', () => {
 
       expect(prismaService.brand.create).toHaveBeenCalledWith({
         data: createBrandDto,
+        include: {
+          products: {
+            orderBy: {
+              name: 'asc',
+            },
+            include: {
+              category: true,
+            },
+          },
+        },
       });
       expect(result).toEqual(brand);
     });
@@ -82,6 +93,7 @@ describe('BrandService', () => {
           logo: 'https://test-logo.com/test.png',
           createdAt: new Date(),
           updatedAt: new Date(),
+          products: [],
         },
       ];
       jest.spyOn(prismaService.brand, 'findMany').mockResolvedValueOnce(brands);
@@ -90,7 +102,17 @@ describe('BrandService', () => {
 
       expect(prismaService.brand.findMany).toHaveBeenCalledWith({
         orderBy: {
-          name: 'desc',
+          createdAt: 'desc',
+        },
+        include: {
+          products: {
+            orderBy: {
+              name: 'asc',
+            },
+            include: {
+              category: true,
+            },
+          },
         },
       });
       expect(result).toEqual(brands);
@@ -106,6 +128,7 @@ describe('BrandService', () => {
         logo: 'https://test-logo.com/test.png',
         createdAt: new Date(),
         updatedAt: new Date(),
+        products: [],
       };
       jest.spyOn(prismaService.brand, 'findUnique').mockResolvedValueOnce(brand);
 
@@ -113,6 +136,16 @@ describe('BrandService', () => {
 
       expect(prismaService.brand.findUnique).toHaveBeenCalledWith({
         where: { id },
+        include: {
+          products: {
+            orderBy: {
+              name: 'asc',
+            },
+            include: {
+              category: true,
+            },
+          },
+        },
       });
       expect(result).toEqual(brand);
     });
@@ -138,6 +171,7 @@ describe('BrandService', () => {
         logo: updateBrandDto.logo,
         createdAt: new Date(),
         updatedAt: new Date(),
+        products: [],
       };
       jest.spyOn(prismaService.brand, 'update').mockResolvedValueOnce(brand);
 
@@ -146,6 +180,16 @@ describe('BrandService', () => {
       expect(prismaService.brand.update).toHaveBeenCalledWith({
         where: { id },
         data: updateBrandDto,
+        include: {
+          products: {
+            orderBy: {
+              name: 'asc',
+            },
+            include: {
+              category: true,
+            },
+          },
+        },
       });
       expect(result).toEqual(brand);
     });
@@ -187,6 +231,7 @@ describe('BrandService', () => {
         logo: 'https://test-logo.com/test.png',
         createdAt: new Date(),
         updatedAt: new Date(),
+        products: [],
       };
       jest.spyOn(prismaService.brand, 'delete').mockResolvedValueOnce(brand);
 
@@ -194,6 +239,16 @@ describe('BrandService', () => {
 
       expect(prismaService.brand.delete).toHaveBeenCalledWith({
         where: { id },
+        include: {
+          products: {
+            orderBy: {
+              name: 'asc',
+            },
+            include: {
+              category: true,
+            },
+          },
+        },
       });
       expect(result).toEqual(brand);
     });

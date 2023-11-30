@@ -1,5 +1,5 @@
 import instance from '@/config/axios.config';
-import { Brand, CreateBrandDto, UpdateBrandDto } from '@/models/brand.model';
+import { Brand, CreateBrandDto, UpdateBrandDto } from '@/models/product.model';
 
 export const createBrand = async (data: CreateBrandDto): Promise<Brand> => {
   const response = await instance.post('/brands', data);

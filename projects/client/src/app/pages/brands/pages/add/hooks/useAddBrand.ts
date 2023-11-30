@@ -1,7 +1,7 @@
 import { toast } from 'sonner';
 
 import useNavigate from '@/app/hooks/useNavigate';
-import { CreateBrandDto } from '@/models/brand.model';
+import { CreateBrandDto } from '@/models/product.model';
 import { createBrand } from '@/services/brand.service';
 
 type Props = {

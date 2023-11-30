@@ -11,7 +11,7 @@ import InputField from '@/app/components/input-field/InputField';
 import Loading from '@/app/components/loading/Loading';
 import NotFound from '@/app/components/not-found/NotFound';
 import InnerLayout from '@/app/layouts/InnerLayout';
-import { UpdateCategoryDto } from '@/models/category.model';
+import { UpdateCategoryDto } from '@/models/product.model';
 import uploadImage from '@/services/cloudinary.service';
 
 import useEditCategory from './hooks/useEditCategory';

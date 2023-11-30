@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
 import useNavigate from '@/app/hooks/useNavigate';
-import { Brand, UpdateBrandDto } from '@/models/brand.model';
+import { Brand, UpdateBrandDto } from '@/models/product.model';
 import { getBrandById, updateBrandById } from '@/services/brand.service';
 
 type Props = {

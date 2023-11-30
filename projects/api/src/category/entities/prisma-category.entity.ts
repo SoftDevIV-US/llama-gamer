@@ -1,8 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-import PrismaProduct from '@/product/entities/prisma-product.entity';
-
-class Category {
+class PrismaCategory {
   @ApiProperty({
     type: 'String',
     format: 'uuid',
@@ -38,13 +36,6 @@ class Category {
     example: '2021-01-01T00:00:00.000Z',
   })
   readonly updatedAt: Date;
-
-  @ApiProperty({
-    type: () => PrismaProduct,
-    isArray: true,
-    description: 'The products of the category',
-  })
-  readonly products: PrismaProduct[];
 }
 
-export default Category;
+export default PrismaCategory;

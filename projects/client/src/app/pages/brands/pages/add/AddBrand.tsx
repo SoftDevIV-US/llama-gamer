@@ -8,7 +8,7 @@ import Form from '@/app/components/form/Form';
 import InputField from '@/app/components/input-field/InputField';
 import InputImage from '@/app/components/input-image/InputImage';
 import InnerLayout from '@/app/layouts/InnerLayout';
-import { CreateBrandDto } from '@/models/brand.model';
+import { CreateBrandDto } from '@/models/product.model';
 
 import useAddBrand from './hooks/useAddBrand';
 
