@@ -26,6 +26,13 @@ class ProductService {
                 },
               },
             },
+            orderBy: {
+              supplier: {
+                country: {
+                  tax: 'asc',
+                },
+              },
+            },
           },
         },
       });
@@ -56,6 +63,13 @@ class ProductService {
               },
             },
           },
+          orderBy: {
+            supplier: {
+              country: {
+                tax: 'asc',
+              },
+            },
+          },
         },
       },
     });
@@ -72,10 +86,17 @@ class ProductService {
         brand: true,
         productImages: true,
         productsSuppliers: {
-          include: {
+          select: {
             supplier: {
               include: {
                 country: true,
+              },
+            },
+          },
+          orderBy: {
+            supplier: {
+              country: {
+                tax: 'asc',
               },
             },
           },
@@ -107,6 +128,13 @@ class ProductService {
                 },
               },
             },
+            orderBy: {
+              supplier: {
+                country: {
+                  tax: 'asc',
+                },
+              },
+            },
           },
         },
       });
@@ -134,6 +162,13 @@ class ProductService {
               supplier: {
                 include: {
                   country: true,
+                },
+              },
+            },
+            orderBy: {
+              supplier: {
+                country: {
+                  tax: 'asc',
                 },
               },
             },
