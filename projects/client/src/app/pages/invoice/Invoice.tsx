@@ -1,28 +1,55 @@
+/* eslint-disable import/no-extraneous-dependencies */
+import { Document, Image, Page, Text, View } from '@react-pdf/renderer';
+
 import logo from './assets/llama-logo.png';
 
-function Invoice() {
+function InvoicePDF() {
   const currentDate = new Date();
   const formattedDate = currentDate.toLocaleDateString('es-ES');
 
   return (
-    <div className='flex-col bg-[#FFFFFF]'>
-      <div className='flex items-center justify-center gap-12 bg-[#FFFFFF] bg-cover bg-center bg-no-repeat'>
-        <img src={logo} alt='Llama Logo' className='max-w-[200px] md:max-w-[300px] lg:min-w-[330px]' />
-        <p className='text-xs font-bold text-[#3A4D5E] md:text-2xl lg:text-3xl'>Billing</p>
-      </div>
-      <div className='flex items-center justify-center gap-12 bg-[#FFFFFF] bg-cover bg-center bg-no-repeat'>
-        <div className='grid flex-col items-center justify-center bg-[#FFFFFF]'>
-          <p className='text-xs text-[#111111] md:text-base lg:text-lg'>Alex Fernandez</p>
-          <p className='text-xs text-[#111111] md:text-base lg:text-lg'>649 62 05 35</p>
-          <p className='text-xs text-[#111111] md:text-base lg:text-lg'>afsprodesign@gmail.com</p>
-        </div>
-        <div className='grid flex-col items-center justify-center bg-[#FFFFFF]'>
-          <p className='text-center text-xs font-bold text-[#111111]'>Date</p>
-          <p className='text-xs text-[#111111]'>{formattedDate}</p>
-        </div>
-      </div>
-    </div>
+    <Document>
+      <Page
+        size='A4'
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'white',
+        }}
+      >
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'white',
+            padding: 10,
+          }}
+        >
+          <View style={{ marginBottom: 12 }}>
+            <Image src={logo} style={{ maxWidth: '200px', maxHeight: '200px' }} />
+            <Text style={{ fontSize: '24px', fontWeight: 'bold', color: '#3A4D5E' }}>Billing</Text>
+          </View>
+
+          <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+            <View style={{ textAlign: 'center', marginRight: 12 }}>
+              <Text style={{ fontSize: '16px', color: '#111111' }}>Alex Fernandez</Text>
+              <Text style={{ fontSize: '16px', color: '#111111' }}>649 62 05 35</Text>
+              <Text style={{ fontSize: '16px', color: '#111111' }}>afsprodesign@gmail.com</Text>
+            </View>
+
+            <View style={{ textAlign: 'center' }}>
+              <Text style={{ fontSize: '16px', fontWeight: 'bold', color: '#111111' }}>Date</Text>
+              <Text style={{ fontSize: '16px', color: '#111111' }}>{formattedDate}</Text>
+            </View>
+          </View>
+        </View>
+      </Page>
+    </Document>
   );
 }
 
-export default Invoice;
+export default InvoicePDF;
