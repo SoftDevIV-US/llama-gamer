@@ -1,79 +1,113 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { Document, Image, Page, Text, View } from '@react-pdf/renderer';
+import { Document, Image, Page, PDFViewer, Text, View } from '@react-pdf/renderer';
+
+import { CartProduct } from '@/models/product.model';
+import useAuthStore from '@/store/auth.store';
 
 import logo from './assets/llama-logo.png';
 
-function InvoicePDF() {
+type Props = {
+  cart: CartProduct[];
+  totalPrice: number;
+};
+
+function InvoicePDF({ cart, totalPrice }: Props) {
   const currentDate = new Date();
   const formattedDate = currentDate.toLocaleDateString('es-ES');
+  const userInfo = useAuthStore.getState().auth?.user;
 
-  const items = [
-    { name: 'KumaraK552', amount: 2, unitaryPrice: 160, tax: 2.3, total: 167.36 },
-    { name: 'SUK552213', amount: 2, unitaryPrice: 215, tax: 3.14, total: 221.75 },
-  ];
+  const tax = 0.13;
+
+  const subtotal = totalPrice.toFixed(2);
+  const totalTax = (Number((tax + totalPrice).toFixed(2)) - Number(totalPrice.toFixed(2))).toFixed(2);
+  const total = (tax + totalPrice).toFixed(2);
 
   return (
-    <Document>
-      <Page
-        size='A4'
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: 'white',
-        }}
-      >
-        <View
+    <PDFViewer>
+      <Document>
+        <Page
+          size='A4'
           style={{
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'center',
+            justifyContent: 'flex-start',
             alignItems: 'center',
             backgroundColor: 'white',
-            padding: 10,
           }}
         >
-          <View style={{ marginBottom: 12 }}>
-            <Image src={logo} style={{ maxWidth: '200px', maxHeight: '200px' }} />
-            <Text style={{ fontSize: '24px', fontWeight: 'bold', color: '#3A4D5E' }}>Billing</Text>
-          </View>
-
-          <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-            <View style={{ textAlign: 'center', marginRight: 12 }}>
-              <Text style={{ fontSize: '16px', color: '#111111' }}>Alex Fernandez</Text>
-              <Text style={{ fontSize: '16px', color: '#111111' }}>649 62 05 35</Text>
-              <Text style={{ fontSize: '16px', color: '#111111' }}>afsprodesign@gmail.com</Text>
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'flex-start',
+              alignItems: 'center',
+              backgroundColor: 'white',
+              padding: 10,
+            }}
+          >
+            <View style={{ marginBottom: 12, flexDirection: 'row', alignItems: 'center' }}>
+              <Image src={logo} style={{ maxWidth: '300px', maxHeight: '300px', marginRight: 120 }} />
+              <Text style={{ fontSize: '24px', fontWeight: 'bold', color: '#3A4D5E', marginLeft: -50 }}>Billing</Text>
             </View>
 
-            <View style={{ textAlign: 'center' }}>
-              <Text style={{ fontSize: '16px', fontWeight: 'bold', color: '#111111' }}>Date</Text>
-              <Text style={{ fontSize: '16px', color: '#111111' }}>{formattedDate}</Text>
-            </View>
-          </View>
-
-          <View style={{ marginTop: 12 }}>
-            <View style={{ flexDirection: 'row' }}>
-              <Text style={{ width: '20%', fontWeight: 'bold' }}>Name</Text>
-              <Text style={{ width: '20%', fontWeight: 'bold' }}>Amount</Text>
-              <Text style={{ width: '20%', fontWeight: 'bold' }}>Unitary P.</Text>
-              <Text style={{ width: '20%', fontWeight: 'bold' }}>Tax</Text>
-              <Text style={{ width: '20%', fontWeight: 'bold' }}>Total</Text>
-            </View>
-            {items.map((item, index) => (
-              // eslint-disable-next-line react/no-array-index-key
-              <View key={index} style={{ flexDirection: 'row' }}>
-                <Text style={{ width: '20%' }}>{item.name}</Text>
-                <Text style={{ width: '20%' }}>{item.amount}</Text>
-                <Text style={{ width: '20%' }}>{item.unitaryPrice}</Text>
-                <Text style={{ width: '20%' }}>{item.tax}</Text>
-                <Text style={{ width: '20%' }}>{item.total}</Text>
+            <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+              <View style={{ textAlign: 'center', marginRight: 120 }}>
+                <Text style={{ fontSize: '16px', color: '#111111' }}>{`${userInfo?.name} ${userInfo?.lastName}`}</Text>
+                <Text style={{ fontSize: '16px', color: '#111111' }}>{userInfo?.email}</Text>
               </View>
-            ))}
+
+              <View style={{ textAlign: 'center', marginLeft: 120 }}>
+                <Text style={{ fontSize: '16px', fontWeight: 'bold', color: '#111111', marginLeft: 20 }}>Date</Text>
+                <Text style={{ fontSize: '16px', color: '#111111' }}>{formattedDate}</Text>
+              </View>
+            </View>
+
+            <View style={{ marginTop: 12 }}>
+              <View style={{ flexDirection: 'row' }}>
+                <Text style={{ width: '32%', fontWeight: 'bold', backgroundColor: '#3A4D5E', color: '#FFFFFF' }}>
+                  Name
+                </Text>
+                <Text style={{ width: '13%', fontWeight: 'bold', backgroundColor: '#3A4D5E', color: '#FFFFFF' }}>
+                  Amount
+                </Text>
+                <Text style={{ width: '15%', fontWeight: 'bold', backgroundColor: '#3A4D5E', color: '#FFFFFF' }}>
+                  Unitary P.
+                </Text>
+                <Text style={{ width: '20%', fontWeight: 'bold', backgroundColor: '#3A4D5E', color: '#FFFFFF' }}>
+                  Tax
+                </Text>
+                <Text style={{ width: '20%', fontWeight: 'bold', backgroundColor: '#3A4D5E', color: '#FFFFFF' }}>
+                  Total
+                </Text>
+              </View>
+              {cart.map((item) => (
+                <View key={item.product.id} style={{ flexDirection: 'row' }}>
+                  <Text style={{ width: '32%' }}>{item.product.name}</Text>
+                  <Text style={{ width: '13%', textAlign: 'center' }}>{item.quantity}</Text>
+                  <Text style={{ width: '15%', textAlign: 'center' }}>{item.product.price}</Text>
+                  <Text style={{ width: '20%', textAlign: 'center' }}>{`${
+                    item.totalPrice - item.priceWithoutTax
+                  } Bs.`}</Text>
+                  <Text style={{ width: '20%', textAlign: 'center' }}>{`${item.totalPrice} Bs.`}</Text>
+                </View>
+              ))}
+              <View style={{ flexDirection: 'row', marginTop: 10 }}>
+                <Text style={{ width: '80%', fontWeight: 'bold', textAlign: 'right' }}>Subtotal</Text>
+                <Text style={{ width: '20%', textAlign: 'right' }}>{` ${subtotal} Bs.`}</Text>
+              </View>
+              <View style={{ flexDirection: 'row' }}>
+                <Text style={{ width: '80%', fontWeight: 'bold', textAlign: 'right' }}>Taxes</Text>
+                <Text style={{ width: '20%', textAlign: 'right' }}>{`${totalTax} Bs.`}</Text>
+              </View>
+              <View style={{ flexDirection: 'row' }}>
+                <Text style={{ width: '80%', fontWeight: 'bold', textAlign: 'right' }}>Total</Text>
+                <Text style={{ width: '20%', textAlign: 'right' }}>{`${total} Bs.`}</Text>
+              </View>
+            </View>
           </View>
-        </View>
-      </Page>
-    </Document>
+        </Page>
+      </Document>
+    </PDFViewer>
   );
 }
 

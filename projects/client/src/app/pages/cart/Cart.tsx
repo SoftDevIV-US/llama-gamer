@@ -1,3 +1,7 @@
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import React from 'react';
+
+import Button from '@/app/components/button/Button';
 import useNavigate from '@/app/hooks/useNavigate';
 import useCartStore from '@/store/cart.store';
 
@@ -9,32 +13,48 @@ function Cart() {
   const { navigate } = useNavigate();
 
   return (
-    <div className='grid h-screen w-full grid-flow-col place-content-center space-x-10 '>
-      <div className='grid grid-flow-row  space-y-5'>
-        <ProductCart
-          name='KumaraK552'
-          supplier='USA'
-          tax='2.3'
-          brand='ASUS'
-          days='7'
-          image={Keyboard1}
-          price='160'
-          quantity={2}
-        />
-        <ProductCart
-          name='SUK552213'
-          supplier='Mexico'
-          tax='3.14'
-          brand='Delux'
-          days='3'
-          image={Keyboard2}
-          price='215'
-          quantity={2}
-        />
-      </div>
-      <div>
-        <TotalBalance subtTotal={375} tax={12.5} />
-      </div>
+    <div className='flex  w-full flex-col gap-4 px-40 py-16'>
+      <h1 className='text-2xl font-semibold'>{`My Cart (${cart.length})`}</h1>
+
+      {cart.length === 0 ? (
+        <div className='mt-24 grid h-full place-content-center gap-5'>
+          <span className='text-2xl font-medium'>No products in the Cart yet</span>
+          <Button
+            className='mx-auto flex w-fit place-content-center items-center gap-2 rounded-lg bg-[#3a4d5e] px-3 py-2 text-lg text-white'
+            onClick={() => {
+              navigate('/');
+            }}
+          >
+            <p>
+              <ArrowBackIcon fontSize='inherit' />
+            </p>
+            <p className='font-medium'>Back to Shop</p>
+          </Button>
+        </div>
+      ) : (
+        <div className='flex w-full gap-5'>
+          <div className='flex grow flex-col gap-5 rounded-lg bg-white p-5 shadow-lg'>
+            {cart.map((item, index) => (
+              <React.Fragment key={item.product.id}>
+                <ProductCart key={item.product.id} item={item} />
+                {index !== cart.length - 1 && <hr className='border border-[#DDE1E8]' />}
+              </React.Fragment>
+            ))}
+            <Button
+              className='flex w-fit place-content-center items-center gap-2 rounded-lg bg-[#3a4d5e] px-3 py-2 text-lg text-white'
+              onClick={() => {
+                navigate('/');
+              }}
+            >
+              <p>
+                <ArrowBackIcon fontSize='inherit' />
+              </p>
+              <p className='font-medium'>Back to Shop</p>
+            </Button>
+          </div>
+          <TotalBalance />
+        </div>
+      )}
     </div>
   );
 }
