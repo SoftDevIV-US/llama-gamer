@@ -1,6 +1,7 @@
 import LocalMallIcon from '@mui/icons-material/LocalMall';
 
 import useNavigate from '@/app/hooks/useNavigate';
+import defaultLogo from '@/assets/images/default.png';
 import { PrismaCategoryProduct } from '@/models/product.model';
 
 import Button from '../../button/Button';
@@ -19,7 +20,11 @@ function BrandProductCard({ product }: Props) {
         <p className='text-base text-[#0077E4]'>{product.name}</p>
       </div>
       <picture className='grid w-full place-content-center'>
-        <img src={product.productImages[0].image} alt={product.name} className='h-[175px] w-[175px]' />
+        <img
+          src={product.productImages.length >= 1 ? product.productImages[0].image : defaultLogo}
+          alt={product.name}
+          className='h-[175px] w-[175px]'
+        />
       </picture>
       <div className='flex w-full items-center justify-between'>
         <p className='text-lg font-bold'>{product.price.toFixed(2)} Bs</p>

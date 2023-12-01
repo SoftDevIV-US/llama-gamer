@@ -1,5 +1,6 @@
 import Button from '@/app/components/button/Button';
 import useNavigate from '@/app/hooks/useNavigate';
+import defaultLogo from '@/assets/images/default.png';
 import { PrismaProduct } from '@/models/product.model';
 
 type Props = {
@@ -13,7 +14,7 @@ function ProductByCategoryCard({ product }: Props) {
     <div className='flex h-[115px] w-full gap-3 rounded-lg bg-white p-2 shadow-xl md:h-[280px] md:gap-6 md:p-10 xl:gap-24'>
       <picture className='block grow-0'>
         <img
-          src={product.productImages[0].image}
+          src={product.productImages.length >= 1 ? product.productImages[0].image : defaultLogo}
           alt={product.name}
           className='h-[90px] w-[90px] md:h-[200px] md:w-[200px]'
         />

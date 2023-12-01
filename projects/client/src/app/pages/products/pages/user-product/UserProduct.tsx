@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 
 import Button from '@/app/components/button/Button';
 import Loading from '@/app/components/loading/Loading';
+import defaultLogo from '@/assets/images/default.png';
 import { Supplier } from '@/models/supplier.model';
 
 import useLoadProductInfo from './hooks/useLoadProductInfo';
@@ -48,7 +49,7 @@ function UserProduct() {
           <div className='flex h-[700px] w-full flex-col gap-5 bg-white px-7 py-4 shadow-lg lg:h-[470px] lg:flex-row lg:gap-32 lg:px-16 lg:py-8'>
             <picture className='flex place-content-center'>
               <img
-                src={product.productImages[0].image}
+                src={product.productImages.length >= 1 ? product.productImages[0].image : defaultLogo}
                 alt={product.name}
                 className='h-[200px] w-[200px]  lg:h-[425px] lg:w-[425px]'
               />
