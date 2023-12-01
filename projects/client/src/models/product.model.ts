@@ -67,6 +67,16 @@ interface Product extends ApiRecord {
   purchasesProducts: PurchasesProducts[];
 }
 
+interface CartProduct {
+  product: Product;
+  quantity: number;
+  tax: number;
+  deliveryTime: number;
+  totalPrice: number;
+  priceWithoutTax: number;
+  supplier: Supplier | null;
+}
+
 interface PrismaProduct extends ApiRecord {
   name: string;
   description: string;
@@ -104,6 +114,7 @@ type UpdateProductDto = {
 
 export type {
   Brand,
+  CartProduct,
   Category,
   CreateBrandDto,
   CreateCategoryDto,
