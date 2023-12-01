@@ -6,6 +6,7 @@ const defaultProps = {
   isDisabled: false,
   type: 'text',
   showRequired: true,
+  allowDecimals: true,
 };
 
 type Props = {
@@ -17,9 +18,20 @@ type Props = {
   isCorrect?: boolean;
   isDisabled?: boolean;
   showRequired?: boolean;
+  allowDecimals?: boolean;
 };
 
-function InputField({ id, children, value, type, placeholder, isCorrect, isDisabled, showRequired }: Props) {
+function InputField({
+  id,
+  children,
+  value,
+  type,
+  placeholder,
+  isCorrect,
+  isDisabled,
+  showRequired,
+  allowDecimals,
+}: Props) {
   return (
     <label htmlFor={id}>
       <p className='px-4 text-[#1B263B]/50'>
@@ -33,8 +45,8 @@ function InputField({ id, children, value, type, placeholder, isCorrect, isDisab
         className={`w-full rounded-lg px-5 py-3 outline-none ${isCorrect ? '' : 'border-2 border-[#f55b5b]'}`}
         placeholder={placeholder}
         disabled={isDisabled}
-        step={type === 'number' ? '0.01' : undefined}
-        pattern={type === 'number' ? '\\d+(\\.\\d{1,2})?' : undefined}
+        step={type === 'number' ? (allowDecimals ? '0.01' : '1') : undefined}
+        pattern={type === 'number' ? (allowDecimals ? '\\d+(\\.\\d{1,2})?' : '\\d+') : undefined}
         required
       />
     </label>
