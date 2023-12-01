@@ -8,7 +8,7 @@ import useCartStore from '@/store/cart.store';
 import InvoiceModal from '../../invoice/InvoiceModal';
 
 function TotalBalance() {
-  const { getTotalPrice, clearCart, cart } = useCartStore();
+  const { getTotalPrice, cart } = useCartStore();
   const [isModalOpen, setModalOpen] = React.useState(false);
   const { auth } = useAuthStore();
 
@@ -18,7 +18,7 @@ function TotalBalance() {
       return;
     }
     setModalOpen(true);
-    clearCart();
+    // clearCart();
   };
 
   const tax = getTotalPrice() * 0.13;
