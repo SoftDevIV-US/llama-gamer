@@ -15,7 +15,9 @@ function TotalBalance() {
         </div>
         <div className='flex w-full justify-between'>
           <p>Tax:</p>
-          <p className='text-[#00B517]'>+ {tax.toFixed(2)} Bs</p>
+          <p className='text-[#00B517]'>
+            + {(Number((tax + getTotalPrice()).toFixed(2)) - Number(getTotalPrice().toFixed(2))).toFixed(2)} Bs
+          </p>
         </div>
       </div>
 
