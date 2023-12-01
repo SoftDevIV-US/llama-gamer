@@ -5,6 +5,7 @@ import Modal from '@mui/material/Modal';
 import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer';
 
 import { CartProduct } from '@/models/product.model';
+import useCartStore from '@/store/cart.store';
 
 import DocuPDF from './Invoice';
 
@@ -20,8 +21,11 @@ type Props = {
 };
 
 function InvoiceModal({ id, name, open, onClose, cart, totalPrice }: Props) {
+  const { clearCart } = useCartStore();
+
   const handleClose = () => {
     onClose();
+    clearCart();
   };
 
   return (

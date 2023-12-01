@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { Document, Image, Page, PDFViewer, Text, View } from '@react-pdf/renderer';
 
 import { CartProduct } from '@/models/product.model';
