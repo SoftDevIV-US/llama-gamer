@@ -1,8 +1,25 @@
+import React from 'react';
+import { toast } from 'sonner';
+
 import Button from '@/app/components/button/Button';
+import useAuthStore from '@/store/auth.store';
 import useCartStore from '@/store/cart.store';
 
+import InvoiceModal from '../../invoice/InvoiceModal';
+
 function TotalBalance() {
-  const { getTotalPrice } = useCartStore();
+  const { getTotalPrice, clearCart, cart } = useCartStore();
+  const [isModalOpen, setModalOpen] = React.useState(false);
+  const { auth } = useAuthStore();
+
+  const handleCheckout = () => {
+    if (auth === null) {
+      toast.warning('You need to be logged in to make a purchase');
+      return;
+    }
+    setModalOpen(true);
+    clearCart();
+  };
 
   const tax = getTotalPrice() * 0.13;
 
@@ -27,7 +44,20 @@ function TotalBalance() {
           <p>Total:</p>
           <p>{(tax + getTotalPrice()).toFixed(2)} Bs</p>
         </div>
-        <Button className='w-full rounded-xl bg-[#00b517] py-2 text-lg  font-medium text-white'>Checkout</Button>
+        <Button
+          className='w-full rounded-xl bg-[#00b517] py-2 text-lg  font-medium text-white'
+          onClick={handleCheckout}
+        >
+          Checkout
+        </Button>
+        <InvoiceModal
+          id='someId'
+          name='Invoice'
+          open={isModalOpen}
+          onClose={() => setModalOpen(false)}
+          cart={cart}
+          totalPrice={getTotalPrice()}
+        />
       </div>
     </div>
   );

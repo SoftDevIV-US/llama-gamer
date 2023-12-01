@@ -22,7 +22,6 @@ import EditCountry from './pages/countries/pages/edit/EditCountry';
 import CountryInfo from './pages/countries/pages/info/CountryInfo';
 import Admin from './pages/home/admin/Admin';
 import User from './pages/home/user/User';
-import Invoice from './pages/invoice/InvoiceModal';
 import Login from './pages/login/Login';
 import NotFound from './pages/not-found/NotFound';
 import AddProduct from './pages/products/pages/add/AddProduct';
@@ -49,7 +48,6 @@ function App() {
         <Route path='/wish-list' element={<WishList />} />
         <Route path='/terms-conditions' element={<TermsConditions />} />
         <Route path='/cart' element={<Cart />} />
-        <Route path='/cart/invoice' element={<Invoice id='invoice' name='bill' />} />
         <Route path='/account' element={<Account />} />
         <Route path='/product/:id' element={<UserProduct />} />
         <Route path='/category/:id' element={<UserCategory />} />
