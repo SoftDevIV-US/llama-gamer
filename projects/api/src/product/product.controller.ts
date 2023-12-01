@@ -37,8 +37,6 @@ class ProductController {
   }
 
   @Get(':id')
-  @UseGuards(JwtAuthGuard)
-  @ApiBearerAuth()
   @ApiOperation({ summary: 'Get a product by id' })
   @ApiCreatedResponse({ type: Product })
   async findOne(@Param('id') id: string): Promise<Product> {

@@ -12,7 +12,6 @@ const countries: CreateCountryDto[] = [
   { name: 'Peru', tax: 0.18 },
   { name: 'Chile', tax: 0.19 },
   { name: 'Ecuador', tax: 0.12 },
-  { name: 'Bolivia', tax: 0.13 },
   { name: 'Paraguay', tax: 0.1 },
   { name: 'Uruguay', tax: 0.22 },
   { name: 'Venezuela', tax: 0.16 },
