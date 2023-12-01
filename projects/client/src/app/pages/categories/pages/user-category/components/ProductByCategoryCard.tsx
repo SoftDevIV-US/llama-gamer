@@ -11,7 +11,7 @@ function ProductByCategoryCard({ product }: Props) {
   const { navigate } = useNavigate();
 
   return (
-    <div className='flex h-[115px] w-full gap-3 rounded-lg bg-white p-2 shadow-xl md:h-[280px] md:gap-6 md:p-10 xl:gap-24'>
+    <div className='flex h-[115px] w-full gap-3 break-words rounded-lg bg-white p-2 shadow-xl md:h-[280px] md:gap-6 md:p-10 xl:gap-24'>
       <picture className='block grow-0'>
         <img
           src={product.productImages.length >= 1 ? product.productImages[0].image : defaultLogo}

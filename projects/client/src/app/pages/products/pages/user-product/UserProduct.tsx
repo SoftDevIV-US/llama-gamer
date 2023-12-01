@@ -34,7 +34,7 @@ function UserProduct() {
   };
 
   return (
-    <div className='grid w-full p-4 lg:px-14 lg:py-6'>
+    <div className='grid w-full break-words p-4 lg:px-14 lg:py-6'>
       {isLoading ? (
         <div className='grid h-screen w-full place-content-center gap-5 text-center'>
           <Loading />
@@ -70,7 +70,7 @@ function UserProduct() {
                 <p>Stock:</p>
                 <p className='rounded-full bg-[#ffe5ec] px-2 py-1 text-[#FF316A] lg:mb-5'>{product.stock}</p>
               </div>
-              {supplier && (
+              {supplier ? (
                 <div className='relative flex w-full'>
                   <div key={supplier.id} className='flex w-full justify-between'>
                     <div>
@@ -123,13 +123,17 @@ function UserProduct() {
                     </div>
                   )}
                 </div>
+              ) : (
+                <div className='w-full'>
+                  <p>This Product doesn't have Suppliers yet</p>
+                </div>
               )}
 
               <div className='flex w-full flex-col gap-4 lg:flex-row lg:gap-10'>
                 <p className='text-lg font-medium text-black lg:text-4xl'>
                   {supplier
                     ? (product.price * quantity + product.price * quantity * supplier.country.tax).toFixed(2)
-                    : 0}{' '}
+                    : (product.price * quantity).toFixed(2)}{' '}
                   Bs
                 </p>
                 <div className='flex grow items-center justify-between rounded-full border border-black/20 px-5 text-base lg:text-lg'>

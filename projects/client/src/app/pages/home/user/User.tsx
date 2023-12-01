@@ -33,9 +33,9 @@ function User() {
           </div>
         ) : (
           <div className='flex w-full flex-col gap-14'>
-            {brands.length >= 1 && <BrandCarousel brand={brands[0]} />}
+            {brands.length >= 1 && brands[0].products.length >= 1 && <BrandCarousel brand={brands[0]} />}
             <div className='lg:px-20'>{categories.length >= 1 && <CategoryCarousel categories={categories} />}</div>
-            {brands.length === 2 && <BrandCarousel brand={brands[1]} />}
+            {brands.length === 2 && brands[1].products.length >= 1 && <BrandCarousel brand={brands[1]} />}
           </div>
         )}
       </div>

@@ -16,7 +16,9 @@ const useLoadProductInfo = ({ id, setIsLoading, setSupplier }: Props) => {
   useEffect(() => {
     async function loadProduct() {
       const response = await getProductById(id);
-      setSupplier(response.productsSuppliers[0].supplier);
+      if (response.productsSuppliers.length < 1) {
+        setSupplier(response.productsSuppliers[0].supplier);
+      }
       setProduct(response);
     }
 
