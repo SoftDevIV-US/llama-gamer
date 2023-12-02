@@ -15,11 +15,11 @@ function InvoicePDF({ cart, totalPrice }: Props) {
   const formattedDate = currentDate.toLocaleDateString('es-ES');
   const userInfo = useAuthStore.getState().auth?.user;
 
-  const tax = (0.13).toFixed(2);
+  const tax = totalPrice * 0.13;
 
   const subtotal = totalPrice.toFixed(2);
-  const totalTax = (parseFloat(tax) + totalPrice).toFixed(2);
-  const total = (parseFloat(tax) + totalPrice).toFixed(2);
+  const total = (tax + totalPrice).toFixed(2);
+  const totalTax = (Number(total) - Number(subtotal)).toFixed(2);
 
   return (
     <Document>
@@ -83,9 +83,9 @@ function InvoicePDF({ cart, totalPrice }: Props) {
                 <Text style={{ width: '32%' }}>{item.product.name}</Text>
                 <Text style={{ width: '13%', textAlign: 'center' }}>{item.quantity}</Text>
                 <Text style={{ width: '15%', textAlign: 'center' }}>{item.product.price}</Text>
-                <Text style={{ width: '20%', textAlign: 'center' }}>{`${(
-                  item.totalPrice - item.priceWithoutTax
-                ).toFixed(2)} Bs.`}</Text>
+                <Text style={{ width: '20%', textAlign: 'center' }}>{`${(item.totalPrice * item.tax).toFixed(
+                  2
+                )} Bs.`}</Text>
 
                 <Text style={{ width: '20%', textAlign: 'center' }}>{`${item.totalPrice.toFixed(2)} Bs.`}</Text>
               </View>

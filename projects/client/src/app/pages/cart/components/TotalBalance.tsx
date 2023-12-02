@@ -18,7 +18,6 @@ function TotalBalance() {
       return;
     }
     setModalOpen(true);
-    // clearCart();
   };
 
   const tax = getTotalPrice() * 0.13;

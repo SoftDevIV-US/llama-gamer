@@ -46,7 +46,7 @@ function InvoiceModal({ id, name, open, onClose, cart, totalPrice }: Props) {
             className='mt-4 bg-blue-500 px-4 py-2 text-white hover:bg-blue-700 focus:border-blue-300 focus:outline-none focus:ring'
             onClick={handleClose}
           >
-            Close Modal
+            Close
           </button>
           <div>
             <PDFDownloadLink document={<DocuPDF cart={cart} totalPrice={totalPrice} />} fileName={`${name}.pdf`}>
