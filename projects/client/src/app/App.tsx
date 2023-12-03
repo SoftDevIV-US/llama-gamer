@@ -26,7 +26,7 @@ import Login from './pages/login/Login';
 import NotFound from './pages/not-found/NotFound';
 import AddProduct from './pages/products/pages/add/AddProduct';
 import EditProduct from './pages/products/pages/edit/EditProduct';
-import ProductInfo from './pages/products/pages/info/ProductInfo';
+import InfoProduct from './pages/products/pages/info/InfoProduct';
 import UserProduct from './pages/products/pages/user-product/UserProduct';
 import Products from './pages/products/Products';
 import AddSupplier from './pages/suppliers/pages/add/AddSupplier';
@@ -73,7 +73,7 @@ function App() {
         <Route path='/admin/products' element={<Products />} />
         <Route path='/admin/products/add' element={<AddProduct />} />
         <Route path='/admin/products/edit/:id' element={<EditProduct />} />
-        <Route path='/admin/products/info/:id' element={<ProductInfo />} />
+        <Route path='/admin/products/info/:id' element={<InfoProduct />} />
       </Route>
     </Routes>
   );
