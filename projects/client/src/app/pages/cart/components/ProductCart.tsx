@@ -11,12 +11,12 @@ function ProductCart({ item }: Props) {
   const { removeFromCart } = useCartStore();
 
   return (
-    <div className='flex h-[225px] justify-between gap-16 p-2'>
-      <picture className='flex h-full place-content-center items-center'>
+    <div className='flex h-[700px] w-full flex-col gap-5 bg-white px-7 py-4 shadow-lg lg:h-[470px] lg:flex-row lg:gap-32 lg:px-16 lg:py-8'>
+      <picture className='flex h-full place-content-center'>
         <img
           src={item.product.productImages.length >= 1 ? item.product.productImages[0].image : defaultLogo}
           alt={item.product.name}
-          className='h-[125px] w-[125px]'
+          className='h-full w-full'
         />
       </picture>
       <div className='flex flex-col justify-between break-words text-lg'>
