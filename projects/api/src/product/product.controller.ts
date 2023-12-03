@@ -27,8 +27,6 @@ class ProductController {
   }
 
   @Get()
-  @UseGuards(JwtAuthGuard)
-  @ApiBearerAuth()
   @ApiOperation({ summary: 'Get all products' })
   @ApiCreatedResponse({ type: Product, isArray: true })
   async findAll(): Promise<Product[]> {
