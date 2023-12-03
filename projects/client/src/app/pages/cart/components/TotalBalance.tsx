@@ -23,7 +23,7 @@ function TotalBalance() {
   const tax = getTotalPrice() * 0.13;
 
   return (
-    <div className='flex h-[220px]  w-[320px] flex-col justify-between rounded-lg bg-white p-5 shadow-lg'>
+    <div className='flex h-[220px] w-[320px]  min-w-[320px] flex-col justify-between rounded-lg bg-white p-5 shadow-lg'>
       <div className='flex w-full flex-col gap-5 text-[#505050]'>
         <div className='flex w-full justify-between'>
           <p>Subtotal:</p>

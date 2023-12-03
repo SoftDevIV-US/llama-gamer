@@ -148,7 +148,7 @@ function UserProduct() {
                   <div className='flex grow items-center justify-between rounded-full border border-black/20 px-5 text-base lg:text-lg'>
                     <Button
                       onClick={() => {
-                        if (quantity > 0) {
+                        if (quantity > 1) {
                           setQuantity(quantity - 1);
                         }
                       }}
@@ -193,7 +193,7 @@ function UserProduct() {
           </div>
           <div className='flex w-full flex-col'>
             <p className='w-fit bg-white p-3 text-base font-medium lg:p-5 lg:text-2xl'>Description</p>
-            <div className='h-[400px] w-full bg-white px-3 py-5 shadow-lg lg:px-5 lg:py-10'>
+            <div className='flex min-h-[400px] w-full break-all bg-white px-3 py-5 shadow-lg lg:px-5 lg:py-10'>
               <p className='text-sm lg:text-xl'>{product.description}</p>
             </div>
           </div>

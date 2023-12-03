@@ -32,7 +32,7 @@ function Cart() {
           </Button>
         </div>
       ) : (
-        <div className='grid  w-full place-content-center items-center gap-5 sm:grid-flow-col  '>
+        <div className='grid  w-full place-content-center gap-5 sm:grid-flow-col  '>
           <div className='flex grow flex-col  gap-5 rounded-lg bg-white p-5 shadow-lg'>
             {cart.map((item, index) => (
               <React.Fragment key={item.product.id}>
