@@ -13,7 +13,7 @@ function Cart() {
   const { navigate } = useNavigate();
 
   return (
-    <div className='flex w-full flex-col gap-4 px-20 py-16'>
+    <div className='flex w-full flex-col gap-4 p-4 lg:px-20 lg:py-16'>
       <h1 className=' text-left text-2xl font-semibold'>{`My Cart (${cart.length})`}</h1>
 
       {cart.length === 0 ? (
@@ -32,7 +32,7 @@ function Cart() {
           </Button>
         </div>
       ) : (
-        <div className='grid  w-full place-content-center gap-5 sm:grid-flow-col  '>
+        <div className='flex w-full flex-col items-center gap-5 lg:flex-row lg:items-start '>
           <div className='flex grow flex-col  gap-5 rounded-lg bg-white p-5 shadow-lg'>
             {cart.map((item, index) => (
               <React.Fragment key={item.product.id}>
