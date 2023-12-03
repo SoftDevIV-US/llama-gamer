@@ -28,7 +28,7 @@ function InvoiceModal({ id, name, open, onClose, cart, totalPrice }: Props) {
   };
 
   return (
-    <div>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
       <Modal
         id={id}
         open={open}
@@ -37,8 +37,11 @@ function InvoiceModal({ id, name, open, onClose, cart, totalPrice }: Props) {
         aria-describedby='parent-modal-description'
         className='flex items-center justify-center'
       >
-        <Box className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 border-2 border-black bg-white px-4 pb-3 pt-2 shadow-md'>
-          <PDFViewer style={{ width: '500px', height: '600px' }}>
+        <Box
+          className='border-2 border-black bg-white px-4 pb-3 pt-2 shadow-md'
+          style={{ width: '80%', height: '80%', overflow: 'auto' }}
+        >
+          <PDFViewer style={{ width: '100%', height: '80%' }}>
             <DocuPDF cart={cart} totalPrice={totalPrice} />
           </PDFViewer>
           <button
