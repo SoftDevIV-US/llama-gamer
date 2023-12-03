@@ -10,6 +10,9 @@ type Props = {
 function ProductByCategoryCard({ product }: Props) {
   const { navigate } = useNavigate();
 
+  const text =
+    'Experience cable-free freedom and exceptional performance with our Wireless RGB Mechanical Keyboard. Its high-quality switches provide precise tactile responses, while the customizable RGB backlight adds a stylish touch to your workspace. With low-latency wireless connectivity, outstanding durability, and an ergonomic design, this keyboard is the perfect choice for gamers and professionals seeking the ideal balance of form and function.;';
+
   return (
     <div className='flex h-[115px] w-full gap-3 break-words rounded-lg bg-white p-2 shadow-xl md:h-[280px] md:gap-6 md:p-10 xl:gap-24'>
       <picture className=' flex h-full grow-0 items-center'>
@@ -22,7 +25,7 @@ function ProductByCategoryCard({ product }: Props) {
       <section className='flex grow flex-col place-content-center gap-5'>
         <p className='text-[10px] font-medium text-[#3A4D5E] md:text-2xl'>{product.name}</p>
         <p className='break-words text-[8px] text-[#586A84] md:text-lg'>
-          {product.description.length > 100 ? `${product.description.substring(0, 100)}...` : product.description}
+          {text.length > 100 ? `${text.substring(0, 100)}...` : text}
         </p>
       </section>
       <section className='flex h-full w-[90px] min-w-[90px] flex-col place-content-center content-center gap-2 lg:w-[200px] lg:min-w-[200px] lg:gap-5'>
