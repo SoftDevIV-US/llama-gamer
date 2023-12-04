@@ -67,7 +67,6 @@ function EditBrand() {
         const logoUrl = response.data.secure_url;
 
         const newValues = { ...values, logo: logoUrl };
-        console.log(newValues);
         editBrand(newValues);
       }
     } finally {
@@ -110,6 +109,7 @@ function EditBrand() {
                   >
                     Logo
                   </InputImage>
+                  <img src={brand.image} alt={brand.name} style={{ width: '300px', height: 'auto' }} />
                 </div>
                 <div className='flex justify-center py-6'>
                   <Button
