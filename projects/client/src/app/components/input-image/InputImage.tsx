@@ -6,6 +6,7 @@ const defaultProps = {
   isCorrect: true,
   isDisabled: false,
   onChange: undefined,
+  isRequired: true,
 };
 
 type Props = {
@@ -15,6 +16,7 @@ type Props = {
   isCorrect?: boolean;
   isDisabled?: boolean;
   requiredSize: '256' | '512';
+  isRequired?: boolean;
   onChange?: (file: File | null) => void;
 };
 
@@ -59,7 +61,7 @@ const validateLogo = async (file: File | null, requiredSize: '256' | '512'): Pro
   });
 };
 
-function InputImage({ id, children, value, isCorrect, isDisabled, requiredSize, onChange }: Props) {
+function InputImage({ id, children, value, isCorrect, isDisabled, requiredSize, isRequired, onChange }: Props) {
   const [logoValidationMessage, setLogoValidationMessage] = useState<string | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
 
@@ -135,7 +137,7 @@ function InputImage({ id, children, value, isCorrect, isDisabled, requiredSize, 
                   event.preventDefault();
                 }
               }}
-              required
+              required={isRequired}
             />
             <div className='flex min-h-[8rem] w-full cursor-pointer flex-col items-center justify-center border-2 border-dashed border-gray-300 bg-slate-50'>
               {!preview && (

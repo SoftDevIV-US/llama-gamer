@@ -41,6 +41,11 @@ function EditBrand() {
       setIsLoading(true);
 
       if (!selectedFile) {
+        const editName = {
+          name: values.name,
+          logo: values.logo,
+        };
+        editBrand(editName);
         return;
       }
       if (brand.name.length > maxLength || brand.name.length < minLength || !NAME_VALIDATOR.test(brand.name)) {
@@ -62,6 +67,7 @@ function EditBrand() {
         const logoUrl = response.data.secure_url;
 
         const newValues = { ...values, logo: logoUrl };
+        console.log(newValues);
         editBrand(newValues);
       }
     } finally {
@@ -100,6 +106,7 @@ function EditBrand() {
                     isCorrect={isLogoCorrect}
                     requiredSize='256'
                     onChange={(file) => setSelectedFile(file)}
+                    isRequired={false}
                   >
                     Logo
                   </InputImage>
