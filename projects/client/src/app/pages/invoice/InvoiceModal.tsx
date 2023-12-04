@@ -28,7 +28,7 @@ function InvoiceModal({ id, name, open, onClose, cart, totalPrice }: Props) {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+    <div className='flex h-screen items-center justify-center'>
       <Modal
         id={id}
         open={open}
