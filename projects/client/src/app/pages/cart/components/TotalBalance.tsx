@@ -37,7 +37,7 @@ function TotalBalance() {
         </div>
       </div>
 
-      <div className='flex flex-col gap-2'>
+      <div className='flex h-full flex-col gap-2'>
         <hr className='border-[0.5px] border-[#DDE1E8]' />
         <div className='flex w-full justify-between text-lg font-semibold'>
           <p>Total:</p>

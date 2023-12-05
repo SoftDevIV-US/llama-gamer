@@ -52,7 +52,9 @@ function Cart() {
               <p className='font-medium'>Back to Shop</p>
             </Button>
           </div>
-          <TotalBalance />
+          <div>
+            <TotalBalance />
+          </div>
         </div>
       )}
     </div>
