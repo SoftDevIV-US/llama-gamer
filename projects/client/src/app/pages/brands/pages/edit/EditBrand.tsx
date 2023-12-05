@@ -41,6 +41,11 @@ function EditBrand() {
       setIsLoading(true);
 
       if (!selectedFile) {
+        const editName = {
+          name: values.name,
+          logo: values.logo,
+        };
+        editBrand(editName);
         return;
       }
       if (brand.name.length > maxLength || brand.name.length < minLength || !NAME_VALIDATOR.test(brand.name)) {
@@ -100,9 +105,11 @@ function EditBrand() {
                     isCorrect={isLogoCorrect}
                     requiredSize='256'
                     onChange={(file) => setSelectedFile(file)}
+                    isRequired={false}
                   >
                     Logo
                   </InputImage>
+                  <img src={brand.logo} alt={brand.name} style={{ width: '300px', height: 'auto' }} />
                 </div>
                 <div className='flex justify-center py-6'>
                   <Button
