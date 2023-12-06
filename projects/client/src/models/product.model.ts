@@ -98,8 +98,8 @@ type CreateProductDto = {
   stock: number;
   price: number;
   isAvailable: boolean;
+  categoryId: string;
   brandId: string;
-  countryId: string;
 };
 
 type UpdateProductDto = {
@@ -108,8 +108,8 @@ type UpdateProductDto = {
   stock: number;
   price: number;
   isAvailable: boolean;
+  categoryId: string;
   brandId: string;
-  countryId: string;
 };
 
 export type {
@@ -119,6 +119,7 @@ export type {
   CreateBrandDto,
   CreateCategoryDto,
   CreateProductDto,
+  OnlySuppliers,
   PrismaCategoryProduct,
   PrismaProduct,
   Product,
