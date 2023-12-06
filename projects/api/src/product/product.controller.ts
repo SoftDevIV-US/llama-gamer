@@ -4,6 +4,10 @@ import { ApiBearerAuth, ApiCreatedResponse, ApiOperation, ApiTags } from '@nestj
 import AdminAccess from '@/auth/decorators/admin.decorator';
 import AdminGuard from '@/auth/guard/admin.guard';
 import JwtAuthGuard from '@/auth/guard/jwt.guard';
+import CreateProductImageDto from '@/product-image/dto/create-product-image.dto';
+import ProductImageService from '@/product-image/product-image.service';
+import CreateProductsSuppliersDto from '@/products-suppliers/dto/create-products-suppliers.dto';
+import ProductsSuppliersService from '@/products-suppliers/products-suppliers.service';
 
 import CreateProductDto from './dto/create-product.dto';
 import UpdateProductDto from './dto/update-product.dto';
@@ -13,7 +17,11 @@ import ProductService from './product.service';
 @Controller('product')
 @ApiTags('Product')
 class ProductController {
-  constructor(private readonly productService: ProductService) {}
+  constructor(
+    private readonly productService: ProductService,
+    private readonly productSupplierService: ProductsSuppliersService,
+    private readonly productImageService: ProductImageService
+  ) {}
 
   @Post()
   @AdminAccess()
@@ -21,8 +29,32 @@ class ProductController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Create a new Product' })
   @ApiCreatedResponse({ type: Product })
-  async create(@Body() createProductDto: CreateProductDto): Promise<Product> {
+  async create(@Body() createProductForm): Promise<Product> {
+    const createProductDto: CreateProductDto = {
+      name: createProductForm.name,
+      description: createProductForm.description,
+      stock: createProductForm.stock,
+      price: createProductForm.price,
+      categoryId: createProductForm.categoryId,
+      brandId: createProductForm.brandId,
+    };
+    const createSupplierIds = createProductForm.supplierIds;
+    const createProductImages = createProductForm.productImages;
     const product: Product = await this.productService.create(createProductDto);
+    createSupplierIds.forEach(async (element) => {
+      const cpsdto: CreateProductsSuppliersDto = {
+        productId: product.id,
+        supplierId: element,
+      };
+      await this.productSupplierService.create(cpsdto);
+    });
+    createProductImages.forEach(async (element) => {
+      const cpidto: CreateProductImageDto = {
+        productId: product.id,
+        image: element,
+      };
+      await this.productImageService.create(cpidto);
+    });
     return product;
   }
 

@@ -88,8 +88,10 @@ type CreateProductDto = {
   stock: number;
   price: number;
   isAvailable: boolean;
+  categoryId: string;
   brandId: string;
-  countryId: string;
+  supplierIds: string[];
+  productImages: string[];
 };
 
 type UpdateProductDto = {
