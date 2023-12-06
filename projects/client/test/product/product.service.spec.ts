@@ -1,4 +1,5 @@
 import instance from '@/config/axios.config';
+import { CreateProductDto } from '@/models/product.model';
 import {
   createProduct,
   deleteProductById,
@@ -15,14 +16,16 @@ describe('Product Service', () => {
   });
 
   it('should create a product', async () => {
-    const mockData = {
+    const mockData: CreateProductDto = {
       name: 'Test Product',
       description: 'Product description',
       stock: 10,
       price: 20,
       isAvailable: true,
       brandId: '1',
-      countryId: '123',
+      categoryId: '123',
+      supplierIds: [],
+      productImages: [],
     };
 
     const mockResponse = {
@@ -35,7 +38,9 @@ describe('Product Service', () => {
       price: 20,
       isAvailable: true,
       brandId: '1',
-      countryId: '123',
+      categoryId: '123',
+      supplierIds: [],
+      productImages: [],
     };
 
     (instance.post as jest.Mock).mockResolvedValueOnce({ data: mockResponse });
